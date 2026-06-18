@@ -39,7 +39,7 @@ export default function ExternalBookReader({ title, description, chapters }: Ext
             rel="noopener noreferrer"
             className="btn-secondary inline-flex items-center justify-center px-4 py-2 text-xs"
           >
-            Abrir capitulo
+            Abrir capítulo
           </a>
         </div>
       </div>
@@ -81,8 +81,8 @@ export default function ExternalBookReader({ title, description, chapters }: Ext
             />
           </div>
           <p className="text-xs leading-relaxed text-text-muted">
-            O capitulo e carregado diretamente do site externo. Se o navegador bloquear a incorporacao,
-            use o botao para abrir o material em uma nova aba.
+            O capítulo é carregado diretamente do site externo. Se o navegador bloquear a incorporação,
+            use o botão para abrir o material em uma nova aba.
           </p>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function ProcessosDesenvolvimentoSoftwareContent() {
   return (
     <SubjectContentLayout
       sections={PDSW_SECTIONS}
-      eyebrow="6º periodo · 80h · PDSW"
+      eyebrow="6º período · 80h · PDSW"
       title={(
         <>
           Processos de<br /><span className="gradient-text">Desenvolvimento</span>
