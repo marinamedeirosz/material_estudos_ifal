@@ -57,7 +57,7 @@ const subjects: Subject[] = [
   // ═══════ 6º PERÍODO ═══════
   { id: 'empd', name: 'Empreendedorismo Digital', slug: 'empreendedorismo-digital', code: 'EMPD', period: 6, axis: 'FB', hours: 80, hasContent: false },
   { id: 'pisi', name: 'Projeto Integrador em SI', slug: 'projeto-integrador-si', code: 'PISI', period: 6, axis: 'EXT', hours: 80, hasContent: false },
-  { id: 'pdsw', name: 'Processos de Desenvolvimento de Software', slug: 'processos-desenvolvimento-software', code: 'PDSW', period: 6, axis: 'FPG', hours: 80, hasContent: false },
+  { id: 'pdsw', name: 'Processos de Desenvolvimento de Software', slug: 'processos-desenvolvimento-software', code: 'PDSW', period: 6, axis: 'FPG', hours: 80, hasContent: true },
 
   // ═══════ 7º PERÍODO ═══════
   { id: 'gsei', name: 'Gestão da Segurança da Informação', slug: 'gestao-seguranca-informacao', code: 'GSEI', period: 7, axis: 'FPG', hours: 80, hasContent: false },
