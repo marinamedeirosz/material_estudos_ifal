@@ -10,14 +10,20 @@ interface ExamFilterOption {
   description: string;
 }
 
+interface ExamLabel {
+  label: string;
+  description?: string;
+}
+
 interface ExamQuizSelectorProps {
   questions: QuizQuestionData[];
   mode: ReviewMode;
+  examLabels?: Partial<Record<QuizExam, ExamLabel>>;
 }
 
 const ordinais = ['primeira', 'segunda', 'terceira', 'quarta', 'quinta', 'sexta', 'sétima', 'oitava', 'nona', 'décima'];
 
-export default function ExamQuizSelector({ questions, mode }: ExamQuizSelectorProps) {
+export default function ExamQuizSelector({ questions, mode, examLabels }: ExamQuizSelectorProps) {
   const [selectedExam, setSelectedExam] = useState<ExamFilterOption['value']>('todos');
 
   const examOptions = useMemo(() => {
@@ -28,14 +34,17 @@ export default function ExamQuizSelector({ questions, mode }: ExamQuizSelectorPr
       { value: 'todos' as const, label: 'Todas', description: 'Mistura os conteúdos de todas as avaliações.' },
       ...exams.map(exam => {
         const num = exam.replace('prova', '');
+        const customLabel = examLabels?.[exam];
+
         return {
           value: exam,
-          label: `Prova ${num}`,
-          description: `Revisa somente os conteúdos da ${ordinais[Number(num) - 1] ?? `${num}ª`} avaliação.`,
+          label: customLabel?.label ?? `Prova ${num}`,
+          description: customLabel?.description
+            ?? `Revisa somente os conteúdos da ${ordinais[Number(num) - 1] ?? `${num}ª`} avaliação.`,
         };
       }),
     ];
-  }, [questions]);
+  }, [examLabels, questions]);
 
   const filteredQuestions = useMemo(() => (
     selectedExam === 'todos'
@@ -46,7 +55,7 @@ export default function ExamQuizSelector({ questions, mode }: ExamQuizSelectorPr
   return (
     <div className="space-y-4">
       <div className="study-surface p-3">
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3" role="tablist" aria-label="Conteúdo da avaliação">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4" role="tablist" aria-label="Conteúdo da avaliação">
           {examOptions.map(option => {
             const active = selectedExam === option.value;
 

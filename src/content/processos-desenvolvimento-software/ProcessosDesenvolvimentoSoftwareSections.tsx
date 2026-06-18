@@ -288,6 +288,21 @@ const practiceItems: PanelItem[] = [
   },
 ];
 
+const pdswExamLabels = {
+  prova1: {
+    label: 'AV1',
+    description: 'Capitulos 1 a 4: introducao, processos, requisitos e modelos.',
+  },
+  prova2: {
+    label: 'AV2',
+    description: 'Capitulos 5 a 7: principios de projeto, padroes e arquitetura.',
+  },
+  prova4: {
+    label: 'AV4',
+    description: 'Capitulos 8 a 10: testes, refactoring e DevOps.',
+  },
+};
+
 function AssessmentMap() {
   return (
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -488,8 +503,8 @@ function QuizSection() {
         colorClass="text-accent"
       />
       <QuizTabs
-        normal={<ExamQuizSelector questions={QUIZ_DATA} mode="quiz" />}
-        kahoot={<ExamQuizSelector questions={QUIZ_DATA} mode="kahoot" />}
+        normal={<ExamQuizSelector questions={QUIZ_DATA} mode="quiz" examLabels={pdswExamLabels} />}
+        kahoot={<ExamQuizSelector questions={QUIZ_DATA} mode="kahoot" examLabels={pdswExamLabels} />}
         ai={(
           <div className="space-y-4">
             <HighlightBox title="Como funciona?">
