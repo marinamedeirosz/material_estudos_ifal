@@ -5,38 +5,17 @@ import ExamQuizSelector from '../../components/ui/ExamQuizSelector';
 import FlowDiagram from '../../components/ui/FlowDiagram';
 import HighlightBox from '../../components/ui/HighlightBox';
 import QuizTabs from '../../components/ui/QuizTabs';
+import {
+  SectionHeader,
+  ConceptGrid,
+  PanelList,
+  type ConceptItem,
+  type PanelItem,
+} from '../../components/sections';
 import { MARKETING_GUIDE_CONTEXT, MARKETING_TOPICS, QUIZ_DATA } from './data';
 
 interface MarketingSectionsProps {
   activeSection: string;
-}
-
-interface SectionHeaderProps {
-  title: string;
-  subtitle: string;
-  colorClass: string;
-}
-
-type Accent = 'accent' | 'accent2' | 'accent3' | 'accent4' | 'accent5';
-
-interface ConceptItem {
-  title: string;
-  description: string;
-  accent: Accent;
-}
-
-interface PanelItem {
-  title: string;
-  description: string;
-}
-
-function SectionHeader({ title, subtitle, colorClass }: SectionHeaderProps) {
-  return (
-    <div className="space-y-2">
-      <h2 className={`section-title ${colorClass}`}>{title}</h2>
-      <p className="section-subtitle max-w-3xl">{subtitle}</p>
-    </div>
-  );
 }
 
 const marketingApplications: ConceptItem[] = [
@@ -484,29 +463,6 @@ const cxAutomationItems: PanelItem[] = [
     description: 'Testes A/B em anúncios, páginas, ofertas e checkout ajudam a aprender com dados reais antes de escalar a campanha.',
   },
 ];
-
-function ConceptGrid({ items, columns = 'md:grid-cols-2' }: { items: ConceptItem[]; columns?: string }) {
-  return (
-    <div className={`grid grid-cols-1 ${columns} gap-4`}>
-      {items.map(item => (
-        <ConceptCard key={item.title} title={item.title} description={item.description} accent={item.accent} />
-      ))}
-    </div>
-  );
-}
-
-function PanelList({ items, columns }: { items: PanelItem[]; columns?: string }) {
-  return (
-    <div className={columns ? `grid grid-cols-1 ${columns} gap-3` : 'space-y-3'}>
-      {items.map(item => (
-        <div key={item.title} className="bg-card border border-border rounded-xl px-5 py-4">
-          <h3 className="font-semibold text-sm md:text-base text-text mb-0.5">{item.title}</h3>
-          <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
 
 function IntroSection() {
   return (

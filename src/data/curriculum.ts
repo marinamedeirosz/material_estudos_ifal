@@ -36,12 +36,12 @@ const subjects: Subject[] = [
   { id: 'etap', name: 'Estatística Aplicada', slug: 'estatistica-aplicada', code: 'ETAP', period: 3, axis: 'FB', hours: 80, hasContent: false },
   { id: 'fdbd', name: 'Fundamentos de Banco de Dados', slug: 'fundamentos-banco-dados', code: 'FDBD', period: 3, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'sope', name: 'Sistemas Operacionais', slug: 'sistemas-operacionais', code: 'SOPE', period: 3, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'edts', name: 'Estrutura de Dados', slug: 'estrutura-dados', code: 'EDTS', period: 3, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'metc', name: 'Metodologia Científica', slug: 'metodologia-cientifica', code: 'METC', period: 3, axis: 'FB', hours: 80, hasContent: false },
+  { id: 'estd', name: 'Estrutura de Dados', slug: 'estrutura-dados', code: 'ESTD', period: 3, axis: 'FPG', hours: 80, hasContent: true },
+  { id: 'metc', name: 'Metodologia Científica', slug: 'metodologia-cientifica', code: 'METC', period: 3, axis: 'FB', hours: 80, hasContent: true },
 
   // ═══════ 4º PERÍODO ═══════
   { id: 'ihcc', name: 'Interação Humano-Computador', slug: 'interacao-humano-computador', code: 'IHCC', period: 4, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'apbd', name: 'Administração e Projeto de Banco de Dados', slug: 'administracao-projeto-banco-dados', code: 'APBD', period: 4, axis: 'FPG', hours: 80, hasContent: false },
+  { id: 'apbd', name: 'Administração e Projeto de Banco de Dados', slug: 'administracao-projeto-banco-dados', code: 'APBD', period: 4, axis: 'FPG', hours: 80, hasContent: true },
   { id: 'frdc', name: 'Fundamentos de Redes de Computadores', slug: 'fundamentos-redes-computadores', code: 'FRDC', period: 4, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'poob', name: 'Programação Orientada a Objetos', slug: 'programacao-orientada-objetos', code: 'POOB', period: 4, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'gpti', name: 'Gestão de Pessoas em TI', slug: 'gestao-pessoas-ti', code: 'GPTI', period: 4, axis: 'FB', hours: 40, hasContent: false },
@@ -57,7 +57,7 @@ const subjects: Subject[] = [
   // ═══════ 6º PERÍODO ═══════
   { id: 'empd', name: 'Empreendedorismo Digital', slug: 'empreendedorismo-digital', code: 'EMPD', period: 6, axis: 'FB', hours: 80, hasContent: false },
   { id: 'pisi', name: 'Projeto Integrador em SI', slug: 'projeto-integrador-si', code: 'PISI', period: 6, axis: 'EXT', hours: 80, hasContent: false },
-  { id: 'pdsw', name: 'Processos de Desenvolvimento de Software', slug: 'processos-desenvolvimento-software', code: 'PDSW', period: 6, axis: 'FPG', hours: 80, hasContent: false },
+  { id: 'pdsw', name: 'Processos de Desenvolvimento de Software', slug: 'processos-desenvolvimento-software', code: 'PDSW', period: 6, axis: 'FPG', hours: 80, hasContent: true },
 
   // ═══════ 7º PERÍODO ═══════
   { id: 'gsei', name: 'Gestão da Segurança da Informação', slug: 'gestao-seguranca-informacao', code: 'GSEI', period: 7, axis: 'FPG', hours: 80, hasContent: false },
