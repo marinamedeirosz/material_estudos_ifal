@@ -1,13 +1,20 @@
 {
   "$schema": "./registro.schema.json",
   "versao": 1,
-  "atualizadoEm": "2026-06-12T10:50:00-03:00",
+  "atualizadoEm": "2026-06-21T10:00:00-03:00",
   "contribuintes": [
     {
       "id": "isaque-braga",
       "nome": "Isaque Braga",
       "matricula": "2024001384",
       "emailInstitucional": "isb15@aluno.ifal.edu.br",
+      "curso": "Sistemas de Informação"
+    },
+    {
+      "id": "maria-luisa-alaquoke",
+      "nome": "Maria Luisa Alaquoke Ferreira dos Santos",
+      "matricula": "2024001400",
+      "emailInstitucional": "mlafs2@aluno.ifal.edu.br",
       "curso": "Sistemas de Informação"
     }
   ],
@@ -111,6 +118,29 @@
       "status": "incorporado",
       "revisadoPor": ["periclesanfe"],
       "tags": ["estrutura-dados", "conteudo", "codeblock"]
+    },
+    {
+      "id": "contrib-2026-06-21-conteudo-apbd",
+      "contribuinteId": "maria-luisa-alaquoke",
+      "quando": {
+        "data": "2026-06-21",
+        "registradoEm": "2026-06-21T10:00:00-03:00",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "administracao-projeto-banco-dados",
+        "materiaCodigo": "APBD",
+        "arquivo": "src/content/administracao-projeto-banco-dados/data.ts"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Responsável pelo conteúdo da matéria Administração e Projeto de Banco de Dados.",
+        "origem": "revisao_manual"
+      },
+      "status": "incorporado",
+      "revisadoPor": ["periclesanfe"],
+      "tags": ["administracao-projeto-banco-dados", "conteudo"]
     }
   ]
 }

@@ -8,8 +8,9 @@ import SettingsPage from './pages/SettingsPage';
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
       <Sidebar />
-      <main className="main-surface flex-1 overflow-y-auto min-h-screen pt-14 lg:pt-0">
+      <main id="conteudo" tabIndex={-1} className="main-surface flex-1 overflow-y-auto min-h-screen pt-14 lg:pt-0">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/materia/:slug" element={<SubjectPage />} />

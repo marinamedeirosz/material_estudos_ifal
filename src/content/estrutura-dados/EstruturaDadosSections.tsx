@@ -1,46 +1,25 @@
 import AIQuizGenerator from '../../components/ui/AIQuizGenerator';
 import AIKahootQuiz from '../../components/ui/AIKahootQuiz';
 import CodeBlock from '../../components/ui/CodeBlock';
-import ConceptCard from '../../components/ui/ConceptCard';
 import ExamQuizSelector from '../../components/ui/ExamQuizSelector';
 import FlowDiagram from '../../components/ui/FlowDiagram';
 import HighlightBox from '../../components/ui/HighlightBox';
 import QuizTabs from '../../components/ui/QuizTabs';
+import {
+  SectionHeader,
+  ConceptGrid,
+  PanelList,
+  StatStrip,
+  ComparisonTable,
+  type ConceptItem,
+  type PanelItem,
+  type StatItem,
+  type ComparisonRow,
+} from '../../components/sections';
 import { ESTRUTURA_DADOS_GUIDE_CONTEXT, ESTRUTURA_DADOS_TOPICS, QUIZ_DATA } from './data';
 
 interface EstruturaDadosSectionsProps {
   activeSection: string;
-}
-
-interface SectionHeaderProps {
-  title: string;
-  subtitle: string;
-  colorClass: string;
-}
-
-type Accent = 'accent' | 'accent2' | 'accent3' | 'accent4' | 'accent5';
-
-interface ConceptItem {
-  title: string;
-  description: string;
-  accent: Accent;
-}
-
-interface PanelItem {
-  title: string;
-  description: string;
-}
-
-interface StatItem {
-  label: string;
-  value: string;
-  accent: string;
-}
-
-interface ComparisonRow {
-  criterion: string;
-  left: string;
-  right: string;
 }
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -694,78 +673,6 @@ const bstComplexity: ComparisonRow[] = [
   { criterion: 'Remoção', left: 'O(h) - 3 casos: folha, 1 filho, 2 filhos', right: 'O(log n) balanceada · O(n) degenerada' },
   { criterion: 'Em-ordem', left: 'O(n) - visita todos os nós', right: 'Produz sequência ordenada' },
 ];
-
-// ── Helper components ────────────────────────────────────────────────────────
-
-function SectionHeader({ title, subtitle, colorClass }: SectionHeaderProps) {
-  return (
-    <div className="space-y-2">
-      <h2 className={`section-title ${colorClass}`}>{title}</h2>
-      <p className="section-subtitle max-w-3xl">{subtitle}</p>
-    </div>
-  );
-}
-
-function ConceptGrid({ items, columns = 'md:grid-cols-2' }: { items: ConceptItem[]; columns?: string }) {
-  return (
-    <div className={`grid grid-cols-1 ${columns} gap-4`}>
-      {items.map(item => (
-        <ConceptCard key={item.title} title={item.title} description={item.description} accent={item.accent} />
-      ))}
-    </div>
-  );
-}
-
-function PanelList({ items }: { items: PanelItem[] }) {
-  return (
-    <div className="space-y-3">
-      {items.map(item => (
-        <div key={item.title} className="bg-card border border-border rounded-xl px-5 py-4">
-          <h3 className="font-semibold text-sm md:text-base text-text mb-0.5">{item.title}</h3>
-          <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function StatStrip({ items }: { items: StatItem[] }) {
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-      {items.map(item => (
-        <div key={item.label} className="bg-card border border-border rounded-xl px-5 py-5 text-center">
-          <p className={`font-display font-black text-2xl text-${item.accent}`}>{item.value}</p>
-          <p className="text-text-muted text-sm">{item.label}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ComparisonTable({ rows, leftLabel, rightLabel }: { rows: ComparisonRow[]; leftLabel: string; rightLabel: string }) {
-  return (
-    <div className="overflow-x-auto study-surface">
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-border">
-            <th className="text-left py-3 px-4 font-semibold text-text-muted uppercase tracking-wider text-xs w-1/4">Critério</th>
-            <th className="text-left py-3 px-4 font-semibold text-accent uppercase tracking-wider text-xs">{leftLabel}</th>
-            <th className="text-left py-3 px-4 font-semibold text-accent3 uppercase tracking-wider text-xs">{rightLabel}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => (
-            <tr key={i} className="border-b border-border/50 last:border-0">
-              <td className="py-3 px-4 font-semibold text-text text-xs">{row.criterion}</td>
-              <td className="py-3 px-4 text-text-muted text-xs leading-relaxed">{row.left}</td>
-              <td className="py-3 px-4 text-text-muted text-xs leading-relaxed">{row.right}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 // ── Section components ───────────────────────────────────────────────────────
 

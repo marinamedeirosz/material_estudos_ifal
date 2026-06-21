@@ -203,9 +203,7 @@ export default function SettingsPage() {
                   {loadingModels ? 'Buscando…' : 'Buscar modelos'}
                 </button>
               </div>
-              {modelsError && (
-                <p className="text-accent2 text-sm mt-2">{modelsError}</p>
-              )}
+              <p role="alert" aria-live="polite" className="text-accent2 text-sm mt-2 empty:hidden">{modelsError}</p>
             </div>
 
             {/* Ações */}

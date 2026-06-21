@@ -12,16 +12,16 @@ export default function AIProviderBadge() {
   const provider = getProvider(config.provider);
 
   return (
-    <div className="flex items-center justify-between gap-3 flex-wrap text-xs">
-      <span className="inline-flex items-center gap-2 text-text-muted">
-        <span aria-hidden className="h-2 w-2 rounded-full bg-accent5" />
-        Usando
-        <span className="font-semibold text-text font-mono">{config.model}</span>
-        <span className="text-text-muted/60">via {provider.label}</span>
+    <div className="flex items-center justify-between gap-3 text-xs">
+      <span className="inline-flex items-center gap-2 text-text-muted min-w-0">
+        <span aria-hidden className="h-2 w-2 shrink-0 rounded-full bg-accent5" />
+        <span className="shrink-0">Usando</span>
+        <span className="font-semibold text-text font-mono truncate" title={config.model}>{config.model}</span>
+        <span className="text-text-muted/60 shrink-0">via {provider.label}</span>
       </span>
       <Link
         to="/configuracoes"
-        className="text-text-muted hover:text-text font-semibold underline underline-offset-2 transition-colors"
+        className="shrink-0 text-text-muted hover:text-text font-semibold underline underline-offset-2 transition-colors"
       >
         Trocar
       </Link>

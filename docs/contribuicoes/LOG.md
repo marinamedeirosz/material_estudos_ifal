@@ -7,6 +7,7 @@ Fonte estruturada: [`registro.json`](./registro.json).
 | ID | Nome | Matricula | Email institucional | Curso | Observacoes |
 | --- | --- | --- | --- | --- | --- |
 | isaque-braga | Isaque Braga | 2024001384 | isb15@aluno.ifal.edu.br | Sistemas de Informação | |
+| maria-luisa-alaquoke | Maria Luisa Alaquoke Ferreira dos Santos | 2024001400 | mlafs2@aluno.ifal.edu.br | Sistemas de Informação | |
 
 ## Contribuicoes Por Materia
 
@@ -14,6 +15,7 @@ Fonte estruturada: [`registro.json`](./registro.json).
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 2026-05-31 | Metodologia Científica (METC) | conteudo_materia | isaque-braga | src/content/metodologia-cientifica/data.ts | Adiciona conteúdo completo com seções navegáveis e quiz de revisão | #18 | incorporado |
 | 2026-06-11 | Estrutura de Dados (ESTD) | conteudo_materia | isaque-braga | src/content/estrutura-dados/data.ts | Adiciona conteúdo completo com exemplos usando CodeBlock | #19 | incorporado |
+| 2026-06-21 | Administração e Projeto de Banco de Dados (APBD) | conteudo_materia | maria-luisa-alaquoke | src/content/administracao-projeto-banco-dados/data.ts | Responsável pelo conteúdo da matéria | — | incorporado |
 
 ## Contribuicoes Do Projeto
 

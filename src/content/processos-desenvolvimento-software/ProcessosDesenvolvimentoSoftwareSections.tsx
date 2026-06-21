@@ -1,12 +1,12 @@
 import AIKahootQuiz from '../../components/ui/AIKahootQuiz';
 import AIQuizGenerator from '../../components/ui/AIQuizGenerator';
 import CodeBlock from '../../components/ui/CodeBlock';
-import ConceptCard from '../../components/ui/ConceptCard';
 import ExamQuizSelector from '../../components/ui/ExamQuizSelector';
 import ExternalBookReader from '../../components/ui/ExternalBookReader';
 import FlowDiagram from '../../components/ui/FlowDiagram';
 import HighlightBox from '../../components/ui/HighlightBox';
 import QuizTabs from '../../components/ui/QuizTabs';
+import { SectionHeader, ConceptGrid, PanelList } from '../../components/sections';
 import {
   PDSW_BOOK_CHAPTERS,
   PDSW_CHAPTER_CONTENT,
@@ -17,55 +17,10 @@ import {
   QUIZ_DATA,
   type PdswChapterContent,
   type PdswConcept,
-  type PdswPanel,
 } from './data';
 
 interface ProcessosDesenvolvimentoSoftwareSectionsProps {
   activeSection: string;
-}
-
-interface SectionHeaderProps {
-  title: string;
-  subtitle: string;
-  colorClass: string;
-  badge?: string;
-}
-
-function SectionHeader({ title, subtitle, colorClass, badge }: SectionHeaderProps) {
-  return (
-    <div className="space-y-2">
-      {badge && (
-        <span className="inline-flex rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent">
-          {badge}
-        </span>
-      )}
-      <h2 className={`section-title ${colorClass}`}>{title}</h2>
-      <p className="section-subtitle max-w-3xl">{subtitle}</p>
-    </div>
-  );
-}
-
-function ConceptGrid({ items, columns = 'md:grid-cols-2 lg:grid-cols-3' }: { items: PdswConcept[]; columns?: string }) {
-  return (
-    <div className={`grid grid-cols-1 gap-4 ${columns}`}>
-      {items.map(item => (
-        <ConceptCard key={item.title} title={item.title} description={item.description} accent={item.accent} />
-      ))}
-    </div>
-  );
-}
-
-function PanelList({ items, columns = 'md:grid-cols-2' }: { items: PdswPanel[]; columns?: string }) {
-  return (
-    <div className={`grid grid-cols-1 gap-3 ${columns}`}>
-      {items.map(item => (
-        <div key={item.title} className="study-surface p-4">
-          <h3 className="mb-1 text-sm font-bold text-text">{item.title}</h3>
-          <p className="text-sm leading-relaxed text-text-muted">{item.description}</p>
-        </div>
-      ))}
-    </div>
-  );
 }
 
 function AssessmentMap() {
@@ -151,7 +106,7 @@ function ChapterSection({ chapter }: { chapter: PdswChapterContent }) {
             <h3 className="mb-1 font-display text-xl font-bold text-accent">{subsection.title}</h3>
             <p className="max-w-3xl text-sm leading-relaxed text-text-muted">{subsection.description}</p>
           </div>
-          {subsection.concepts && <ConceptGrid items={subsection.concepts} />}
+          {subsection.concepts && <ConceptGrid items={subsection.concepts} columns="md:grid-cols-2 lg:grid-cols-3" />}
           {subsection.panels && <PanelList items={subsection.panels} />}
           {subsection.flow && (
             <HighlightBox title="Fluxo mental" accent="var(--color-accent4)">

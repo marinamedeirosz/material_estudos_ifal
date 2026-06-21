@@ -17,7 +17,7 @@ function SubjectContentFallback() {
     <div className="page-wrap py-10 md:py-12 animate-fade-in">
       <section className="study-surface px-6 py-12 md:px-10 md:py-14 text-center">
         <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin mx-auto" />
-        <p className="text-text-muted text-sm mt-4">Carregando conteúdo da matéria...</p>
+        <p className="text-text-muted text-sm mt-4">Carregando conteúdo da matéria…</p>
       </section>
     </div>
   );

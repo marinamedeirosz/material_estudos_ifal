@@ -2,11 +2,20 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import AIQuizGenerator from '../../components/ui/AIQuizGenerator';
 import AIKahootQuiz from '../../components/ui/AIKahootQuiz';
-import ConceptCard from '../../components/ui/ConceptCard';
 import FlowDiagram from '../../components/ui/FlowDiagram';
 import HighlightBox from '../../components/ui/HighlightBox';
 import KahootQuiz from '../../components/ui/KahootQuiz';
 import QuizCard from '../../components/ui/QuizCard';
+import {
+  SectionHeader,
+  ConceptGrid,
+  PanelList,
+  ColoredPanelList,
+  TheoryBlock,
+  ExampleBox,
+  type ConceptItem,
+  type PanelItem,
+} from '../../components/sections';
 import {
   ADMINISTRACAO_PROJETO_BANCO_DADOS_GUIDE_CONTEXT,
   ADMINISTRACAO_PROJETO_BANCO_DADOS_QUIZ_DATA,
@@ -15,25 +24,6 @@ import {
 
 interface AdministracaoProjetoBancoDadosSectionsProps {
   activeSection: string;
-}
-
-interface SectionHeaderProps {
-  title: string;
-  subtitle: string;
-  colorClass?: string;
-}
-
-type Accent = 'accent' | 'accent2' | 'accent3' | 'accent4' | 'accent5';
-
-interface ConceptItem {
-  title: string;
-  description: string;
-  accent: Accent;
-}
-
-interface PanelItem {
-  title: string;
-  description: string;
 }
 
 interface CodeToken {
@@ -142,63 +132,6 @@ function renderInlineCodeText(text: string) {
   return parts.length > 0 ? parts : text;
 }
 
-function SectionHeader({ title, subtitle, colorClass = 'text-accent' }: SectionHeaderProps) {
-  return (
-    <div className="space-y-2">
-      <h2 className={`section-title ${colorClass}`}>{title}</h2>
-      <p className="section-subtitle max-w-3xl">{subtitle}</p>
-    </div>
-  );
-}
-
-function ConceptGrid({ items, columns = 'md:grid-cols-2' }: { items: ConceptItem[]; columns?: string }) {
-  return (
-    <div className={`grid grid-cols-1 ${columns} gap-4`}>
-      {items.map(item => (
-        <ConceptCard key={item.title} title={item.title} description={item.description} accent={item.accent} />
-      ))}
-    </div>
-  );
-}
-
-function PanelList({ items }: { items: PanelItem[] }) {
-  return (
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-      {items.map(item => (
-        <div key={item.title} className="bg-card border border-border rounded-xl px-5 py-4">
-          <h3 className="font-semibold text-sm md:text-base text-text mb-1">{item.title}</h3>
-          <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ColoredPanelList({ items }: { items: PanelItem[] }) {
-  const styles = [
-    'border-accent/35 bg-accent/8 text-accent',
-    'border-accent2/35 bg-accent2/8 text-accent2',
-    'border-accent3/35 bg-accent3/8 text-accent3',
-    'border-accent4/35 bg-accent4/8 text-accent4',
-    'border-accent5/35 bg-accent5/8 text-accent5',
-  ];
-
-  return (
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-      {items.map((item, index) => {
-        const colorClass = styles[index % styles.length];
-
-        return (
-          <div key={item.title} className={`border rounded-xl px-5 py-4 ${colorClass}`}>
-            <h3 className="font-semibold text-sm md:text-base mb-1 text-text">{item.title}</h3>
-            <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 function CodeBlock({ children, language = 'sql' }: { children: string; language?: string }) {
   const [copied, setCopied] = useState(false);
   const lines = children.replace(/\n$/, '').split('\n');
@@ -255,33 +188,6 @@ function CodeBlock({ children, language = 'sql' }: { children: string; language?
         </code>
       </pre>
     </div>
-  );
-}
-
-function TheoryBlock({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="study-surface p-5 md:p-6 space-y-3">
-      <h3 className="font-display font-bold text-2xl text-text">{title}</h3>
-      <div className="text-text-muted text-sm md:text-base leading-relaxed space-y-3">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function ExampleBox({
-  title,
-  children,
-  accent = 'var(--color-accent4)',
-}: {
-  title: string;
-  children: ReactNode;
-  accent?: string;
-}) {
-  return (
-    <HighlightBox title={title} accent={accent}>
-      {children}
-    </HighlightBox>
   );
 }
 

@@ -66,7 +66,7 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
   const allTopicsSelected = selectedTopicValues.length === topics.length;
   const progressPct = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
   const generateLabel = loading
-    ? `Gerando ${selectedCount}...`
+    ? `Gerando ${selectedCount}…`
     : selectedCount === 1
       ? 'Gerar pergunta'
       : `Gerar ${selectedCount} perguntas`;
@@ -188,7 +188,7 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
         </div>
       </div>
 
-      <div className="study-surface flex gap-5 items-center px-4 py-3.5 text-sm">
+      <div className="study-surface flex gap-5 items-center px-4 py-3.5 text-sm tabular-nums">
         <div className="text-center">
           <div className="font-bold text-accent5">{score.correct}</div>
           <div className="text-[11px] text-text-muted uppercase tracking-wider">Acertos</div>
@@ -215,9 +215,9 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
       </div>
 
       {loading && (
-        <div className="text-center py-10">
-          <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin mx-auto" />
-          <p className="text-text-muted mt-3 text-sm">Consultando a IA...</p>
+        <div className="text-center py-10" role="status" aria-live="polite">
+          <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin mx-auto" aria-hidden="true" />
+          <p className="text-text-muted mt-3 text-sm">Consultando a IA…</p>
         </div>
       )}
 
@@ -231,16 +231,16 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
 
             return (
               <div key={`${question.pergunta}-${questionIndex}`} className="study-surface p-5 md:p-6">
-                <div className="flex justify-between items-center gap-3 mb-3">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded bg-accent/10 text-accent uppercase tracking-wider">
+                <div className="flex justify-between items-start gap-3 mb-3">
+                  <div className="flex flex-wrap items-center gap-2 min-w-0">
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded bg-accent/10 text-accent uppercase tracking-wider tabular-nums shrink-0">
                       Pergunta {questionIndex + 1} de {questions.length}
                     </span>
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded bg-accent3/10 text-accent3 uppercase tracking-wider">
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded bg-accent3/10 text-accent3 uppercase tracking-wider break-words">
                       {question.tema}
                     </span>
                   </div>
-                  <span className="text-xs font-semibold text-text-muted">
+                  <span className="text-xs font-semibold text-text-muted shrink-0">
                     {difficultyLabels[question.dificuldade] || question.dificuldade}
                   </span>
                 </div>

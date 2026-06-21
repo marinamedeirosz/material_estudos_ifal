@@ -39,7 +39,7 @@ export default function AIKahootQuiz({ guideContext, topics }: AIKahootQuizProps
   const quizKey = kahootQuestions.map(question => question.id).join('|');
 
   const generateLabel = loading
-    ? `Gerando ${selectedCount}...`
+    ? `Gerando ${selectedCount}…`
     : selectedCount === 1
       ? 'Gerar Kahoot'
       : `Gerar Kahoot com ${selectedCount}`;
@@ -185,9 +185,9 @@ export default function AIKahootQuiz({ guideContext, topics }: AIKahootQuizProps
       </div>
 
       {loading && (
-        <div className="text-center py-10">
-          <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin mx-auto" />
-          <p className="text-text-muted mt-3 text-sm">Consultando a IA...</p>
+        <div className="text-center py-10" role="status" aria-live="polite">
+          <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin mx-auto" aria-hidden="true" />
+          <p className="text-text-muted mt-3 text-sm">Consultando a IA…</p>
         </div>
       )}
 

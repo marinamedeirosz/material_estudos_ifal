@@ -75,15 +75,15 @@ export default function SubjectCatalog({ subjects }: SubjectCatalogProps) {
       </div>
 
       {filteredSubjects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+        <div key={`${filter}-${query}`} className="grid grid-cols-1 md:grid-cols-2 gap-3.5 stagger-children">
           {filteredSubjects.map(subject => (
             <NavLink
               key={subject.id}
               to={`/materia/${subject.slug}`}
               className="study-surface study-surface-hover px-4 py-3.5 group flex items-center justify-between min-h-[78px]"
             >
-              <div>
-                <h3 className="font-semibold text-sm md:text-base text-text group-hover:text-accent transition-colors">
+              <div className="min-w-0">
+                <h3 className="font-semibold text-sm md:text-base text-text group-hover:text-accent transition-colors break-words">
                   {subject.name}
                 </h3>
                 <p className="text-text-muted text-xs md:text-sm mt-0.5">{subjectMeta(subject)}</p>

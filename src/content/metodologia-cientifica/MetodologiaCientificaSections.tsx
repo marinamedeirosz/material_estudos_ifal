@@ -1,45 +1,24 @@
 import AIQuizGenerator from '../../components/ui/AIQuizGenerator';
 import AIKahootQuiz from '../../components/ui/AIKahootQuiz';
-import ConceptCard from '../../components/ui/ConceptCard';
 import ExamQuizSelector from '../../components/ui/ExamQuizSelector';
 import FlowDiagram from '../../components/ui/FlowDiagram';
 import HighlightBox from '../../components/ui/HighlightBox';
 import QuizTabs from '../../components/ui/QuizTabs';
+import {
+    SectionHeader,
+    ConceptGrid,
+    PanelList,
+    StatStrip,
+    ComparisonTable,
+    type ConceptItem,
+    type PanelItem,
+    type StatItem,
+    type ComparisonRow,
+} from '../../components/sections';
 import { METODOLOGIA_CIENTIFICA_GUIDE_CONTEXT, METODOLOGIA_CIENTIFICA_TOPICS, QUIZ_DATA } from './data';
 
 interface MetodologiaCientificaSectionsProps {
     activeSection: string;
-}
-
-interface SectionHeaderProps {
-    title: string;
-    subtitle: string;
-    colorClass: string;
-}
-
-type Accent = 'accent' | 'accent2' | 'accent3' | 'accent4' | 'accent5';
-
-interface ConceptItem {
-    title: string;
-    description: string;
-    accent: Accent;
-}
-
-interface PanelItem {
-    title: string;
-    description: string;
-}
-
-interface StatItem {
-    label: string;
-    value: string;
-    accent: string;
-}
-
-interface ComparisonRow {
-    criterion: string;
-    left: string;
-    right: string;
 }
 
 const revisionOverview: ConceptItem[] = [
@@ -862,84 +841,6 @@ const qualitativeAnalysisPanels: PanelItem[] = [
     },
 ];
 
-function SectionHeader({ title, subtitle, colorClass }: SectionHeaderProps) {
-    return (
-        <div className="space-y-2">
-            <h2 className={`section-title ${colorClass}`}>{title}</h2>
-            <p className="section-subtitle max-w-3xl">{subtitle}</p>
-        </div>
-    );
-}
-
-function ConceptGrid({ items, columns = 'md:grid-cols-2' }: { items: ConceptItem[]; columns?: string }) {
-    return (
-        <div className={`grid grid-cols-1 ${columns} gap-4`}>
-            {items.map(item => (
-                <ConceptCard key={item.title} title={item.title} description={item.description} accent={item.accent} />
-            ))}
-        </div>
-    );
-}
-
-function PanelList({ items, columns }: { items: PanelItem[]; columns?: string }) {
-    return (
-        <div className={columns ? `grid grid-cols-1 ${columns} gap-3` : 'space-y-3'}>
-            {items.map(item => (
-                <div key={item.title} className="bg-card border border-border rounded-xl px-5 py-4">
-                    <h3 className="font-semibold text-sm md:text-base text-text mb-0.5">{item.title}</h3>
-                    <p className="text-text-muted text-sm leading-relaxed">{item.description}</p>
-                </div>
-            ))}
-        </div>
-    );
-}
-
-function StatStrip({ items }: { items: StatItem[] }) {
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {items.map(item => (
-                <div key={item.label} className="bg-card border border-border rounded-xl px-5 py-5 text-center">
-                    <p className={`font-display font-black text-2xl ${item.accent}`}>{item.label}</p>
-                    <p className="text-text-muted text-sm">{item.value}</p>
-                </div>
-            ))}
-        </div>
-    );
-}
-
-function ComparisonTable({
-    rows,
-    leftTitle,
-    rightTitle,
-}: {
-    rows: ComparisonRow[];
-    leftTitle: string;
-    rightTitle: string;
-}) {
-    return (
-        <div className="overflow-x-auto study-surface">
-            <table className="w-full text-sm">
-                <thead>
-                    <tr className="border-b border-border">
-                        <th className="text-left py-3 px-4 font-semibold text-text-muted uppercase tracking-wider text-xs">Critério</th>
-                        <th className="text-left py-3 px-4 font-semibold text-text-muted uppercase tracking-wider text-xs">{leftTitle}</th>
-                        <th className="text-left py-3 px-4 font-semibold text-text-muted uppercase tracking-wider text-xs">{rightTitle}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows.map(row => (
-                        <tr key={row.criterion} className="border-b border-border/50">
-                            <td className="py-3 px-4 font-semibold text-text">{row.criterion}</td>
-                            <td className="py-3 px-4 text-text-muted">{row.left}</td>
-                            <td className="py-3 px-4 text-text-muted">{row.right}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
-}
-
 function IntroSection() {
     return (
         <section className="animate-fade-in space-y-6">
@@ -1020,7 +921,7 @@ function CienciaSection() {
 
             <div>
                 <h3 className="font-display font-bold text-xl text-accent2 mb-3">Ciência moderna e pós-moderna</h3>
-                <ComparisonTable rows={modernVsPostmodernScience} leftTitle="Característica central" rightTitle="Ênfase analítica" />
+                <ComparisonTable rows={modernVsPostmodernScience} leftLabel="Característica central" rightLabel="Ênfase analítica" />
             </div>
 
             <div>
@@ -1085,7 +986,7 @@ function AbordagemSection() {
 
             <div>
                 <h3 className="font-display font-bold text-xl text-accent2 mb-3">Comparando as abordagens</h3>
-                <ComparisonTable rows={approachDetails} leftTitle="Como trabalha" rightTitle="Foco metodológico" />
+                <ComparisonTable rows={approachDetails} leftLabel="Como trabalha" rightLabel="Foco metodológico" />
             </div>
 
             <HighlightBox title="Critério de escolha">
