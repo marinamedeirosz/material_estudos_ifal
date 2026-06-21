@@ -58,10 +58,16 @@ const nomePorId = new Map(contribuintes.map(c => [c.id, c.nome]));
 
 /** Formata "2026-06-21" como "21 de junho de 2026" (pt-BR). */
 export function formatarData(iso: string): string {
-  // Constrói em UTC para evitar deslocamento de fuso ao usar só a data.
-  const data = new Date(`${iso}T12:00:00`);
+  // Interpreta e formata em UTC para que a data nunca deslize de dia,
+  // independentemente do fuso horário de quem acessa o site.
+  const data = new Date(`${iso}T00:00:00Z`);
   if (Number.isNaN(data.getTime())) return iso;
-  return new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }).format(data);
+  return new Intl.DateTimeFormat('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(data);
 }
 
 /** Lista de atualizações, da mais recente para a mais antiga. */
