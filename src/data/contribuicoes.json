@@ -1,7 +1,7 @@
 {
   "$schema": "./contribuicoes.schema.json",
   "versao": 1,
-  "atualizadoEm": "2026-06-21T10:00:00-03:00",
+  "atualizadoEm": "2026-06-21T15:00:00-03:00",
   "contribuintes": [
     {
       "id": "isaque-braga",
@@ -15,6 +15,20 @@
       "nome": "Maria Luisa Alaquoke Ferreira dos Santos",
       "matricula": "2024001400",
       "emailInstitucional": "mlafs2@aluno.ifal.edu.br",
+      "curso": "Sistemas de Informação"
+    },
+    {
+      "id": "pericles-feitoza",
+      "nome": "Péricles Feitoza",
+      "matricula": "2022000806",
+      "emailInstitucional": "paf1@aluno.ifal.edu.br",
+      "curso": "Sistemas de Informação"
+    },
+    {
+      "id": "marina-medeiros",
+      "nome": "Marina Medeiros Correia de Paffer",
+      "matricula": "13177016402",
+      "emailInstitucional": "mmcp1@aluno.ifal.edu.br",
       "curso": "Sistemas de Informação"
     }
   ],
@@ -141,6 +155,74 @@
       "status": "incorporado",
       "revisadoPor": ["periclesanfe"],
       "tags": ["administracao-projeto-banco-dados", "conteudo"]
+    },
+    {
+      "id": "contrib-2026-04-13-conteudo-mkce",
+      "contribuinteId": "pericles-feitoza",
+      "quando": {
+        "data": "2026-04-13",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "marketing-comercio-eletronico",
+        "materiaCodigo": "MKCE",
+        "arquivo": "src/content/marketing-comercio-eletronico/data.ts"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Responsável pelo conteúdo da matéria Marketing e Comércio Eletrônico.",
+        "origem": "revisao_manual"
+      },
+      "status": "incorporado",
+      "revisadoPor": ["periclesanfe"],
+      "tags": ["marketing-comercio-eletronico", "conteudo"]
+    },
+    {
+      "id": "contrib-2026-05-12-conteudo-corg",
+      "contribuinteId": "pericles-feitoza",
+      "quando": {
+        "data": "2026-05-12",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "comportamento-organizacional",
+        "materiaCodigo": "CORG",
+        "arquivo": "src/content/comportamento-organizacional/data.ts"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Responsável pelo conteúdo da matéria Comportamento Organizacional.",
+        "origem": "revisao_manual"
+      },
+      "status": "incorporado",
+      "revisadoPor": ["periclesanfe"],
+      "tags": ["comportamento-organizacional", "conteudo"]
+    },
+    {
+      "id": "contrib-2026-06-17-conteudo-pdsw",
+      "contribuinteId": "marina-medeiros",
+      "quando": {
+        "data": "2026-06-17",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "processos-desenvolvimento-software",
+        "materiaCodigo": "PDSW",
+        "arquivo": "src/content/processos-desenvolvimento-software/data.ts",
+        "pullRequest": "#21"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Responsável pelo conteúdo da matéria Processos de Desenvolvimento de Software, organizado por capítulos com leitor do livro base.",
+        "origem": "pull_request",
+        "referencia": "#21"
+      },
+      "status": "incorporado",
+      "revisadoPor": ["periclesanfe"],
+      "tags": ["processos-desenvolvimento-software", "conteudo"]
     }
   ]
 }
