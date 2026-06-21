@@ -1,6 +1,6 @@
 # Log Visual De Contribuicoes
 
-Fonte estruturada: [`registro.json`](./registro.json).
+Fonte estruturada: [`src/data/contribuicoes.json`](../../src/data/contribuicoes.json).
 
 ## Contribuintes
 

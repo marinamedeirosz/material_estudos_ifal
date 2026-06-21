@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import SubjectPage from './pages/SubjectPage';
 import SettingsPage from './pages/SettingsPage';
+import UpdatesPage from './pages/UpdatesPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/materia/:slug" element={<SubjectPage />} />
           <Route path="/configuracoes" element={<SettingsPage />} />
+          <Route path="/atualizacoes" element={<UpdatesPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

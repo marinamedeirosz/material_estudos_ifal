@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ComponentType } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getSubjectBySlug } from '../data/curriculum';
 import { SITE_LAST_UPDATED_LABEL } from '../data/siteMetadata';
 import NotFoundPage from './NotFoundPage';
@@ -52,9 +52,12 @@ export default function SubjectPage() {
           <p className="text-text-muted text-sm md:text-base relative z-10 max-w-xl mx-auto mb-3">
             Esta matéria ainda não tem conteúdo disponível. Quer ser o primeiro a contribuir?
           </p>
-          <p className="text-text-muted/80 text-xs relative z-10 mb-7">
+          <Link
+            to="/atualizacoes"
+            className="text-text-muted/80 hover:text-text text-xs relative z-10 mb-7 inline-block underline underline-offset-2 transition-colors"
+          >
             Atualizado em {SITE_LAST_UPDATED_LABEL}
-          </p>
+          </Link>
           <div className="flex gap-2 flex-wrap justify-center relative z-10">
             <a
               href="https://github.com/periclesanfe/material_estudos_ifal/issues/new"

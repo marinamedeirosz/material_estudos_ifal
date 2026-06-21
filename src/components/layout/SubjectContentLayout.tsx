@@ -1,5 +1,5 @@
 import { useMemo, useRef, type KeyboardEvent, type ReactNode } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SITE_LAST_UPDATED_LABEL } from '../../data/siteMetadata';
 
 interface SubjectContentSection {
@@ -87,9 +87,12 @@ export default function SubjectContentLayout({
           <p className="text-text-muted text-sm md:text-base relative z-10 max-w-2xl">
             {description}
           </p>
-          <p className="text-text-muted/80 text-xs relative z-10 mt-4">
+          <Link
+            to="/atualizacoes"
+            className="text-text-muted/80 hover:text-text text-xs relative z-10 mt-4 underline underline-offset-2 transition-colors"
+          >
             Atualizado em {SITE_LAST_UPDATED_LABEL}
-          </p>
+          </Link>
         </div>
       )}
 

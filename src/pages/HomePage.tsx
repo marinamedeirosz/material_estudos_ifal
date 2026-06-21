@@ -30,9 +30,12 @@ export default function HomePage() {
         <p className="text-text-muted text-base md:text-lg relative z-10 max-w-2xl mx-auto leading-relaxed text-pretty">
           Conteúdos organizados por matéria, quizzes interativos e geração de perguntas por IA.
         </p>
-        <p className="text-text-muted/80 text-xs relative z-10 mt-4">
+        <NavLink
+          to="/atualizacoes"
+          className="text-text-muted/80 hover:text-text text-xs relative z-10 mt-4 inline-block underline underline-offset-2 transition-colors"
+        >
           Atualizado em {SITE_LAST_UPDATED_LABEL}
-        </p>
+        </NavLink>
       </section>
 
       <section className="study-surface p-5 md:p-6">
