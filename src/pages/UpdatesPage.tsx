@@ -1,14 +1,4 @@
-import { UPDATES, type EscopoContribuicao } from '../data/updates';
-
-const escopoLabel: Record<EscopoContribuicao, string> = {
-  materia: 'Matéria',
-  projeto: 'Projeto',
-  issue: 'Issue',
-  pull_request: 'Pull request',
-  documentacao: 'Documentação',
-  automacao: 'Automação',
-  outro: 'Outro',
-};
+import { UPDATE_GROUPS } from '../data/updates';
 
 const tipoLabel: Record<string, string> = {
   conteudo_materia: 'Conteúdo',
@@ -35,53 +25,58 @@ export default function UpdatesPage() {
             Atualizações
           </h1>
           <p className="section-subtitle reading-measure">
-            Tudo que mudou no material, em ordem cronológica. Cada entrada vem do registro de
+            O que mudou no material, organizado por matéria. Cada entrada vem do registro de
             contribuições do projeto.
           </p>
         </header>
 
-        {UPDATES.length === 0 ? (
+        {UPDATE_GROUPS.length === 0 ? (
           <p className="text-text-muted text-sm">Nenhuma atualização registrada ainda.</p>
         ) : (
-          <ol className="relative border-l border-border ml-1.5 stagger-children">
-            {UPDATES.map(update => (
-              <li key={update.id} className="relative pl-6 pb-7 last:pb-0">
-                {/* Marcador da timeline */}
-                <span
-                  aria-hidden
-                  className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-bg"
-                />
-                <div className="study-surface p-4 md:p-5">
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <time className="text-xs font-semibold text-accent tabular-nums" dateTime={update.data}>
-                      {update.dataLabel}
-                    </time>
-                    <span className="text-[10px] font-bold uppercase tracking-wider rounded px-1.5 py-0.5 bg-accent3/10 text-accent3">
-                      {tipoLabel[update.tipo] ?? update.tipo}
+          <div className="content-stack">
+            {UPDATE_GROUPS.map(group => (
+              <section key={group.key} className="space-y-4">
+                <div className="flex flex-wrap items-baseline gap-2.5">
+                  <h2 className="section-title text-accent">{group.titulo}</h2>
+                  {group.codigo && (
+                    <span className="text-[10px] font-bold uppercase tracking-wider rounded px-1.5 py-0.5 bg-accent/10 text-accent">
+                      {group.codigo}
                     </span>
-                    {update.materiaCodigo ? (
-                      <span className="text-[10px] font-bold uppercase tracking-wider rounded px-1.5 py-0.5 bg-accent/10 text-accent">
-                        {update.materiaCodigo}
-                      </span>
-                    ) : (
-                      <span className="text-[10px] font-bold uppercase tracking-wider rounded px-1.5 py-0.5 bg-card text-text-muted border border-border">
-                        {escopoLabel[update.escopo]}
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="text-text text-sm md:text-base leading-relaxed text-pretty">{update.resumo}</p>
-
-                  <p className="text-text-muted text-xs mt-2">
-                    por <span className="font-semibold text-text">{update.autor}</span>
-                    {update.referencia && update.referencia.startsWith('#') && (
-                      <> · <span className="font-mono">{update.referencia}</span></>
-                    )}
-                  </p>
+                  )}
                 </div>
-              </li>
+
+                <ol className="relative border-l border-border ml-1.5 stagger-children">
+                  {group.entries.map(update => (
+                    <li key={update.id} className="relative pl-6 pb-6 last:pb-0">
+                      <span
+                        aria-hidden
+                        className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-bg"
+                      />
+                      <div className="study-surface p-4 md:p-5">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <time className="text-xs font-semibold text-accent tabular-nums" dateTime={update.data}>
+                            {update.dataLabel}
+                          </time>
+                          <span className="text-[10px] font-bold uppercase tracking-wider rounded px-1.5 py-0.5 bg-accent3/10 text-accent3">
+                            {tipoLabel[update.tipo] ?? update.tipo}
+                          </span>
+                        </div>
+
+                        <p className="text-text text-sm md:text-base leading-relaxed text-pretty">{update.resumo}</p>
+
+                        <p className="text-text-muted text-xs mt-2">
+                          por <span className="font-semibold text-text">{update.autor}</span>
+                          {update.referencia && update.referencia.startsWith('#') && (
+                            <> · <span className="font-mono">{update.referencia}</span></>
+                          )}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
             ))}
-          </ol>
+          </div>
         )}
       </div>
     </div>
