@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { QUESTION_COUNT_OPTIONS, type QuestionCount, useGeminiQuiz } from '../../hooks/useGeminiQuiz';
 import { useApiKey } from '../../hooks/useApiKey';
+import AIErrorBox from './AIErrorBox';
+import AIProviderBadge from './AIProviderBadge';
 import type { QuizTopicOption } from './QuizCard';
 
 interface AIQuizGeneratorProps {
@@ -72,9 +74,10 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
   if (!hasApiKey()) {
     return (
       <div className="study-surface p-6 md:p-8 text-center">
-        <h3 className="font-display font-bold text-3xl md:text-4xl text-text mb-2 leading-tight">Configure sua API Key</h3>
+        <h3 className="font-display font-bold text-3xl md:text-4xl text-text mb-2 leading-tight">Configure a IA</h3>
         <p className="text-text-muted text-sm md:text-base mb-5">
-          Para usar o Quiz com IA, configure sua API Key do Google Gemini nas Configurações.
+          Para usar o Quiz com IA, escolha um provedor (Gemini, OpenAI, Anthropic ou compatível),
+          informe sua API Key e selecione um modelo nas Configurações.
         </p>
         <Link
           to="/configuracoes"
@@ -89,6 +92,7 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
   return (
     <div className="space-y-4">
       <div className="study-surface p-4 md:p-5 space-y-4">
+        <AIProviderBadge />
         <div>
           <label className="block text-[11px] font-semibold text-text-muted uppercase tracking-wider mb-2">
             Conteúdos para gerar perguntas
@@ -217,11 +221,7 @@ export default function AIQuizGenerator({ guideContext, topics }: AIQuizGenerato
         </div>
       )}
 
-      {error && (
-        <div className="bg-accent2/10 border border-accent2/20 rounded-lg p-3 text-accent2 text-sm leading-relaxed">
-          {error}
-        </div>
-      )}
+      {error && <AIErrorBox error={error} />}
 
       {questions.length > 0 && !loading && (
         <div className="space-y-4 animate-fade-in">

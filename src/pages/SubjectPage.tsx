@@ -1,21 +1,27 @@
+import { lazy, Suspense, type ComponentType } from 'react';
 import { useParams } from 'react-router-dom';
 import { getSubjectBySlug } from '../data/curriculum';
-import AdministracaoProjetoBancoDadosContent from '../content/administracao-projeto-banco-dados/AdministracaoProjetoBancoDadosContent.tsx';
-import ComportamentoOrganizacionalContent from '../content/comportamento-organizacional/ComportamentoOrganizacionalContent';
-import MarketingContent from '../content/marketing-comercio-eletronico/MarketingContent';
-import MetodologiaCientificaContent from '../content/metodologia-cientifica/MetodologiaCientificaContent';
-import EstruturaDadosContent from '../content/estrutura-dados/EstruturaDadosContent';
-import ProcessosDesenvolvimentoSoftwareContent from '../content/processos-desenvolvimento-software/ProcessosDesenvolvimentoSoftwareContent';
 import NotFoundPage from './NotFoundPage';
 
-const contentRegistry: Record<string, React.ComponentType> = {
-  'administracao-projeto-banco-dados': AdministracaoProjetoBancoDadosContent,
-  'comportamento-organizacional': ComportamentoOrganizacionalContent,
-  'marketing-comercio-eletronico': MarketingContent,
-  'metodologia-cientifica': MetodologiaCientificaContent,
-  'estrutura-dados': EstruturaDadosContent,
-  'processos-desenvolvimento-software': ProcessosDesenvolvimentoSoftwareContent,
+const contentRegistry: Record<string, ComponentType> = {
+  'administracao-projeto-banco-dados': lazy(() => import('../content/administracao-projeto-banco-dados/AdministracaoProjetoBancoDadosContent')),
+  'comportamento-organizacional': lazy(() => import('../content/comportamento-organizacional/ComportamentoOrganizacionalContent')),
+  'marketing-comercio-eletronico': lazy(() => import('../content/marketing-comercio-eletronico/MarketingContent')),
+  'metodologia-cientifica': lazy(() => import('../content/metodologia-cientifica/MetodologiaCientificaContent')),
+  'estrutura-dados': lazy(() => import('../content/estrutura-dados/EstruturaDadosContent')),
+  'processos-desenvolvimento-software': lazy(() => import('../content/processos-desenvolvimento-software/ProcessosDesenvolvimentoSoftwareContent')),
 };
+
+function SubjectContentFallback() {
+  return (
+    <div className="page-wrap py-10 md:py-12 animate-fade-in">
+      <section className="study-surface px-6 py-12 md:px-10 md:py-14 text-center">
+        <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin mx-auto" />
+        <p className="text-text-muted text-sm mt-4">Carregando conteúdo da matéria...</p>
+      </section>
+    </div>
+  );
+}
 
 export default function SubjectPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -85,5 +91,9 @@ export default function SubjectPage() {
     );
   }
 
-  return <ContentComponent />;
+  return (
+    <Suspense fallback={<SubjectContentFallback />}>
+      <ContentComponent />
+    </Suspense>
+  );
 }
