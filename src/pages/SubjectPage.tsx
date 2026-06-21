@@ -1,6 +1,7 @@
 import { lazy, Suspense, type ComponentType } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getSubjectBySlug } from '../data/curriculum';
+import { SITE_LAST_UPDATED_LABEL } from '../data/siteMetadata';
 import NotFoundPage from './NotFoundPage';
 
 const contentRegistry: Record<string, ComponentType> = {
@@ -48,9 +49,15 @@ export default function SubjectPage() {
             {subject.period === 'optativa' ? 'Optativa' : `${subject.period}º Período`} · {subject.hours}h · {subject.code}
           </p>
           <h1 className="font-display font-bold text-4xl md:text-5xl text-text relative z-10 mb-3 tracking-tight">{subject.name}</h1>
-          <p className="text-text-muted text-sm md:text-base relative z-10 max-w-xl mx-auto mb-7">
+          <p className="text-text-muted text-sm md:text-base relative z-10 max-w-xl mx-auto mb-3">
             Esta matéria ainda não tem conteúdo disponível. Quer ser o primeiro a contribuir?
           </p>
+          <Link
+            to="/atualizacoes"
+            className="text-text-muted/80 hover:text-text text-xs relative z-10 mb-7 inline-block underline underline-offset-2 transition-colors"
+          >
+            Atualizado em {SITE_LAST_UPDATED_LABEL}
+          </Link>
           <div className="flex gap-2 flex-wrap justify-center relative z-10">
             <a
               href="https://github.com/periclesanfe/material_estudos_ifal/issues/new"

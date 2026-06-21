@@ -1,9 +1,11 @@
 # Registro de Contribuicoes
 
-Esta pasta guarda, fora do React, o historico estruturado de quem contribuiu com o projeto.
+Esta pasta guarda a visao humana do historico de contribuicoes. A fonte de dados
+fica em `src/data/contribuicoes.json`, pois e consumida diretamente pelo site
+(pagina de Atualizacoes e selo "Atualizado em").
 
-- `registro.json`: fonte oficial dos dados.
-- `registro.schema.json`: contrato dos campos aceitos no JSON.
+- `src/data/contribuicoes.json`: **fonte oficial** dos dados (consumida pelo app).
+- `src/data/contribuicoes.schema.json`: contrato dos campos aceitos no JSON.
 - `LOG.md`: visao humana em tabelas para revisoes e auditoria.
 
 ## Como Registrar

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import SubjectCatalog from '../components/ui/SubjectCatalog';
 import subjects, { getTotalSubjects, getSubjectsWithContentCount } from '../data/curriculum';
+import { SITE_LAST_UPDATED_LABEL } from '../data/siteMetadata';
 
 export default function HomePage() {
   const totalSubjects = getTotalSubjects();
@@ -29,6 +30,12 @@ export default function HomePage() {
         <p className="text-text-muted text-base md:text-lg relative z-10 max-w-2xl mx-auto leading-relaxed text-pretty">
           Conteúdos organizados por matéria, quizzes interativos e geração de perguntas por IA.
         </p>
+        <NavLink
+          to="/atualizacoes"
+          className="text-text-muted/80 hover:text-text text-xs relative z-10 mt-4 inline-block underline underline-offset-2 transition-colors"
+        >
+          Atualizado em {SITE_LAST_UPDATED_LABEL}
+        </NavLink>
       </section>
 
       <section className="study-surface p-5 md:p-6">

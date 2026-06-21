@@ -1,5 +1,5 @@
 {
-  "$schema": "./registro.schema.json",
+  "$schema": "./contribuicoes.schema.json",
   "versao": 1,
   "atualizadoEm": "2026-06-21T10:00:00-03:00",
   "contribuintes": [
