@@ -91,14 +91,14 @@ export const ADMINISTRACAO_PROJETO_BANCO_DADOS_TOPICS: QuizTopicOption[] = [
 ];
 
 export const ADMINISTRACAO_PROJETO_BANCO_DADOS_SECTIONS = [
-  { id: 'intro', title: 'Introdução à Disciplina', shortTitle: 'Introdução', exam: 'P1' },
-  { id: 'modelagem', title: 'Modelagem de Dados', shortTitle: 'Modelagem', exam: 'P1' },
-  { id: 'armazenamento', title: 'Armazenamento Oracle', shortTitle: 'Armazenamento', exam: 'P1' },
-  { id: 'objetos', title: 'Objetos SQL', shortTitle: 'Objetos SQL', exam: 'P1' },
-  { id: 'desempenho', title: 'Desempenho e Particionamento', shortTitle: 'Desempenho', exam: 'P1' },
-  { id: 'seguranca', title: 'Segurança e Recuperação', shortTitle: 'Segurança', exam: 'P2' },
-  { id: 'arquitetura', title: 'Arquitetura e Administração Oracle', shortTitle: 'Arquitetura', exam: 'P2' },
-  { id: 'plsql', title: 'PL/SQL no Oracle', shortTitle: 'PL/SQL', exam: 'P2' },
+  { id: 'intro', title: 'Introdução à Disciplina', shortTitle: 'Introdução', exam: 'AV1' },
+  { id: 'modelagem', title: 'Modelagem de Dados', shortTitle: 'Modelagem', exam: 'AV1' },
+  { id: 'armazenamento', title: 'Armazenamento Oracle', shortTitle: 'Armazenamento', exam: 'AV1' },
+  { id: 'objetos', title: 'Objetos SQL', shortTitle: 'Objetos SQL', exam: 'AV1' },
+  { id: 'desempenho', title: 'Desempenho e Particionamento', shortTitle: 'Desempenho', exam: 'AV1' },
+  { id: 'seguranca', title: 'Segurança e Recuperação', shortTitle: 'Segurança', exam: 'AV2' },
+  { id: 'arquitetura', title: 'Arquitetura e Administração Oracle', shortTitle: 'Arquitetura', exam: 'AV2' },
+  { id: 'plsql', title: 'PL/SQL no Oracle', shortTitle: 'PL/SQL', exam: 'AV2' },
   { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
   { id: 'iaquiz', title: 'Quiz com IA', shortTitle: 'Quiz IA' },
 ];

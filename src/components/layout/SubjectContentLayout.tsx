@@ -1,6 +1,7 @@
 import { useMemo, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { SITE_LAST_UPDATED_LABEL } from '../../data/siteMetadata';
+import ExamMode from './ExamMode';
 
 interface SubjectContentSection {
   id: string;
@@ -30,8 +31,30 @@ export default function SubjectContentLayout({
   const topicParam = searchParams.get('topic');
   const activeSection = topicParam && sectionIds.has(topicParam) ? topicParam : 'intro';
 
+  const examMode = searchParams.get('modo') === 'prova';
+  const selectedExam = searchParams.get('av') || 'AVF';
+
   const tablistRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const toggleExamMode = (enable: boolean) => {
+    const nextParams = new URLSearchParams(searchParams);
+    if (enable) {
+      nextParams.set('modo', 'prova');
+      nextParams.delete('topic');
+    } else {
+      nextParams.delete('modo');
+      nextParams.delete('av');
+    }
+    setSearchParams(nextParams);
+  };
+
+  const selectExam = (exam: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.set('modo', 'prova');
+    nextParams.set('av', exam);
+    setSearchParams(nextParams);
+  };
 
   const selectSection = (sectionId: string, moveFocusToContent = false) => {
     const nextParams = new URLSearchParams(searchParams);
@@ -70,6 +93,34 @@ export default function SubjectContentLayout({
     selectSection(sections[nextIndex].id);
   };
 
+  if (examMode) {
+    return (
+      <div>
+        <div className="page-wrap pt-5 md:pt-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="text-text-muted text-[11px] font-semibold tracking-[0.18em] uppercase">Modo Prova</p>
+              <h2 className="font-display font-bold text-2xl md:text-3xl text-text">Estudar para a avaliação</h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => toggleExamMode(false)}
+              className="btn-secondary px-4 py-2 text-sm"
+            >
+              ← Voltar ao conteúdo
+            </button>
+          </div>
+        </div>
+        <ExamMode
+          sections={sections}
+          selectedExam={selectedExam}
+          onSelectExam={selectExam}
+          renderSection={renderSection}
+        />
+      </div>
+    );
+  }
+
   return (
     <div>
       {activeSection === 'intro' && (
@@ -96,13 +147,20 @@ export default function SubjectContentLayout({
         </div>
       )}
 
-      <div className="page-wrap">
+      <div className="page-wrap flex flex-col gap-2 sm:flex-row sm:items-stretch">
+        <button
+          type="button"
+          onClick={() => toggleExamMode(true)}
+          className="sticky top-2 z-40 btn-primary shrink-0 px-4 py-2 text-sm inline-flex items-center justify-center gap-1.5"
+        >
+          <span aria-hidden>📝</span> Modo Prova
+        </button>
         <div
           ref={tablistRef}
           role="tablist"
           aria-label="Seções da matéria"
           aria-orientation="horizontal"
-          className="sticky top-2 z-40 glass border border-border rounded-xl px-3 py-3 flex gap-2 overflow-x-auto whitespace-nowrap"
+          className="sticky top-2 z-40 glass border border-border rounded-xl px-3 py-3 flex gap-2 overflow-x-auto whitespace-nowrap flex-1 min-w-0"
         >
           {sections.map((section, index) => {
             const selected = activeSection === section.id;
