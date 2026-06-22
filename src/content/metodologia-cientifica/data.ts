@@ -54,17 +54,17 @@ export const METODOLOGIA_CIENTIFICA_TOPICS: QuizTopicOption[] = [
 
 export const METODOLOGIA_CIENTIFICA_SECTIONS = [
     { id: 'intro', title: 'Introdução à Metodologia', shortTitle: 'Introdução' },
-    { id: 'conhecimento', title: 'Tipos de Conhecimento', shortTitle: 'Conhecimento', exam: 'P1' },
-    { id: 'ciencia', title: 'Ciência e Método', shortTitle: 'Ciência', exam: 'P1' },
-    { id: 'paradigmas', title: 'Paradigmas de Pesquisa', shortTitle: 'Paradigmas', exam: 'P1' },
-    { id: 'abordagem', title: 'Abordagem e Natureza', shortTitle: 'Abordagem', exam: 'P1' },
-    { id: 'procedimentos', title: 'Objetivos e Procedimentos', shortTitle: 'Procedimentos', exam: 'P1' },
-    { id: 'amostragem', title: 'Amostragem', shortTitle: 'Amostragem', exam: 'P1' },
-    { id: 'tecnicas-estudo', title: 'Técnicas de Estudo', shortTitle: 'Técnicas', exam: 'P1' },
-    { id: 'projeto', title: 'Projeto de Pesquisa', shortTitle: 'Projeto', exam: 'P2' },
-    { id: 'abnt', title: 'Normas ABNT', shortTitle: 'ABNT', exam: 'P2' },
-    { id: 'citacoes', title: 'Citações e Referências', shortTitle: 'Citações', exam: 'P2' },
-    { id: 'coleta-analise', title: 'Coleta e Análise de Dados', shortTitle: 'Dados', exam: 'P2' },
+    { id: 'conhecimento', title: 'Tipos de Conhecimento', shortTitle: 'Conhecimento', exam: 'AV1' },
+    { id: 'ciencia', title: 'Ciência e Método', shortTitle: 'Ciência', exam: 'AV1' },
+    { id: 'paradigmas', title: 'Paradigmas de Pesquisa', shortTitle: 'Paradigmas', exam: 'AV1' },
+    { id: 'abordagem', title: 'Abordagem e Natureza', shortTitle: 'Abordagem', exam: 'AV1' },
+    { id: 'procedimentos', title: 'Objetivos e Procedimentos', shortTitle: 'Procedimentos', exam: 'AV1' },
+    { id: 'amostragem', title: 'Amostragem', shortTitle: 'Amostragem', exam: 'AV1' },
+    { id: 'tecnicas-estudo', title: 'Técnicas de Estudo', shortTitle: 'Técnicas', exam: 'AV1' },
+    { id: 'projeto', title: 'Projeto de Pesquisa', shortTitle: 'Projeto', exam: 'AV2' },
+    { id: 'abnt', title: 'Normas ABNT', shortTitle: 'ABNT', exam: 'AV2' },
+    { id: 'citacoes', title: 'Citações e Referências', shortTitle: 'Citações', exam: 'AV2' },
+    { id: 'coleta-analise', title: 'Coleta e Análise de Dados', shortTitle: 'Dados', exam: 'AV2' },
     { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ];
 
