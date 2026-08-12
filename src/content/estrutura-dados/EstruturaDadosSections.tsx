@@ -15,13 +15,18 @@ import OrdenacaoSection from './sections/OrdenacaoSection';
 import ArvoresSection from './sections/ArvoresSection';
 import ArvoresBuscaSection from './sections/ArvoresBuscaSection';
 import QuizSection from './sections/QuizSection';
+import type { EstruturaDadosSectionId } from './data';
 
 interface EstruturaDadosSectionsProps {
   activeSection: string;
 }
 
-/** Mapa de id de seção → componente. A ordem de exibição vem de ESTRUTURA_DADOS_SECTIONS. */
-const SECTION_COMPONENTS: Record<string, () => React.ReactElement> = {
+/**
+ * Mapa de id de seção → componente. A ordem de exibição vem de ESTRUTURA_DADOS_SECTIONS.
+ * O `Record` tipado pelos ids reais garante que toda seção tenha componente e que um id
+ * inexistente (ou renomeado) quebre a compilação em vez de cair no fallback silenciosamente.
+ */
+const SECTION_COMPONENTS: Record<EstruturaDadosSectionId, () => React.ReactElement> = {
   intro: IntroSection,
   python: PythonSection,
   'strings-listas': StringsListasSection,
@@ -41,7 +46,11 @@ const SECTION_COMPONENTS: Record<string, () => React.ReactElement> = {
   quiz: QuizSection,
 };
 
+function isSectionId(id: string): id is EstruturaDadosSectionId {
+  return id in SECTION_COMPONENTS;
+}
+
 export default function EstruturaDadosSections({ activeSection }: EstruturaDadosSectionsProps) {
-  const Section = SECTION_COMPONENTS[activeSection] ?? IntroSection;
+  const Section = isSectionId(activeSection) ? SECTION_COMPONENTS[activeSection] : IntroSection;
   return <Section />;
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SectionNav from '../../components/layout/SectionNav';
 import MetodologiaCientificaSections from './MetodologiaCientificaSections';
 import { METODOLOGIA_CIENTIFICA_SECTIONS } from './data';
 
@@ -34,22 +35,12 @@ export default function MetodologiaCientificaContent() {
                 </div>
             )}
 
-            <div className="page-wrap">
-                <nav className="sticky top-2 z-40 glass border border-border rounded-xl px-3 py-3 flex gap-2 overflow-x-auto whitespace-nowrap">
-                    {METODOLOGIA_CIENTIFICA_SECTIONS.map(section => (
-                        <button
-                            key={section.id}
-                            onClick={() => setActiveSection(section.id)}
-                            className={`study-pill px-3 py-1.5 inline-flex items-center gap-1.5 ${activeSection === section.id ? 'active' : ''
-                                }`}
-                        >
-                            {'exam' in section && section.exam && (
-                                <span className="text-[10px] font-black opacity-75">{section.exam}</span>
-                            )}
-                            {section.shortTitle}
-                        </button>
-                    ))}
-                </nav>
+            <div className="page-wrap flex">
+                <SectionNav
+                    sections={METODOLOGIA_CIENTIFICA_SECTIONS}
+                    activeSection={activeSection}
+                    onSelect={setActiveSection}
+                />
             </div>
 
             <div

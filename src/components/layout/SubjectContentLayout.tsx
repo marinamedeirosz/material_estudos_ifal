@@ -1,13 +1,11 @@
-import { useMemo, useRef, type KeyboardEvent, type ReactNode } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { SITE_LAST_UPDATED_LABEL } from '../../data/siteMetadata';
-import { FINAL_EXAM_ID, examIdsOf, type ExamDefinition, type ExamTagged } from '../../lib/exams';
+import { useEffect, useMemo, useRef, type ReactNode } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { FINAL_EXAM_ID, type ExamDefinition } from '../../lib/exams';
 import ExamMode from './ExamMode';
+import SectionNav, { type SectionNavItem } from './SectionNav';
+import SubjectHero from './SubjectHero';
 
-interface SubjectContentSection extends ExamTagged {
-  id: string;
-  shortTitle: string;
-}
+type SubjectContentSection = SectionNavItem;
 
 interface SubjectContentLayoutProps {
   sections: readonly SubjectContentSection[];
@@ -37,14 +35,8 @@ export default function SubjectContentLayout({
   const examMode = searchParams.get('modo') === 'prova';
   const selectedExam = searchParams.get('av') || FINAL_EXAM_ID;
 
-  // Rótulo curto exibido na pill; a matéria pode renomear o id via `exams`.
-  const examLabelOf = useMemo(() => {
-    const labels = new Map(exams?.map(exam => [exam.id, exam.label]));
-    return (id: string) => labels.get(id) ?? id;
-  }, [exams]);
-
-  const tablistRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const pendingFocusRef = useRef(false);
 
   const toggleExamMode = (enable: boolean) => {
     const nextParams = new URLSearchParams(searchParams);
@@ -75,32 +67,17 @@ export default function SubjectContentLayout({
     }
 
     setSearchParams(nextParams);
-    if (moveFocusToContent) {
-      // Após escolher uma seção, leva o foco ao conteúdo para leitores de tela e teclado.
-      requestAnimationFrame(() => contentRef.current?.focus());
-    }
+    // O painel é remontado a cada seção (key={activeSection}); o foco é aplicado no efeito
+    // abaixo, já com o nó novo montado.
+    pendingFocusRef.current = moveFocusToContent;
   };
 
-  // Navegação por teclado no tablist: setas movem o foco entre as abas (roving tabindex).
-  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    const keyToDelta: Record<string, number> = { ArrowRight: 1, ArrowLeft: -1 };
-    let nextIndex: number | null = null;
-
-    if (event.key in keyToDelta) {
-      nextIndex = (index + keyToDelta[event.key] + sections.length) % sections.length;
-    } else if (event.key === 'Home') {
-      nextIndex = 0;
-    } else if (event.key === 'End') {
-      nextIndex = sections.length - 1;
-    }
-
-    if (nextIndex === null) return;
-
-    event.preventDefault();
-    const buttons = tablistRef.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-    buttons?.[nextIndex]?.focus();
-    selectSection(sections[nextIndex].id);
-  };
+  // Após escolher uma seção, leva o foco ao conteúdo para leitores de tela e teclado.
+  useEffect(() => {
+    if (!pendingFocusRef.current) return;
+    pendingFocusRef.current = false;
+    contentRef.current?.focus();
+  }, [activeSection]);
 
   if (examMode) {
     return (
@@ -134,27 +111,7 @@ export default function SubjectContentLayout({
   return (
     <div>
       {activeSection === 'intro' && (
-        <div className="relative min-h-[38vh] md:min-h-[42vh] flex flex-col items-center justify-center text-center px-6 py-12 md:py-14 overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none opacity-60">
-            <div className="absolute inset-0" style={{ background: heroBackground }} />
-          </div>
-
-          <p className="text-text-muted text-[11px] font-semibold tracking-[0.2em] uppercase relative z-10 mb-4">
-            {eyebrow}
-          </p>
-          <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-text relative z-10 mb-3 leading-[1.06] tracking-tight">
-            {title}
-          </h1>
-          <p className="text-text-muted text-sm md:text-base relative z-10 max-w-2xl">
-            {description}
-          </p>
-          <Link
-            to="/atualizacoes"
-            className="text-text-muted/80 hover:text-text text-xs relative z-10 mt-4 underline underline-offset-2 transition-colors"
-          >
-            Atualizado em {SITE_LAST_UPDATED_LABEL}
-          </Link>
-        </div>
+        <SubjectHero eyebrow={eyebrow} title={title} description={description} background={heroBackground} />
       )}
 
       <div className="page-wrap flex flex-col gap-2 sm:flex-row sm:items-stretch">
@@ -165,38 +122,13 @@ export default function SubjectContentLayout({
         >
           <span aria-hidden>📝</span> Modo Prova
         </button>
-        <div
-          ref={tablistRef}
-          role="tablist"
-          aria-label="Seções da matéria"
-          aria-orientation="horizontal"
-          className="sticky top-2 z-40 glass border border-border rounded-xl px-3 py-3 flex gap-2 overflow-x-auto whitespace-nowrap flex-1 min-w-0"
-        >
-          {sections.map((section, index) => {
-            const selected = activeSection === section.id;
-            // Uma seção pode cair em mais de uma avaliação (ex.: Big O em AV1 e AV2).
-            const badge = examIdsOf(section).map(examLabelOf).join(' · ');
-            return (
-              <button
-                key={section.id}
-                type="button"
-                role="tab"
-                id={`tab-${section.id}`}
-                aria-selected={selected}
-                aria-controls="painel-conteudo"
-                tabIndex={selected ? 0 : -1}
-                onClick={() => selectSection(section.id, true)}
-                onKeyDown={event => handleTabKeyDown(event, index)}
-                className={`study-pill px-3 py-1.5 inline-flex items-center gap-1.5 ${selected ? 'active' : ''}`}
-              >
-                {badge && (
-                  <span className="text-[10px] font-black opacity-75">{badge}</span>
-                )}
-                {section.shortTitle}
-              </button>
-            );
-          })}
-        </div>
+        <SectionNav
+          sections={sections}
+          exams={exams}
+          activeSection={activeSection}
+          onSelect={selectSection}
+          panelId="painel-conteudo"
+        />
       </div>
 
       <div
