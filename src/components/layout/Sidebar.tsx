@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { getPeriods } from '../../data/curriculum';
+import Logo from '../ui/Logo';
 import SidebarOptativesSection from './sidebar/SidebarOptativesSection';
 import SidebarPeriodsSection from './sidebar/SidebarPeriodsSection';
 
@@ -199,8 +200,15 @@ export default function Sidebar() {
         onClick={handleNavigate}
         className="sidebar-brand block px-4 pt-5 pb-4 border-b border-border"
       >
-        <p className="text-[10px] text-text-muted tracking-[0.22em] uppercase">IFAL BSI</p>
-        <h1 className="font-display font-bold text-[1.95rem] text-text leading-[1.02] tracking-tight mt-1.5">
+        <div className="flex items-center gap-2.5">
+          <Logo className="text-[2rem]" />
+          <p className="text-[10px] text-text-muted tracking-[0.22em] uppercase leading-tight">
+            IFAL
+            <br />
+            BSI
+          </p>
+        </div>
+        <h1 className="font-display font-bold text-[1.95rem] text-text leading-[1.02] tracking-tight mt-2">
           Material de Estudo
         </h1>
         <p className="text-text-muted/80 text-xs mt-2">Navegação por período, optativas e conteúdo disponível.</p>
