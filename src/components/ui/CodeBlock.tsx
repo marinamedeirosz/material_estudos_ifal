@@ -346,8 +346,13 @@ function tokenizeHtml(code: string): Token[] {
       continue;
     }
 
-    tokens.push({ type: 'default', text: code[i] });
-    i++;
+    // Texto entre tags: consome tudo até o próximo '<' de uma vez. Um token por
+    // caractere renderizaria um <span> por letra — DOM desperdiçado e, pior,
+    // seleção e cópia do código ficam frágeis, e é código feito para copiar.
+    const nextTag = code.indexOf('<', i + 1);
+    const end = nextTag === -1 ? code.length : nextTag;
+    tokens.push({ type: 'default', text: code.slice(i, end) });
+    i = end;
   }
 
   return tokens;
@@ -360,9 +365,18 @@ function tokenizeHtml(code: string): Token[] {
 function tokenizeCss(code: string): Token[] {
   const tokens: Token[] = [];
   let i = 0;
-  // Dentro de um bloco {...} o texto antes de ':' é propriedade; fora, é seletor.
-  let inBlock = false;
+  // Pilha de blocos abertos. Um booleano não basta: at-rules como @media
+  // aninham um nível, e o `}` da regra interna não nos tira do @media. Cada
+  // item diz se aquele bloco contém declarações (`prop: valor`) ou outras
+  // regras — o corpo de um @media contém seletores, o de uma regra normal
+  // contém propriedades.
+  const blocks: Array<'declarations' | 'rules'> = [];
+  // Uma at-rule condicional (@media, @supports) foi vista e o `{` dela ainda
+  // não chegou; o bloco que abrir a seguir contém regras, não declarações.
+  let pendingAtRuleBlock = false;
   let afterColon = false;
+
+  const inDeclaration = () => blocks[blocks.length - 1] === 'declarations';
 
   while (i < code.length) {
     if (code.startsWith('/*', i)) {
@@ -376,20 +390,23 @@ function tokenizeCss(code: string): Token[] {
     const ch = code[i];
 
     if (ch === '{') {
-      inBlock = true;
+      blocks.push(pendingAtRuleBlock ? 'rules' : 'declarations');
+      pendingAtRuleBlock = false;
       afterColon = false;
       tokens.push({ type: 'default', text: ch });
       i++;
       continue;
     }
     if (ch === '}') {
-      inBlock = false;
+      // `pop()` em pilha vazia é no-op: CSS malformado (ou recortado no meio)
+      // não deve travar o tokenizador num estado impossível.
+      blocks.pop();
       afterColon = false;
       tokens.push({ type: 'default', text: ch });
       i++;
       continue;
     }
-    if (ch === ':' && inBlock) {
+    if (ch === ':' && inDeclaration()) {
       afterColon = true;
       tokens.push({ type: 'default', text: ch });
       i++;
@@ -414,8 +431,21 @@ function tokenizeCss(code: string): Token[] {
     // At-rule: @media, @keyframes, @font-face…
     const atRule = /^@[a-zA-Z-]+/.exec(code.slice(i));
     if (atRule) {
+      // @media/@supports/@keyframes envolvem outras regras; @font-face e afins
+      // levam declarações direto no corpo.
+      pendingAtRuleBlock = /^@(media|supports|keyframes|layer|container|scope)$/i.test(atRule[0]);
       tokens.push({ type: 'keyword', text: atRule[0] });
       i += atRule[0].length;
+      continue;
+    }
+
+    // Cor hexadecimal: #fff, #6c63ff, #aabbccdd. Precisa vir antes da regra de
+    // número, senão `#6c63ff` se parte em `#` + `6` + `c63ff` (três tokens de
+    // três cores diferentes).
+    const hex = /^#[0-9a-fA-F]{3,8}\b/.exec(code.slice(i));
+    if (hex && [4, 5, 7, 9].includes(hex[0].length)) {
+      tokens.push({ type: 'number', text: hex[0] });
+      i += hex[0].length;
       continue;
     }
 
@@ -430,8 +460,8 @@ function tokenizeCss(code: string): Token[] {
     const word = /^[a-zA-Z_-][a-zA-Z0-9_-]*/.exec(code.slice(i));
     if (word) {
       let type: TokenType;
-      if (!inBlock) {
-        type = 'function'; // seletor
+      if (!inDeclaration()) {
+        type = 'function'; // seletor (inclusive dentro de @media)
       } else if (afterColon) {
         type = 'string'; // valor
       } else {
