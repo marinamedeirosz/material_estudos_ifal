@@ -1,7 +1,8 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, PanelList, ColoredPanelList } from '../../../components/sections';
-import { codeFlexbox } from './snippets';
+import { codeFlexbox, codeFlexboxPlayground, flexboxComJustify, htmlApoioFlexbox } from './snippets';
 import { flexProperties, css3Features, cssAtividadeChecklist } from './blocks';
 
 export default function CssLayoutSection() {
@@ -37,7 +38,23 @@ export default function CssLayoutSection() {
       </HighlightBox>
 
       <Subsection title="O formulário organizado com flexbox" accentClass="text-accent4">
-        <CodeBlock code={codeFlexbox} language="css" title="style.css — layout do formulário de estágio" />
+        <CodePlayground
+          html={htmlApoioFlexbox}
+          css={codeFlexboxPlayground}
+          editable={['css']}
+          title="style.css — layout do formulário de estágio"
+          challenge="Clique nos valores de justify-content e veja os campos se moverem no eixo horizontal. Depois troque flex-direction para column e clique de novo: o mesmo justify-content passa a mover na vertical."
+          presets={[
+            { label: 'flex-start', patch: { css: flexboxComJustify('flex-start') } },
+            { label: 'center', patch: { css: flexboxComJustify('center') } },
+            { label: 'space-between', patch: { css: flexboxComJustify('space-between') } },
+            { label: 'space-around', patch: { css: flexboxComJustify('space-around') } },
+          ]}
+        />
+      </Subsection>
+
+      <Subsection title="O arquivo completo da atividade" accentClass="text-accent5">
+        <CodeBlock code={codeFlexbox} language="css" title="style.css — com imagem de fundo e media query" />
       </Subsection>
 
       <HighlightBox title="Os dois eixos" accent="var(--color-accent5)">

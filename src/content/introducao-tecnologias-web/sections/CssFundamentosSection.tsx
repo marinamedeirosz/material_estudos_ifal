@@ -1,7 +1,7 @@
-import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, ConceptGrid, ComparisonTable, StatStrip } from '../../../components/sections';
-import { codeSeletores, codeBoxModel } from './snippets';
+import { codeSeletores, codeBoxModel, htmlApoioSeletores, htmlApoioBoxModel } from './snippets';
 import { selectorTypes, boxModelParts, cssApplyModes } from './blocks';
 
 export default function CssFundamentosSection() {
@@ -37,7 +37,13 @@ export default function CssFundamentosSection() {
       </Subsection>
 
       <Subsection title="Seletores na prática" accentClass="text-accent4">
-        <CodeBlock code={codeSeletores} language="css" title="style.css — os seletores exigidos na atividade" />
+        <CodePlayground
+          html={htmlApoioSeletores}
+          css={codeSeletores}
+          editable={['css']}
+          title="style.css — os seletores exigidos na atividade"
+          challenge="Mude a cor do seletor .destaque e veja qual parágrafo muda. Depois troque h1 + p por p e compare quantos parágrafos são atingidos."
+        />
       </Subsection>
 
       <HighlightBox title="Os seletores são a alma do CSS" accent="var(--color-accent5)">
@@ -63,7 +69,18 @@ export default function CssFundamentosSection() {
       </Subsection>
 
       <Subsection title="Todas as propriedades da atividade, numa caixa só" accentClass="text-accent3">
-        <CodeBlock code={codeBoxModel} language="css" title="o box model com as propriedades cobradas" />
+        <CodePlayground
+          html={htmlApoioBoxModel}
+          css={codeBoxModel}
+          editable={['css']}
+          title="o box model com as propriedades cobradas"
+          challenge="Use os botões para comparar padding e margin: um afasta o texto da borda, o outro afasta as duas caixas entre si."
+          presets={[
+            { label: 'padding maior', patch: { css: codeBoxModel.replace('padding: 16px;', 'padding: 48px;') } },
+            { label: 'margin maior', patch: { css: codeBoxModel.replace('margin: 24px;', 'margin: 64px;') } },
+            { label: 'sem borda', patch: { css: codeBoxModel.replace('border: 2px solid #1b5e20;', 'border: none;') } },
+          ]}
+        />
       </Subsection>
 
       <HighlightBox title="padding ou margin?" accent="var(--color-accent4)">

@@ -1,7 +1,8 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, ConceptGrid, ComparisonTable, PanelList } from '../../../components/sections';
-import { codeJsFundamentos, codeJsDom } from './snippets';
+import { codeJsFundamentos, codeJsDom, htmlJsDom, scriptJsDom } from './snippets';
 import { jsBasics, domMethods, ioFunctions } from './blocks';
 
 export default function JavaScriptSection() {
@@ -28,7 +29,13 @@ export default function JavaScriptSection() {
       </Subsection>
 
       <Subsection title="Um programa completo" accentClass="text-accent3">
-        <CodeBlock code={codeJsFundamentos} language="javascript" title="fundamentos: variáveis, condicional, laço e função" />
+        <CodePlayground
+          js={codeJsFundamentos}
+          editable={['js']}
+          hidePreview
+          title="fundamentos: variáveis, condicional, laço e função"
+          challenge="Acrescente uma nota ao array e execute: a média muda. Este exemplo é lógica pura, então a saída aparece no console — sem página para mostrar."
+        />
       </Subsection>
 
       <Subsection title="Entrada e saída no navegador" accentClass="text-accent4">
@@ -63,8 +70,24 @@ export default function JavaScriptSection() {
       </Subsection>
 
       <Subsection title="Alterando a página pelo DOM" accentClass="text-accent3">
-        <CodeBlock code={codeJsDom} language="html" title="DOM: buscar o elemento, ligar o evento, trocar o conteúdo" />
+        <CodePlayground
+          html={htmlJsDom}
+          js={scriptJsDom}
+          editable={['html', 'js']}
+          title="DOM: buscar o elemento, ligar o evento, trocar o conteúdo"
+          challenge="Execute e clique no botão do preview: o texto muda. Agora troque a mensagem do innerHTML, ou o id do parágrafo — se os ids não baterem, o console mostra o erro."
+        />
       </Subsection>
+
+      <HighlightBox title="Num arquivo só" accent="var(--color-accent5)">
+        <p>
+          No playground acima o markup e o script aparecem em abas separadas, mas no arquivo que você entrega eles
+          convivem no mesmo documento — o <code>script</code> vem depois do HTML que ele manipula, senão{' '}
+          <code>getElementById</code> procura um elemento que o navegador ainda não criou:
+        </p>
+      </HighlightBox>
+
+      <CodeBlock code={codeJsDom} language="html" title="pagina.html — o mesmo exemplo num arquivo só" />
 
       <HighlightBox title="Detecção de recursos" accent="var(--color-accent4)">
         <p>
