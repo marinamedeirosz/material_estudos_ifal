@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import PreviewTravado from './PreviewTravado';
 import { SANDBOX_CHANNEL, buildSandboxDocument } from './sandboxDocument';
 import type { ConsoleLevel, SandboxParts } from './sandboxDocument';
 
@@ -123,48 +124,25 @@ export default function SandboxPreview({
     };
   }, [runId, doc]);
 
-  if (hidden) {
-    // Ainda precisamos executar (o console depende disso), mas sem ocupar espaço.
-    return (
-      <iframe
-        // key: recria o elemento a cada execução, descartando qualquer estado anterior.
-        key={runId}
-        ref={iframeRef}
-        sandbox={SANDBOX_ATTR}
-        srcDoc={doc}
-        title={title}
-        className="hidden"
-      />
-    );
-  }
+  const iframe = (
+    <iframe
+      // key: recria o elemento a cada execução, descartando timers, listeners
+      // e qualquer laço que ainda estivesse rodando na execução anterior.
+      key={runId}
+      ref={iframeRef}
+      sandbox={SANDBOX_ATTR}
+      srcDoc={doc}
+      title={title}
+      className={hidden ? 'hidden' : 'w-full h-64 md:h-80 block bg-white'}
+    />
+  );
+
+  // Escondido: ainda executa (o console depende disso), mas sem ocupar espaço.
+  if (hidden) return iframe;
 
   return (
     <div className="rounded-lg overflow-hidden border border-border bg-white">
-      {travou ? (
-        <PreviewTravado />
-      ) : (
-        <iframe
-          key={runId}
-          ref={iframeRef}
-          sandbox={SANDBOX_ATTR}
-          srcDoc={doc}
-          title={title}
-          className="w-full h-64 md:h-80 block bg-white"
-        />
-      )}
-    </div>
-  );
-}
-
-/** Aviso exibido quando a execução foi interrompida por não terminar a tempo. */
-function PreviewTravado() {
-  return (
-    <div className="h-64 md:h-80 flex items-center justify-center p-6 bg-card">
-      <p className="text-center text-sm text-text-muted max-w-xs">
-        <span className="block font-bold text-accent2 mb-1">Execução interrompida</span>
-        O código não terminou em 3 segundos. O caso mais comum é um laço que nunca acaba — confira
-        se a condição do <code>while</code> ou do <code>for</code> chega a ficar falsa.
-      </p>
+      {travou ? <PreviewTravado /> : iframe}
     </div>
   );
 }
