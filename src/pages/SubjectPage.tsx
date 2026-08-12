@@ -11,6 +11,7 @@ const contentRegistry: Record<string, ComponentType> = {
   'metodologia-cientifica': lazy(() => import('../content/metodologia-cientifica/MetodologiaCientificaContent')),
   'estrutura-dados': lazy(() => import('../content/estrutura-dados/EstruturaDadosContent')),
   'processos-desenvolvimento-software': lazy(() => import('../content/processos-desenvolvimento-software/ProcessosDesenvolvimentoSoftwareContent')),
+  'linguagem-programacao': lazy(() => import('../content/linguagem-programacao/LPGMContent')),
 };
 
 function SubjectContentFallback() {
