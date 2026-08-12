@@ -20,13 +20,21 @@ GUIA DE ALGORITMOS E LÓGICA DE PROGRAMAÇÃO (disciplina introdutória, em Pyth
 
 8. FUNÇÕES: Uma função é uma sequência de instruções agrupadas para realizar uma tarefa. Vantagens: dividir para conquistar, reuso, facilidade de teste e de manutenção. Define-se com def nome(): e o código indentado pertence a ela. Há dois momentos: definição (criar) e chamada (usar) — se não for chamada, nada acontece. Parâmetros passam valores para a função; return devolve um resultado (sem return, a função apenas executa/imprime). A função main() com if __name__ == '__main__': é o ponto de entrada do programa. A palavra global indica variáveis de escopo maior.
 
-9. STRINGS: Uma string (str) é uma sequência de caracteres imutáveis, criada com aspas simples ou duplas. Por ser imutável, não se pode alterar um caractere pelo índice (gera TypeError). Formatação: print concatena com espaço, o operador + concatena sem espaço, e há .format({0}) e f-strings (f"{variavel}"). Métodos úteis: len, find, capitalize, upper, lower, strip/lstrip/rstrip, replace, startswith, endswith, count, isalnum e isdigit.
+9. STRINGS: Uma string (str) é uma sequência de caracteres, criada com aspas simples ou duplas. A string é imutável: não se pode alterar um caractere pelo índice (gera TypeError). Formatação: print concatena com espaço, o operador + concatena sem espaço, e há .format({0}) e f-strings (f"{variavel}"). Métodos úteis: len, find, capitalize, upper, lower, strip/lstrip/rstrip, replace, startswith, endswith, count, isalnum e isdigit. O find aceita um segundo parâmetro: a posição a partir da qual procurar — "banana".find("na") devolve 2, e "banana".find("na", 3) devolve 4.
 
-10. EXCEÇÕES: Certos erros quebram o programa: divisão por zero (ZeroDivisionError), índice inexistente (IndexError) ou tipo errado. Uma exceção é uma situação inesperada, que foge ao fluxo previsto. Como não se pode parar um sistema por causa de erros, é preciso tratá-los com try/except: o try tenta executar o código e o except captura a exceção. O bloco finally executa sempre, tendo havido erro ou não.
+10. EXCEÇÕES: Certos erros quebram o programa: divisão por zero (ZeroDivisionError), índice inexistente (IndexError) ou tipo errado. Uma exceção é uma situação inesperada, que foge ao fluxo previsto. Uma exceção não tratada sobe pela pilha de chamadas: se main() chama m1(), que chama m2(), e o erro acontece em m2(), ele interrompe m2, depois m1, depois main — nada depois do ponto do erro executa. Tratar com try/except em qualquer nível dessa pilha faz a execução continuar a partir dali. O try tenta executar o código e o except captura a exceção. O bloco finally executa sempre, tendo havido erro ou não.
+
+11. MANIPULAÇÃO DE ARQUIVOS: open(nome, modo) abre um arquivo — modo "w" escreve (apaga o conteúdo anterior), "r" lê e "a" acrescenta ao final. write(texto) grava (não coloca quebra de linha sozinho: usa-se "\\n"), readlines() devolve uma lista com todas as linhas (cada uma ainda com o "\\n" no fim, removido com strip()), e close() fecha o arquivo. Abrir para leitura um arquivo que não existe lança FileNotFoundError, por isso arquivos e try/except andam juntos.
+
+12. TUPLAS: Uma tupla é uma coleção ordenada como a lista, mas criada com parênteses e IMUTÁVEL — aceita len(), indexação e o operador in, mas atribuir a um item (meses[0] = "maio") lança TypeError.
+
+13. OS DOIS JOGOS DA DISCIPLINA: a turma reescreveu dois programas o semestre inteiro, um a cada ferramenta nova. Adivinhação: versão só com if/elif/else (um chute), depois com while (chutes até acertar), depois com while + limite de chances, depois guardando os chutes numa lista. Forca: versão linear com for e len, depois com lista de letras descobertas e níveis de dificuldade, depois separada em 5 funções (configuracoes_iniciais, tela_inicial, define_nivel, jogar, main) usando global. Essa progressão mostra para que serve cada estrutura.
+
+14. AVALIAÇÃO DA DISCIPLINA: cada bimestre tem Nota 1 (minitestes ou prova) e Nota 2 (prova ou projeto), e a nota do bimestre é a média das duas. As provas cobram programas completos com menu, laço principal e funções específicas — não definições. O projeto final é um jogo em grupo (Pygame), com repositório no GitHub, README, MVP, estórias de usuário priorizadas no Trello, planning semanal, commits individuais de cada integrante e avaliação 360 entre os membros.
 
 DIVISÃO POR AVALIAÇÕES:
 - AV1 (fundamentos): conceitos de algoritmo e lógica, Python (tipos, entrada/saída, operadores), estruturas condicionais, escopo de variáveis e estruturas de repetição (while e for).
-- AV2 (aprofundamento): listas, módulos (math e random), funções (parâmetros, retorno, escopo), strings e tratamento de exceções.
+- AV2 (aprofundamento): listas, módulos (math e random), funções (parâmetros, retorno, escopo), strings, arquivos e tratamento de exceções.
 `;
 
 export const ALPG_TOPICS: QuizTopicOption[] = [
@@ -38,18 +46,21 @@ export const ALPG_TOPICS: QuizTopicOption[] = [
   {
     value: 'av2',
     label: 'AV2: Listas, Funções e mais',
-    prompt: 'Conteúdo da AV2: listas (índice, pertinência, append, del, len), módulos (import, funções built-in como pow, math com sqrt/pi/log, random com randint/choice/shuffle/sample), funções (def, parâmetros, return, main, if __name__, escopo global), strings (imutabilidade, indexação, formatação com format e f-strings, métodos como upper/lower/find/replace/split/count/isdigit) e tratamento de exceções (try/except/finally, ZeroDivisionError, IndexError).',
+    prompt: 'Conteúdo da AV2: listas (índice, pertinência com in e not in, append, concatenação com +, del, len, listas aninhadas com indexação dupla, percurso com for e com while+len), tuplas (imutáveis), módulos (import, funções built-in como pow, math com sqrt/pi/log, random com randint/choice/shuffle/sample), funções (def, parâmetros, return, main, if __name__ e o problema de import que ele resolve, escopo global), strings (imutabilidade, indexação, formatação com format e f-strings, métodos como upper/lower/find com segundo parâmetro/replace/count/isdigit), manipulação de arquivos (open com modos w/r/a, write, readlines, strip, close, FileNotFoundError) e tratamento de exceções (try/except/finally, propagação pela pilha de chamadas, ZeroDivisionError, IndexError).',
   },
   { value: 'conceitos', label: 'Conceitos de Algoritmo e Lógica' },
   { value: 'python', label: 'Python: Dados e Expressões' },
   { value: 'condicionais', label: 'Estruturas Condicionais' },
   { value: 'escopo', label: 'Escopo de Variáveis' },
   { value: 'repeticao', label: 'Estruturas de Repetição' },
-  { value: 'listas', label: 'Listas' },
+  { value: 'listas', label: 'Listas e Tuplas' },
   { value: 'modulos', label: 'Módulos (math e random)' },
   { value: 'funcoes', label: 'Funções' },
   { value: 'strings', label: 'Strings' },
   { value: 'excecoes', label: 'Exceções' },
+  { value: 'arquivos', label: 'Manipulação de Arquivos' },
+  { value: 'jogos', label: 'Os dois jogos da disciplina' },
+  { value: 'projeto', label: 'Projeto em grupo e provas' },
 ];
 
 export const ALPG_EXAMS: ExamDefinition[] = [
@@ -72,11 +83,14 @@ export const ALPG_SECTIONS = [
   { id: 'condicionais', title: 'Estruturas Condicionais', shortTitle: 'Condicionais', exams: ['av1'] },
   { id: 'escopo', title: 'Escopo de Variáveis', shortTitle: 'Escopo', exams: ['av1'] },
   { id: 'repeticao', title: 'Estruturas de Repetição', shortTitle: 'Repetição', exams: ['av1'] },
-  { id: 'listas', title: 'Listas', shortTitle: 'Listas', exams: ['av2'] },
+  { id: 'listas', title: 'Listas e Tuplas', shortTitle: 'Listas', exams: ['av2'] },
   { id: 'modulos', title: 'Módulos: math e random', shortTitle: 'Módulos', exams: ['av2'] },
   { id: 'funcoes', title: 'Funções', shortTitle: 'Funções', exams: ['av2'] },
   { id: 'strings', title: 'Strings', shortTitle: 'Strings', exams: ['av2'] },
   { id: 'excecoes', title: 'Tratamento de Exceções', shortTitle: 'Exceções', exams: ['av2'] },
+  { id: 'arquivos', title: 'Manipulação de Arquivos', shortTitle: 'Arquivos', exams: ['av2'] },
+  { id: 'jogos', title: 'Os dois jogos da disciplina', shortTitle: 'Os dois jogos', exams: ['av1', 'av2'] },
+  { id: 'projeto', title: 'Projeto em grupo e provas', shortTitle: 'Projeto e provas' },
   { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ];
 
@@ -196,6 +210,48 @@ const QUIZ_DATA_AV1: QuizQuestionData[] = [
     feedbackCorrect: 'Em Python, comentários de linha começam com #.',
     feedbackWrong: 'É o # que inicia um comentário em Python.',
   },
+  {
+    id: 'a21',
+    question: '21. O que o comando print(1,000,000) imprime na tela?',
+    options: ['1000000', '1,000,000', '1 0 0', '1.000.000'],
+    correctIndex: 2,
+    feedbackCorrect: 'As vírgulas separam três argumentos: 1, 000 e 000. O print mostra "1 0 0" (os zeros à esquerda somem).',
+    feedbackWrong: 'Sai "1 0 0": as vírgulas separam três argumentos (1, 000, 000), e o print os imprime separados por espaço.',
+  },
+  {
+    id: 'a22',
+    question: '22. Qual é a saída deste trecho? contador = 0; while contador < 3: print(contador); contador = contador + 1',
+    options: [
+      '0 1 2 3',
+      '0 1 2',
+      '1 2 3',
+      'Loop infinito',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'O laço imprime 0, 1 e 2. Quando contador vira 3, a condição 3 < 3 é falsa e o laço para.',
+    feedbackWrong: 'Imprime 0, 1 e 2. O valor 3 não é impresso porque a condição contador < 3 já é falsa quando ele chega a 3.',
+  },
+  {
+    id: 'a23',
+    question: '23. No jogo de Adivinhação da turma, o laço é while acertou == False and chances < 4. O que acontece se o jogador errar os 4 chutes?',
+    options: [
+      'O laço continua até ele acertar',
+      'O laço para porque chances < 4 fica falsa, mesmo sem ter acertado',
+      'O programa lança uma exceção',
+      'O laço vira infinito',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'Com and, basta uma das condições ficar falsa para o laço parar — foi assim que o professor limitou as chances.',
+    feedbackWrong: 'Como as duas condições estão ligadas por and, quando chances chega a 4 o laço para, mesmo com acertou ainda False.',
+  },
+  {
+    id: 'a24',
+    question: '24. Segundo as boas práticas cobradas pelo professor, qual é o melhor nome de variável para o valor da hora trabalhada?',
+    options: ['vh', 'v', 'valor_hora', 'valorhora'],
+    correctIndex: 2,
+    feedbackCorrect: 'Nome descritivo, sem acentuação e com separação legível (valor_hora ou valorHora).',
+    feedbackWrong: 'O ideal é valor_hora (ou valorHora): descritivo, sem acento e com as palavras separadas. Abreviações como vh e v foram criticadas na correção.',
+  },
 ];
 
 const QUIZ_DATA_AV2: QuizQuestionData[] = [
@@ -298,6 +354,105 @@ const QUIZ_DATA_AV2: QuizQuestionData[] = [
     correctIndex: 1,
     feedbackCorrect: 'O finally executa sempre, independentemente de ter ocorrido exceção.',
     feedbackWrong: 'O finally roda sempre, com ou sem erro — útil para finalizar recursos.',
+  },
+  {
+    id: 'a25',
+    question: '25. main() chama m1(), que chama m2(). O erro acontece em m2() e ninguém trata. O que é impresso depois do erro?',
+    options: [
+      'Só o "fim m2" é pulado; "fim m1" e "fim main" aparecem',
+      'Nada: a exceção sobe pela pilha e interrompe m2, m1 e main',
+      'O programa continua normalmente, só imprime o erro',
+      'Apenas "fim main" aparece',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'A exceção não tratada sobe pela pilha de chamadas e mata tudo — nenhum dos três "fim" é impresso.',
+    feedbackWrong: 'A exceção sobe por toda a pilha (m2 → m1 → main) e encerra o programa: nenhuma das linhas depois do erro executa.',
+  },
+  {
+    id: 'a26',
+    question: '26. Você põe o try/except na main(), em volta da chamada a m1(). O erro continua acontecendo em m2(). O que muda?',
+    options: [
+      'Nada, o programa quebra do mesmo jeito',
+      'A exceção é capturada na main: o "fim m2" e o "fim m1" não saem, mas o "fim main" sai',
+      'O m2() volta a terminar normalmente',
+      'O erro deixa de acontecer',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'O try/except interrompe a subida da exceção no nível em que está: dali para frente a execução continua.',
+    feedbackWrong: 'A exceção ainda aborta m2 e m1, mas é capturada na main — por isso só o "fim main" é impresso. Mover o try/except de nível muda até onde a execução é perdida.',
+  },
+  {
+    id: 'a27',
+    question: '27. Por que o professor precisou do if __name__ == "__main__" nos arquivos adivinhacao.py e forca.py?',
+    options: [
+      'Porque sem ele a função main() não existe',
+      'Porque, ao importar os jogos no jogos.py, o código solto de cada arquivo executava sozinho',
+      'Porque Python exige essa linha em todo programa',
+      'Porque ele deixa o programa mais rápido',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'Ao importar um módulo, o Python executa o código de nível superior dele — os dois jogos disparavam antes mesmo do menu aparecer.',
+    feedbackWrong: 'Importar um módulo executa o código solto dele. Sem a guarda, os dois jogos rodavam no import; com ela, só rodam quando o arquivo é executado diretamente.',
+  },
+  {
+    id: 'a28',
+    question: '28. Em Python, qual a diferença entre uma lista e uma tupla?',
+    options: [
+      'A tupla só aceita números',
+      'A tupla é imutável: não se pode atribuir a um item depois de criada',
+      'A lista não aceita o operador in',
+      'A tupla não tem len()',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'A tupla usa parênteses e é imutável — meses[0] = "maio" lança TypeError. Aceita len(), índice e in normalmente.',
+    feedbackWrong: 'A diferença é a imutabilidade: a tupla aceita len(), indexação e in, mas atribuir a um item lança TypeError.',
+  },
+  {
+    id: 'a29',
+    question: '29. Ao ler um arquivo com readlines(), por que geralmente se usa strip() em cada linha?',
+    options: [
+      'Para converter a linha em número',
+      'Para remover o "\\n" (quebra de linha) que vem no fim de cada linha lida',
+      'Porque readlines() devolve texto embaralhado',
+      'Para fechar o arquivo',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'readlines() preserva o "\\n" de cada linha; o strip() limpa esses espaços e quebras das pontas.',
+    feedbackWrong: 'Cada item devolvido por readlines() ainda traz o "\\n" no final — o strip() remove isso antes de guardar na lista.',
+  },
+  {
+    id: 'a30',
+    question: '30. O que acontece ao executar open("aaa.txt", "r") se o arquivo aaa.txt não existir?',
+    options: [
+      'O Python cria o arquivo vazio',
+      'Lança uma exceção (FileNotFoundError), que precisa ser tratada',
+      'Devolve uma lista vazia',
+      'Devolve None sem erro',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'No modo "r" o arquivo precisa existir; senão lança FileNotFoundError. Por isso arquivos e try/except andam juntos.',
+    feedbackWrong: 'Lança FileNotFoundError. Quem cria o arquivo é o modo "w" — o modo "r" exige que ele já exista.',
+  },
+  {
+    id: 'a31',
+    question: '31. Qual é o resultado de "banana".find("na", 3)?',
+    options: ['2', '4', '-1', '3'],
+    correctIndex: 1,
+    feedbackCorrect: 'O segundo parâmetro diz a partir de qual posição procurar: ignorando o "na" da posição 2, o próximo está na posição 4.',
+    feedbackWrong: 'É 4. Sem o segundo parâmetro, "banana".find("na") daria 2; começando da posição 3, a próxima ocorrência está no índice 4.',
+  },
+  {
+    id: 'a32',
+    question: '32. No jogo da Forca com funções, por que as funções usam a palavra global antes de mexer em qtd_chances?',
+    options: [
+      'Para deixar o programa mais rápido',
+      'Porque, sem global, atribuir a qtd_chances criaria uma variável local e a de fora não mudaria',
+      'Porque global é obrigatório em toda função',
+      'Para poder ler o valor da variável',
+    ],
+    correctIndex: 1,
+    feedbackCorrect: 'Atribuir a um nome dentro da função o torna local por padrão; global avisa que a atribuição deve valer para a variável de fora.',
+    feedbackWrong: 'Sem global, a atribuição criaria uma variável local com o mesmo nome, e a de fora ficaria intacta. Para apenas LER uma variável global, o global não é necessário.',
   },
 ];
 
