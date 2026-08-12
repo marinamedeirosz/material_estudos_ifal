@@ -1,16 +1,18 @@
 import { useMemo, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { SITE_LAST_UPDATED_LABEL } from '../../data/siteMetadata';
+import { FINAL_EXAM_ID, examIdsOf, type ExamDefinition, type ExamTagged } from '../../lib/exams';
 import ExamMode from './ExamMode';
 
-interface SubjectContentSection {
+interface SubjectContentSection extends ExamTagged {
   id: string;
   shortTitle: string;
-  exam?: string;
 }
 
 interface SubjectContentLayoutProps {
   sections: readonly SubjectContentSection[];
+  /** Avaliações declaradas pela matéria; sem elas os ids das seções viram rótulo. */
+  exams?: readonly ExamDefinition[];
   eyebrow: string;
   title: ReactNode;
   description: string;
@@ -20,6 +22,7 @@ interface SubjectContentLayoutProps {
 
 export default function SubjectContentLayout({
   sections,
+  exams,
   eyebrow,
   title,
   description,
@@ -32,7 +35,13 @@ export default function SubjectContentLayout({
   const activeSection = topicParam && sectionIds.has(topicParam) ? topicParam : 'intro';
 
   const examMode = searchParams.get('modo') === 'prova';
-  const selectedExam = searchParams.get('av') || 'AVF';
+  const selectedExam = searchParams.get('av') || FINAL_EXAM_ID;
+
+  // Rótulo curto exibido na pill; a matéria pode renomear o id via `exams`.
+  const examLabelOf = useMemo(() => {
+    const labels = new Map(exams?.map(exam => [exam.id, exam.label]));
+    return (id: string) => labels.get(id) ?? id;
+  }, [exams]);
 
   const tablistRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -113,6 +122,7 @@ export default function SubjectContentLayout({
         </div>
         <ExamMode
           sections={sections}
+          exams={exams}
           selectedExam={selectedExam}
           onSelectExam={selectExam}
           renderSection={renderSection}
@@ -164,6 +174,8 @@ export default function SubjectContentLayout({
         >
           {sections.map((section, index) => {
             const selected = activeSection === section.id;
+            // Uma seção pode cair em mais de uma avaliação (ex.: Big O em AV1 e AV2).
+            const badge = examIdsOf(section).map(examLabelOf).join(' · ');
             return (
               <button
                 key={section.id}
@@ -177,8 +189,8 @@ export default function SubjectContentLayout({
                 onKeyDown={event => handleTabKeyDown(event, index)}
                 className={`study-pill px-3 py-1.5 inline-flex items-center gap-1.5 ${selected ? 'active' : ''}`}
               >
-                {section.exam && (
-                  <span className="text-[10px] font-black opacity-75">{section.exam}</span>
+                {badge && (
+                  <span className="text-[10px] font-black opacity-75">{badge}</span>
                 )}
                 {section.shortTitle}
               </button>

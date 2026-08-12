@@ -1,4 +1,5 @@
 import type { QuizQuestionData, QuizTopicOption } from '../../components/ui/QuizCard';
+import type { ExamDefinition } from '../../lib/exams';
 
 export const ESTRUTURA_DADOS_GUIDE_CONTEXT = `
 GUIA COMPLETO DE ESTRUTURA DE DADOS - Resumo:
@@ -86,23 +87,41 @@ export const ESTRUTURA_DADOS_TOPICS: QuizTopicOption[] = [
     },
 ];
 
+/**
+ * Avaliações declaradas pelo professor no mural. O mesmo vocabulário vale para
+ * as seções e para as questões do quiz.
+ */
+export const ESTRUTURA_DADOS_EXAMS: ExamDefinition[] = [
+    {
+        id: 'av1',
+        label: 'AV1',
+        description: 'Recursividade, pilhas, filas, deques e Big O — mais a base que os precede.',
+    },
+    {
+        id: 'av2',
+        label: 'AV2',
+        description: 'Listas encadeadas, busca, hashing, ordenação, árvores e Big O.',
+    },
+];
+
 export const ESTRUTURA_DADOS_SECTIONS = [
     { id: 'intro', title: 'Introdução à Estrutura de Dados', shortTitle: 'Introdução' },
-    { id: 'python', title: 'Python Básico', shortTitle: 'Python', exam: 'AV1' },
-    { id: 'strings-listas', title: 'Strings e Listas', shortTitle: 'Strings/Listas', exam: 'AV1' },
-    { id: 'recursividade', title: 'Recursividade', shortTitle: 'Recursividade', exam: 'AV1' },
-    { id: 'big-o', title: 'Análise de Desempenho — Notação Big O', shortTitle: 'Big O', exam: 'AV1' },
-    { id: 'tad', title: 'Tipos Abstratos de Dados', shortTitle: 'TAD', exam: 'AV1' },
-    { id: 'listas', title: 'Listas Sequenciais', shortTitle: 'Listas', exam: 'AV1' },
-    { id: 'pilhas', title: 'Pilhas (Stack)', shortTitle: 'Pilhas', exam: 'AV1' },
-    { id: 'filas', title: 'Filas (Queue)', shortTitle: 'Filas', exam: 'AV1' },
-    { id: 'deque', title: 'Deque', shortTitle: 'Deque', exam: 'AV1' },
-    { id: 'listas-encadeadas', title: 'Listas Encadeadas', shortTitle: 'Encadeadas', exam: 'AV2' },
-    { id: 'pesquisa', title: 'Pesquisa e Busca', shortTitle: 'Pesquisa', exam: 'AV2' },
-    { id: 'hashing', title: 'Hashing', shortTitle: 'Hashing', exam: 'AV2' },
-    { id: 'ordenacao', title: 'Ordenação', shortTitle: 'Ordenação', exam: 'AV2' },
-    { id: 'arvores', title: 'Árvores — Conceitos e Representações', shortTitle: 'Árvores', exam: 'AV2' },
-    { id: 'arvores-busca', title: 'Árvores de Busca e Heap', shortTitle: 'BST/Heap', exam: 'AV2' },
+    { id: 'python', title: 'Python Básico', shortTitle: 'Python', exams: ['av1'] },
+    { id: 'strings-listas', title: 'Strings e Listas', shortTitle: 'Strings/Listas', exams: ['av1'] },
+    { id: 'recursividade', title: 'Recursividade', shortTitle: 'Recursividade', exams: ['av1'] },
+    // Big O é o único assunto que o professor listou nos três blocos de avaliação.
+    { id: 'big-o', title: 'Análise de Desempenho — Notação Big O', shortTitle: 'Big O', exams: ['av1', 'av2'] },
+    { id: 'tad', title: 'Tipos Abstratos de Dados', shortTitle: 'TAD', exams: ['av1'] },
+    { id: 'listas', title: 'Listas Sequenciais', shortTitle: 'Listas', exams: ['av1'] },
+    { id: 'pilhas', title: 'Pilhas (Stack)', shortTitle: 'Pilhas', exams: ['av1'] },
+    { id: 'filas', title: 'Filas (Queue)', shortTitle: 'Filas', exams: ['av1'] },
+    { id: 'deque', title: 'Deque', shortTitle: 'Deque', exams: ['av1'] },
+    { id: 'listas-encadeadas', title: 'Listas Encadeadas', shortTitle: 'Encadeadas', exams: ['av2'] },
+    { id: 'pesquisa', title: 'Pesquisa e Busca', shortTitle: 'Pesquisa', exams: ['av2'] },
+    { id: 'hashing', title: 'Hashing', shortTitle: 'Hashing', exams: ['av2'] },
+    { id: 'ordenacao', title: 'Ordenação', shortTitle: 'Ordenação', exams: ['av2'] },
+    { id: 'arvores', title: 'Árvores — Conceitos e Representações', shortTitle: 'Árvores', exams: ['av2'] },
+    { id: 'arvores-busca', title: 'Árvores de Busca e Heap', shortTitle: 'BST/Heap', exams: ['av2'] },
     { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ];
 
@@ -837,14 +856,23 @@ const AV1_QUESTION_IDS = new Set([
     'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10',
     'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17',
     'q33', // pilha: contagem de push/top/pop
-    'q42', // Big O: descarte de constantes (assunto das três avaliações)
     'q50', // recursividade: MDC de Euclides (AV1 e prova final)
     'q51', // recursividade: fatorial duplo
     'q52', // recursividade: palíndromo com dois casos base
+]);
+
+/** Questões de Big O, o assunto que o professor cobra na AV1 e na AV2. */
+const AV1_E_AV2_QUESTION_IDS = new Set([
+    'q42', // Big O: descarte de constantes
     'q54', // Big O: ordem das classes de crescimento
 ]);
 
+function examsOfQuestion(id: string): string[] {
+    if (AV1_E_AV2_QUESTION_IDS.has(id)) return ['av1', 'av2'];
+    return AV1_QUESTION_IDS.has(id) ? ['av1'] : ['av2'];
+}
+
 export const QUIZ_DATA: QuizQuestionData[] = QUIZ_DATA_BASE.map(question => ({
     ...question,
-    exam: AV1_QUESTION_IDS.has(question.id) ? ('prova1' as const) : ('prova2' as const),
+    exams: examsOfQuestion(question.id),
 }));
