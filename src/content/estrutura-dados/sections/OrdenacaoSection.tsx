@@ -1,3 +1,4 @@
+import AlgorithmVisualizer from '../../../components/ui/algorithm/AlgorithmVisualizer';
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
 import { SectionHeader, Subsection, ConceptGrid, ComparisonTable } from '../../../components/sections';
@@ -20,6 +21,16 @@ export default function OrdenacaoSection() {
 
       <Subsection title="Os principais algoritmos">
         <ConceptGrid items={sortConcepts} columns="md:grid-cols-2 lg:grid-cols-3" />
+      </Subsection>
+
+      <Subsection title="Visualizador passo a passo" accentClass="text-accent">
+        <p className="mb-3 text-sm text-text-muted">
+          Os slides ensinam ordenação como uma <strong>sequência de estados do array</strong>, com o elemento em foco
+          destacado e um rótulo explicando cada passo. O array padrão é o da aula —{' '}
+          <code className="text-accent3">[54, 26, 93, 17, 77, 31, 44, 55, 20]</code> — e os rótulos seguem o vocabulário
+          do professor (“Troca”, “93 no lugar após a 1ª varredura”, “93 &gt; 31, desloca para a direita”).
+        </p>
+        <AlgorithmVisualizer />
       </Subsection>
 
       <Subsection title="Bubble Sort e Selection Sort" accentClass="text-accent3">
