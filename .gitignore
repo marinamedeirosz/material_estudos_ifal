@@ -35,6 +35,9 @@ dist-ssr
 # Materiais raspados do Google Classroom (local, nao versionado)
 .classroom/
 
+# Pareceres dos agentes criticos — artefato de processo, nao conteudo do site
+.reviews/
+
 # Segredos OAuth do coletor do Classroom — NUNCA comitar
 scripts/classroom/credentials.json
 scripts/classroom/token.json
