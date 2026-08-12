@@ -11,7 +11,10 @@ export type Language =
   | 'cpp'
   | 'go'
   | 'rust'
-  | 'php';
+  | 'php'
+  | 'sql'
+  | 'dax'
+  | 'mdx';
 
 interface LangConfig {
   label: string;
@@ -158,6 +161,65 @@ const LANG_CONFIGS: Record<Language, LangConfig> = {
       'panic', 'recover', 'print', 'println', 'error', 'string', 'int',
       'int8', 'int16', 'int32', 'int64', 'uint', 'uint8', 'uint16',
       'uint32', 'uint64', 'float32', 'float64', 'bool', 'byte', 'rune',
+    ]),
+    lineComment: '//',
+    hasBlockComment: true,
+    hasTemplateLiteral: false,
+  },
+  // SQL, DAX e MDX não têm palavras reservadas sensíveis a maiúsculas, mas o
+  // tokenizador compara o texto exato — por isso os conjuntos abaixo usam
+  // MAIÚSCULAS, que é a convenção do material da disciplina (e do DWAULA.ddl).
+  sql: {
+    label: 'SQL',
+    keywords: new Set([
+      'SELECT', 'FROM', 'WHERE', 'GROUP', 'BY', 'ORDER', 'HAVING', 'JOIN',
+      'INNER', 'LEFT', 'RIGHT', 'FULL', 'OUTER', 'ON', 'AS', 'AND', 'OR',
+      'NOT', 'IN', 'IS', 'NULL', 'LIKE', 'BETWEEN', 'EXISTS', 'UNION', 'ALL',
+      'DISTINCT', 'INSERT', 'INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE',
+      'CREATE', 'ALTER', 'DROP', 'TABLE', 'VIEW', 'INDEX', 'SEQUENCE',
+      'MATERIALIZED', 'PRIMARY', 'FOREIGN', 'KEY', 'REFERENCES', 'CONSTRAINT',
+      'UNIQUE', 'CHECK', 'DEFAULT', 'ADD', 'COLUMN', 'PARTITION', 'RANGE',
+      'CASE', 'WHEN', 'THEN', 'ELSE', 'END', 'WITH', 'ASC', 'DESC',
+      'TABLESPACE', 'START', 'INCREMENT', 'NOCACHE', 'REFRESH', 'ENABLE',
+      'QUERY', 'REWRITE', 'BUILD', 'IMMEDIATE', 'LESS', 'THAN', 'VALUE',
+    ]),
+    builtins: new Set([
+      'SUM', 'COUNT', 'AVG', 'MIN', 'MAX', 'COALESCE', 'NVL', 'ROUND',
+      'TRUNC', 'TO_DATE', 'TO_CHAR', 'SYSDATE', 'CAST', 'NUMBER', 'VARCHAR2',
+      'DATE', 'CHAR', 'INTEGER', 'DECIMAL',
+    ]),
+    lineComment: '--',
+    hasBlockComment: true,
+    hasTemplateLiteral: false,
+  },
+  dax: {
+    label: 'DAX',
+    keywords: new Set([
+      'VAR', 'RETURN', 'EVALUATE', 'DEFINE', 'MEASURE', 'ORDER', 'BY',
+      'IN', 'NOT', 'TRUE', 'FALSE', 'BLANK',
+    ]),
+    builtins: new Set([
+      'CALCULATE', 'CALCULATETABLE', 'FILTER', 'ALL', 'ALLEXCEPT',
+      'ALLSELECTED', 'VALUES', 'DISTINCT', 'RELATED', 'RELATEDTABLE',
+      'SUM', 'SUMX', 'AVERAGE', 'AVERAGEX', 'COUNT', 'COUNTROWS',
+      'DISTINCTCOUNT', 'DIVIDE', 'MIN', 'MAX', 'MINX', 'MAXX', 'MEDIAN',
+      'PERCENTILE', 'IF', 'SWITCH', 'SELECTEDVALUE', 'HASONEVALUE',
+      'DATEADD', 'DATESYTD', 'TOTALYTD', 'SAMEPERIODLASTYEAR', 'FORMAT',
+    ]),
+    lineComment: '//',
+    hasBlockComment: true,
+    hasTemplateLiteral: false,
+  },
+  mdx: {
+    label: 'MDX',
+    keywords: new Set([
+      'SELECT', 'FROM', 'WHERE', 'ON', 'COLUMNS', 'ROWS', 'PAGES',
+      'WITH', 'MEMBER', 'SET', 'AS', 'NON', 'EMPTY', 'AND', 'OR', 'NOT',
+    ]),
+    builtins: new Set([
+      'Measures', 'CROSSJOIN', 'FILTER', 'ORDER', 'TOPCOUNT', 'BOTTOMCOUNT',
+      'DESCENDANTS', 'CHILDREN', 'MEMBERS', 'PARENT', 'CURRENTMEMBER',
+      'PREVMEMBER', 'SUM', 'AVG', 'COUNT', 'AGGREGATE', 'HEAD', 'TAIL',
     ]),
     lineComment: '//',
     hasBlockComment: true,

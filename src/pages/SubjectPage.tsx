@@ -12,6 +12,7 @@ const contentRegistry: Record<string, ComponentType> = {
   'estrutura-dados': lazy(() => import('../content/estrutura-dados/EstruturaDadosContent')),
   'processos-desenvolvimento-software': lazy(() => import('../content/processos-desenvolvimento-software/ProcessosDesenvolvimentoSoftwareContent')),
   'algoritmos-logica-programacao': lazy(() => import('../content/algoritmos-logica-programacao/ALPGContent')),
+  'topicos-avancados-banco-dados': lazy(() => import('../content/topicos-avancados-banco-dados/TABDContent')),
   'linguagem-programacao': lazy(() => import('../content/linguagem-programacao/LPGMContent')),
 };
 
