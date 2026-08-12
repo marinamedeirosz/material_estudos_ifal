@@ -1,4 +1,5 @@
 import type { QuizQuestionData, QuizTopicOption } from '../../components/ui/QuizCard';
+import type { ExamDefinition } from '../../lib/exams';
 
 export const ALPG_GUIDE_CONTEXT = `
 GUIA DE ALGORITMOS E LÓGICA DE PROGRAMAÇÃO (disciplina introdutória, em Python) — Resumo:
@@ -15,7 +16,7 @@ GUIA DE ALGORITMOS E LÓGICA DE PROGRAMAÇÃO (disciplina introdutória, em Pyth
 
 6. LISTAS: Uma lista é uma coleção ordenada de valores, com índice iniciando em 0; os elementos podem ter tipos diferentes e a lista pode ser aninhada. Operações: criar (x = [1,2,3]), acessar por índice (numeros[2], negativo numeros[-2]), verificar pertinência ("jaca" in frutas), adicionar (frutas.append("x")), remover (del(frutas[1])) e medir tamanho (len(frutas)).
 
-7. MÓDULOS: Um módulo é um arquivo Python com definições reutilizáveis; para usar suas funções é preciso importá-lo antes (import modulo) e chamá-las como modulo.funcao. Algumas funções são built-in (input, print) e não exigem importação. O módulo math traz cálculos prontos: pow(x,y), sqrt(x), pi, log(x,y), log10(x). O módulo random dá aleatoriedade: randint(a,b) para inteiros, uniform para fracionados, choice([lista]) para escolher um item, shuffle para embaralhar a lista e sample para embaralhar temporariamente.
+7. MÓDULOS: Um módulo é um arquivo Python com definições reutilizáveis; para usar suas funções é preciso importá-lo antes (import modulo) e chamá-las como modulo.funcao. Algumas funções são built-in (input, print) e não exigem importação. O módulo math traz cálculos prontos: sqrt(x), pi, log(x,y), log10(x). Atenção: pow é uma função built-in (não precisa de import) e devolve int quando recebe inteiros, aceitando ainda um terceiro argumento para o resto da divisão; math.pow existe, mas sempre devolve float. O módulo random dá aleatoriedade: randint(a,b) para inteiros, uniform para fracionados, choice([lista]) para escolher um item, shuffle para embaralhar a própria lista no lugar (a original muda) e sample para devolver uma nova lista com k itens sorteados, sem alterar a original.
 
 8. FUNÇÕES: Uma função é uma sequência de instruções agrupadas para realizar uma tarefa. Vantagens: dividir para conquistar, reuso, facilidade de teste e de manutenção. Define-se com def nome(): e o código indentado pertence a ela. Há dois momentos: definição (criar) e chamada (usar) — se não for chamada, nada acontece. Parâmetros passam valores para a função; return devolve um resultado (sem return, a função apenas executa/imprime). A função main() com if __name__ == '__main__': é o ponto de entrada do programa. A palavra global indica variáveis de escopo maior.
 
@@ -37,7 +38,7 @@ export const ALPG_TOPICS: QuizTopicOption[] = [
   {
     value: 'av2',
     label: 'AV2: Listas, Funções e mais',
-    prompt: 'Conteúdo da AV2: listas (índice, pertinência, append, del, len), módulos (import, funções built-in, math com pow/sqrt/pi/log, random com randint/choice/shuffle/sample), funções (def, parâmetros, return, main, if __name__, escopo global), strings (imutabilidade, indexação, formatação com format e f-strings, métodos como upper/lower/find/replace/split/count/isdigit) e tratamento de exceções (try/except/finally, ZeroDivisionError, IndexError).',
+    prompt: 'Conteúdo da AV2: listas (índice, pertinência, append, del, len), módulos (import, funções built-in como pow, math com sqrt/pi/log, random com randint/choice/shuffle/sample), funções (def, parâmetros, return, main, if __name__, escopo global), strings (imutabilidade, indexação, formatação com format e f-strings, métodos como upper/lower/find/replace/split/count/isdigit) e tratamento de exceções (try/except/finally, ZeroDivisionError, IndexError).',
   },
   { value: 'conceitos', label: 'Conceitos de Algoritmo e Lógica' },
   { value: 'python', label: 'Python: Dados e Expressões' },
@@ -51,18 +52,31 @@ export const ALPG_TOPICS: QuizTopicOption[] = [
   { value: 'excecoes', label: 'Exceções' },
 ];
 
+export const ALPG_EXAMS: ExamDefinition[] = [
+  {
+    id: 'av1',
+    label: 'AV1',
+    description: 'Fundamentos, Python, condicionais, escopo e laços.',
+  },
+  {
+    id: 'av2',
+    label: 'AV2',
+    description: 'Listas, módulos, funções, strings e exceções.',
+  },
+];
+
 export const ALPG_SECTIONS = [
   { id: 'intro', title: 'Introdução: algoritmos e lógica', shortTitle: 'Introdução' },
-  { id: 'conceitos', title: 'Conceitos de Algoritmo e Lógica', shortTitle: 'Conceitos', exam: 'AV1' },
-  { id: 'python', title: 'Python: Dados e Expressões', shortTitle: 'Python', exam: 'AV1' },
-  { id: 'condicionais', title: 'Estruturas Condicionais', shortTitle: 'Condicionais', exam: 'AV1' },
-  { id: 'escopo', title: 'Escopo de Variáveis', shortTitle: 'Escopo', exam: 'AV1' },
-  { id: 'repeticao', title: 'Estruturas de Repetição', shortTitle: 'Repetição', exam: 'AV1' },
-  { id: 'listas', title: 'Listas', shortTitle: 'Listas', exam: 'AV2' },
-  { id: 'modulos', title: 'Módulos: math e random', shortTitle: 'Módulos', exam: 'AV2' },
-  { id: 'funcoes', title: 'Funções', shortTitle: 'Funções', exam: 'AV2' },
-  { id: 'strings', title: 'Strings', shortTitle: 'Strings', exam: 'AV2' },
-  { id: 'excecoes', title: 'Tratamento de Exceções', shortTitle: 'Exceções', exam: 'AV2' },
+  { id: 'conceitos', title: 'Conceitos de Algoritmo e Lógica', shortTitle: 'Conceitos', exams: ['av1'] },
+  { id: 'python', title: 'Python: Dados e Expressões', shortTitle: 'Python', exams: ['av1'] },
+  { id: 'condicionais', title: 'Estruturas Condicionais', shortTitle: 'Condicionais', exams: ['av1'] },
+  { id: 'escopo', title: 'Escopo de Variáveis', shortTitle: 'Escopo', exams: ['av1'] },
+  { id: 'repeticao', title: 'Estruturas de Repetição', shortTitle: 'Repetição', exams: ['av1'] },
+  { id: 'listas', title: 'Listas', shortTitle: 'Listas', exams: ['av2'] },
+  { id: 'modulos', title: 'Módulos: math e random', shortTitle: 'Módulos', exams: ['av2'] },
+  { id: 'funcoes', title: 'Funções', shortTitle: 'Funções', exams: ['av2'] },
+  { id: 'strings', title: 'Strings', shortTitle: 'Strings', exams: ['av2'] },
+  { id: 'excecoes', title: 'Tratamento de Exceções', shortTitle: 'Exceções', exams: ['av2'] },
   { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ];
 
@@ -288,6 +302,6 @@ const QUIZ_DATA_AV2: QuizQuestionData[] = [
 ];
 
 export const QUIZ_DATA: QuizQuestionData[] = [
-  ...QUIZ_DATA_AV1.map(q => ({ ...q, exam: 'prova1' as const })),
-  ...QUIZ_DATA_AV2.map(q => ({ ...q, exam: 'prova2' as const })),
+  ...QUIZ_DATA_AV1.map(q => ({ ...q, exams: ['av1'] })),
+  ...QUIZ_DATA_AV2.map(q => ({ ...q, exams: ['av2'] })),
 ];

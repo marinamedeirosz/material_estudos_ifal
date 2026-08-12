@@ -15,16 +15,11 @@ import {
   type PanelItem,
   type ComparisonRow,
 } from '../../components/sections';
-import { ALPG_GUIDE_CONTEXT, ALPG_TOPICS, QUIZ_DATA } from './data';
+import { ALPG_EXAMS, ALPG_GUIDE_CONTEXT, ALPG_TOPICS, QUIZ_DATA } from './data';
 
 interface ALPGSectionsProps {
   activeSection: string;
 }
-
-const examLabels = {
-  prova1: { label: 'AV1', description: 'Fundamentos, Python, condicionais, escopo e laços.' },
-  prova2: { label: 'AV2', description: 'Listas, módulos, funções, strings e exceções.' },
-} as const;
 
 /* ============================ AV1 ============================ */
 
@@ -355,6 +350,22 @@ print("Resultado:", math.sqrt(numero))
 print("Valor de Pi:", math.pi)`}
       />
 
+      <HighlightBox title="Cuidado: pow é built-in, não é do math">
+        <p>
+          <code>pow</code> é uma função <strong>built-in</strong> — funciona sem <code>import math</code>. O módulo também tem uma <code>math.pow</code>, mas as duas <strong>não são iguais</strong>: a built-in devolve <code>int</code> quando recebe inteiros e ainda aceita um terceiro argumento (o resto da divisão), enquanto <code>math.pow</code> sempre devolve <code>float</code>.
+        </p>
+      </HighlightBox>
+      <CodeBlock
+        language="python"
+        title="pow built-in x math.pow"
+        code={`print(pow(2, 3))        # 8   -> int, sem precisar de import
+print(2 ** 3)           # 8   -> mesmo resultado, com operador
+print(pow(2, 3, 5))     # 3   -> (2**3) % 5, só a built-in faz isso
+
+import math
+print(math.pow(2, 3))   # 8.0 -> sempre float`}
+      />
+
       <div>
         <h3 className="font-display font-bold text-xl text-accent4 mb-3">Módulo random (aleatoriedade)</h3>
         <PanelList items={randomFuncoes} columns="md:grid-cols-2" />
@@ -372,7 +383,7 @@ print(random.choice(["praia", "serra", 42]))  # escolhe um item da lista`}
 }
 
 const mathFuncoes: PanelItem[] = [
-  { title: 'pow(x, y) e sqrt(x)', description: 'Potência de x elevado a y e raiz quadrada de x.' },
+  { title: 'sqrt(x)', description: 'Raiz quadrada de x. Para potência, veja o cuidado com pow logo abaixo.' },
   { title: 'pi', description: 'A constante Pi já armazenada (3.14159...).' },
   { title: 'log(x, y) e log10(x)', description: 'Logaritmo de x na base y, e logaritmo na base 10.' },
   { title: 'Sem saber a fórmula', description: 'A vantagem do módulo é usar o cálculo pronto, sem precisar decorar a fórmula.' },
@@ -382,7 +393,7 @@ const randomFuncoes: PanelItem[] = [
   { title: 'randint(a, b)', description: 'Sorteia um número inteiro entre a e b.' },
   { title: 'uniform', description: 'Sorteia um número fracionado (real).' },
   { title: 'choice([lista])', description: 'Escolhe um item aleatório de uma lista (de tipos variados).' },
-  { title: 'shuffle e sample', description: 'shuffle embaralha a lista definitivamente; sample embaralha temporariamente.' },
+  { title: 'shuffle e sample', description: 'shuffle embaralha a própria lista, no lugar (a original muda). sample não mexe na lista: devolve uma nova, com a quantidade de itens que você pedir.' },
 ];
 
 function FuncoesSection() {
@@ -533,7 +544,7 @@ function QuizSection() {
   return (
     <section className="animate-fade-in">
       <QuizTabs
-        normal={<ExamQuizSelector questions={QUIZ_DATA} mode="quiz" examLabels={examLabels} />}
+        normal={<ExamQuizSelector questions={QUIZ_DATA} mode="quiz" exams={ALPG_EXAMS} />}
         ai={(
           <div className="space-y-4">
             <HighlightBox title="Como funciona?">
@@ -542,7 +553,7 @@ function QuizSection() {
             <AIQuizGenerator guideContext={ALPG_GUIDE_CONTEXT} topics={ALPG_TOPICS} />
           </div>
         )}
-        kahoot={<ExamQuizSelector questions={QUIZ_DATA} mode="kahoot" examLabels={examLabels} />}
+        kahoot={<ExamQuizSelector questions={QUIZ_DATA} mode="kahoot" exams={ALPG_EXAMS} />}
         aiKahoot={<AIKahootQuiz guideContext={ALPG_GUIDE_CONTEXT} topics={ALPG_TOPICS} />}
       />
     </section>
