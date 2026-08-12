@@ -2,13 +2,19 @@ import { useMemo, useState, type KeyboardEvent } from 'react';
 import CodeBlock, { type Language } from './CodeBlock';
 
 /**
- * As cinco linguagens do curso, com o mesmo exemplo em cada uma. Todas são
- * opcionais: só aparecem abas para as versões realmente fornecidas (fallback).
+ * O mesmo exemplo escrito em várias linguagens. Todas são opcionais: só aparecem
+ * abas para as versões realmente fornecidas (fallback).
+ *
+ * A ordem das abas (ver `ORDER`) segue o peso da linguagem NA DISCIPLINA, não a
+ * ordem em que o objeto é escrito: Python primeiro (a linguagem do curso), C em
+ * seguida (projeto final e opção de prova de recuperação), e depois as demais,
+ * que entram só para comparação conceitual.
  */
 export interface MultiCode {
+  python?: string;
+  c?: string;
   cpp?: string;
   java?: string;
-  python?: string;
   javascript?: string;
   php?: string;
 }
@@ -22,12 +28,14 @@ interface MultiCodeBlockProps {
   defaultLanguage?: Language;
 }
 
-// Ordem fixa das abas e rótulos curtos.
+// Ordem fixa das abas e rótulos curtos. Python primeiro: é a linguagem do curso,
+// então é ela que abre por padrão quando `defaultLanguage` não é informado.
 const ORDER: { key: keyof MultiCode; lang: Language; label: string }[] = [
   { key: 'python', lang: 'python', label: 'Python' },
-  { key: 'javascript', lang: 'javascript', label: 'JavaScript' },
-  { key: 'java', lang: 'java', label: 'Java' },
+  { key: 'c', lang: 'c', label: 'C' },
   { key: 'cpp', lang: 'cpp', label: 'C++' },
+  { key: 'java', lang: 'java', label: 'Java' },
+  { key: 'javascript', lang: 'javascript', label: 'JavaScript' },
   { key: 'php', lang: 'php', label: 'PHP' },
 ];
 
