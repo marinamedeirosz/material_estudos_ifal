@@ -123,7 +123,10 @@ export const ESTRUTURA_DADOS_SECTIONS = [
     { id: 'arvores', title: 'Árvores — Conceitos e Representações', shortTitle: 'Árvores', exams: ['av2'] },
     { id: 'arvores-busca', title: 'Árvores de Busca e Heap', shortTitle: 'BST/Heap', exams: ['av2'] },
     { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
-];
+] as const;
+
+/** Ids reais das seções, derivados da lista acima — usado para tipar o mapa id → componente. */
+export type EstruturaDadosSectionId = (typeof ESTRUTURA_DADOS_SECTIONS)[number]['id'];
 
 const QUIZ_DATA_BASE: QuizQuestionData[] = [
     {
