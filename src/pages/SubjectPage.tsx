@@ -10,6 +10,7 @@ const contentRegistry: Record<string, ComponentType> = {
   'marketing-comercio-eletronico': lazy(() => import('../content/marketing-comercio-eletronico/MarketingContent')),
   'metodologia-cientifica': lazy(() => import('../content/metodologia-cientifica/MetodologiaCientificaContent')),
   'estrutura-dados': lazy(() => import('../content/estrutura-dados/EstruturaDadosContent')),
+  'fundamentos-si': lazy(() => import('../content/fundamentos-si/FundamentosSIContent')),
   'processos-desenvolvimento-software': lazy(() => import('../content/processos-desenvolvimento-software/ProcessosDesenvolvimentoSoftwareContent')),
   'algoritmos-logica-programacao': lazy(() => import('../content/algoritmos-logica-programacao/ALPGContent')),
   'topicos-avancados-banco-dados': lazy(() => import('../content/topicos-avancados-banco-dados/TABDContent')),
