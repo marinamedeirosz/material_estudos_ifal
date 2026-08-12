@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 import ConceptCard from '../ui/ConceptCard';
 import HighlightBox from '../ui/HighlightBox';
-import type { Accent, ComparisonRow, ConceptItem, PanelItem, StatItem } from './types';
+import type { Accent, AccentTextClass, ComparisonRow, ConceptItem, PanelItem, StatItem } from './types';
 
-export type { Accent, ComparisonRow, ConceptItem, PanelItem, StatItem };
+export type { Accent, AccentTextClass, ComparisonRow, ConceptItem, PanelItem, StatItem };
 
 interface SectionHeaderProps {
   title: string;
@@ -162,17 +162,20 @@ export function ComparisonTable({
   rows,
   leftLabel,
   rightLabel,
+  criterionLabel = 'Critério',
 }: {
   rows: ComparisonRow[];
   leftLabel: string;
   rightLabel: string;
+  /** Cabeçalho da primeira coluna. Padrão: "Critério". */
+  criterionLabel?: string;
 }) {
   return (
     <div className="overflow-x-auto study-surface">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border">
-            <th className="text-left py-3 px-4 font-semibold text-text-muted uppercase tracking-wider text-xs w-1/4">Critério</th>
+            <th className="text-left py-3 px-4 font-semibold text-text-muted uppercase tracking-wider text-xs w-1/4">{criterionLabel}</th>
             <th className="text-left py-3 px-4 font-semibold text-accent uppercase tracking-wider text-xs">{leftLabel}</th>
             <th className="text-left py-3 px-4 font-semibold text-accent3 uppercase tracking-wider text-xs">{rightLabel}</th>
           </tr>
