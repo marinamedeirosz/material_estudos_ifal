@@ -11,6 +11,7 @@ export default function HtmlEstruturaSection() {
         title="HTML5: Estrutura do Documento"
         subtitle="O esqueleto que toda página tem, e as regras de quem pode conter quem"
         colorClass="text-accent"
+        badge="AV1"
       />
 
       <Subsection title="O documento mínimo" accentClass="text-accent2">

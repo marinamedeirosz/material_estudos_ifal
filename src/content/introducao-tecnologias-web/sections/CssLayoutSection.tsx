@@ -2,7 +2,7 @@ import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
 import { SectionHeader, Subsection, PanelList, ColoredPanelList } from '../../../components/sections';
 import { codeFlexbox } from './snippets';
-import { flexProperties, css3Features } from './blocks';
+import { flexProperties, css3Features, cssAtividadeChecklist } from './blocks';
 
 export default function CssLayoutSection() {
   return (
@@ -11,6 +11,7 @@ export default function CssLayoutSection() {
         title="CSS: Flexbox e Recursos do CSS3"
         subtitle="Organizar os elementos na tela sem gambiarra"
         colorClass="text-accent"
+        badge="AV2"
       />
 
       <HighlightBox title="Flexbox foi exigido na atividade">
@@ -69,6 +70,14 @@ export default function CssLayoutSection() {
           É um exemplo pequeno de uma ideia grande: menos requisições, página mais rápida.
         </p>
       </HighlightBox>
+
+      <Subsection title="Checklist da atividade de CSS" accentClass="text-accent3">
+        <p className="reading-measure text-text-muted text-sm md:text-base leading-relaxed mb-3">
+          O enunciado do cadastro de estágio é uma lista fechada e verificável — dá para conferir item por item antes
+          de entregar. O modelo visual a reproduzir veio anexo ao enunciado, na <em>image.png</em>.
+        </p>
+        <PanelList items={cssAtividadeChecklist} columns="" />
+      </Subsection>
     </section>
   );
 }

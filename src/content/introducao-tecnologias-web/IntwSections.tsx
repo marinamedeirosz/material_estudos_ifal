@@ -8,6 +8,7 @@ import FormulariosSection from './sections/FormulariosSection';
 import CssFundamentosSection from './sections/CssFundamentosSection';
 import CssLayoutSection from './sections/CssLayoutSection';
 import JavaScriptSection from './sections/JavaScriptSection';
+import ProjetoFinalSection from './sections/ProjetoFinalSection';
 import QuizSection from './sections/QuizSection';
 import type { IntwSectionId } from './data';
 
@@ -31,6 +32,7 @@ const SECTION_COMPONENTS: Record<IntwSectionId, () => React.ReactElement> = {
   'css-fundamentos': CssFundamentosSection,
   'css-layout': CssLayoutSection,
   javascript: JavaScriptSection,
+  'projeto-final': ProjetoFinalSection,
   quiz: QuizSection,
 };
 

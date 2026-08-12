@@ -11,6 +11,7 @@ export default function CssFundamentosSection() {
         title="CSS: Seletores e Box Model"
         subtitle="Escolher o elemento certo e entender a caixa que ele ocupa"
         colorClass="text-accent"
+        badge="AV2"
       />
 
       <HighlightBox title="O que o CSS faz">

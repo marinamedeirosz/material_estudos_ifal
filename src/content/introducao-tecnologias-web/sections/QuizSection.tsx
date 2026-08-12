@@ -11,7 +11,7 @@ export default function QuizSection() {
     <section className="animate-fade-in space-y-6">
       <SectionHeader
         title="Quiz de Revisão"
-        subtitle="14 questões sobre os assuntos da AV1 e da AV2, no formato das atividades do professor"
+        subtitle={`${QUIZ_DATA.length} questões sobre os assuntos da AV1 e da AV2, no formato das atividades do professor`}
         colorClass="text-accent"
       />
 

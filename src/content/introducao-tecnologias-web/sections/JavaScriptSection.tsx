@@ -11,6 +11,7 @@ export default function JavaScriptSection() {
         title="JavaScript e o DOM"
         subtitle="Client-side script: a camada de comportamento da página"
         colorClass="text-accent"
+        badge="AV2"
       />
 
       <HighlightBox title="O terceiro pilar do client-side">

@@ -11,6 +11,7 @@ export default function HtmlSemanticaSection() {
         title="Semântica e Formatação de Texto"
         subtitle="Marcar o que a informação é, não como ela deve parecer"
         colorClass="text-accent"
+        badge="AV1"
       />
 
       <HighlightBox title="Para que serve a semântica">
@@ -60,6 +61,30 @@ export default function HtmlSemanticaSection() {
           Toda imagem que carrega informação precisa de um <code>alt</code> que a descreva. É o que permite a quem usa
           leitor de tela saber o que está ali — e é o texto que aparece quando a imagem não carrega. Deixar o alt de
           fora é o erro de acessibilidade mais comum e um dos mais fáceis de evitar.
+        </p>
+        <p className="mt-3">
+          Mas escrever <em>qualquer</em> alt não resolve. A pergunta certa é:{' '}
+          <strong>se a imagem sumisse, que texto ocuparia o lugar dela sem perda de informação?</strong>
+        </p>
+        <ul className="mt-3 space-y-2">
+          <li>
+            <code>alt=&quot;imagem&quot;</code> ou <code>alt=&quot;foto1.jpg&quot;</code> — inútil. Anuncia que existe
+            uma imagem, que é justamente o que o leitor de tela já sabe, e não diz nada sobre o conteúdo.
+          </li>
+          <li>
+            <code>alt=&quot;Pessoa usando leitor de tela para navegar num site&quot;</code> — útil. Descreve o que a
+            imagem mostra, na medida em que isso importa para o texto ao redor.
+          </li>
+          <li>
+            <code>alt=&quot;&quot;</code> (vazio, mas presente) — correto para imagem <strong>puramente
+            decorativa</strong>. Diz ao leitor de tela para pular aquilo, em vez de fazê-lo ler um nome de arquivo.
+            Omitir o atributo não é a mesma coisa: sem alt, alguns leitores anunciam o endereço do arquivo.
+          </li>
+        </ul>
+        <p className="mt-3">
+          Não é tema lateral desta disciplina: a atividade presencial de HTML pedia a formatação de um{' '}
+          <strong>texto sobre acessibilidade digital</strong>, com a imagem que o professor anexou ao enunciado. O
+          assunto do exercício era o próprio motivo pelo qual o alt existe.
         </p>
       </HighlightBox>
 
