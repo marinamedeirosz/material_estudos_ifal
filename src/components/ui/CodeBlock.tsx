@@ -11,6 +11,7 @@ export type Language =
   | 'cpp'
   | 'go'
   | 'rust'
+  | 'php'
   | 'sql'
   | 'dax'
   | 'mdx';
@@ -238,6 +239,29 @@ const LANG_CONFIGS: Record<Language, LangConfig> = {
       'Ok', 'Err', 'String', 'Vec', 'Box', 'Rc', 'Arc', 'Option',
       'Result', 'panic', 'assert', 'assert_eq', 'assert_ne', 'todo',
       'unimplemented', 'unreachable', 'dbg', 'format',
+    ]),
+    lineComment: '//',
+    hasBlockComment: true,
+    hasTemplateLiteral: false,
+  },
+  php: {
+    label: 'PHP',
+    keywords: new Set([
+      'function', 'class', 'interface', 'trait', 'extends', 'implements',
+      'public', 'private', 'protected', 'static', 'abstract', 'final',
+      'const', 'var', 'if', 'else', 'elseif', 'for', 'foreach', 'while',
+      'do', 'switch', 'case', 'default', 'break', 'continue', 'return',
+      'new', 'clone', 'try', 'catch', 'finally', 'throw', 'echo', 'print',
+      'namespace', 'use', 'as', 'instanceof', 'global', 'and', 'or', 'not',
+      'true', 'false', 'null', 'this', 'self', 'parent', 'fn', 'match',
+      'require', 'require_once', 'include', 'include_once',
+    ]),
+    builtins: new Set([
+      'array', 'count', 'strlen', 'str_replace', 'strtoupper', 'strtolower',
+      'implode', 'explode', 'in_array', 'array_push', 'array_map', 'sort',
+      'isset', 'empty', 'unset', 'var_dump', 'printf', 'sprintf', 'gettype',
+      'intval', 'floatval', 'strval', 'is_int', 'is_string', 'is_array',
+      'range', 'abs', 'sqrt', 'pow', 'rand', 'number_format',
     ]),
     lineComment: '//',
     hasBlockComment: true,
