@@ -1,5 +1,5 @@
-import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, ConceptGrid, ComparisonTable, PanelList } from '../../../components/sections';
 import { codeEstruturaBasica } from './snippets';
 import { documentParts, inlineVsBlock, contentCategories } from './blocks';
@@ -15,7 +15,11 @@ export default function HtmlEstruturaSection() {
       />
 
       <Subsection title="O documento mínimo" accentClass="text-accent2">
-        <CodeBlock code={codeEstruturaBasica} language="html" title="estrutura básica de um documento HTML5" />
+        <CodePlayground
+          html={codeEstruturaBasica}
+          title="estrutura básica de um documento HTML5"
+          challenge="Troque o texto do h1 e o title, depois clique em Executar. Repare que só o h1 aparece na página: o title vai para a aba do navegador."
+        />
       </Subsection>
 
       <HighlightBox title="O que mudou no HTML5">

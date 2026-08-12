@@ -239,6 +239,91 @@ export const codeFlexbox = `/* O display:flex vai no PAI: ele vira o container *
   }
 }`;
 
+/**
+ * HTML de apoio dos exemplos de CSS. O aluno não edita estes documentos: eles
+ * aparecem em aba de leitura para que ele veja sobre qual estrutura o CSS que
+ * está editando é aplicado — box model e flexbox só fazem sentido assim.
+ */
+export const htmlApoioSeletores = `<h1>Guia de Estudo</h1>
+<p>Este parágrafo vem logo depois do título.</p>
+
+<p id="cabecalho">Sou o parágrafo com id "cabecalho".</p>
+
+<p class="destaque">Sou um parágrafo com a classe "destaque".</p>
+
+<p>Um link dentro de um <strong><a href="#">strong dentro do parágrafo</a></strong>.</p>
+
+<p><strong>strong</strong>, <em>em</em> e <span>span</span> agrupados.</p>
+
+<form>
+  <label for="matricula">Matrícula (obrigatória):</label>
+  <input id="matricula" type="text" required>
+</form>`;
+
+export const htmlApoioBoxModel = `<div class="cartao">
+  Sou a caixa. Mude o padding, a borda e a margin
+  no CSS ao lado e veja a caixa mudar de tamanho.
+</div>
+<div class="cartao">
+  Sou a segunda caixa — serve para você enxergar
+  o efeito da margin entre as duas.
+</div>`;
+
+export const htmlApoioFlexbox = `<div class="formulario">
+  <div class="linha">
+    <span class="campo">Nome</span>
+    <span class="campo">Email</span>
+    <span class="campo">Telefone</span>
+  </div>
+</div>`;
+
+/**
+ * Versão do exemplo de flexbox usada no playground: sem a imagem de fundo
+ * (que não existe no sandbox) e enxuta, para o aluno enxergar o efeito do
+ * justify-content sem rolar o editor.
+ */
+export const codeFlexboxPlayground = `/* O display:flex vai no PAI: ele vira o container */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 16px;
+  background-color: #e8f5e9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Uma linha com os campos lado a lado */
+.linha {
+  display: flex;
+  flex-direction: row;
+
+  /* Eixo principal: distribui o espaço horizontalmente */
+  justify-content: flex-start;
+
+  /* Eixo transversal: alinha verticalmente */
+  align-items: center;
+
+  gap: 8px;
+  min-height: 80px;
+  border: 2px dashed #1b5e20;
+}
+
+.campo {
+  padding: 8px 12px;
+  background-color: #1b5e20;
+  color: #ffffff;
+  border-radius: 8px;
+}`;
+
+/** Troca só o valor de justify-content — o resto do CSS fica igual. */
+export function flexboxComJustify(valor: string): string {
+  return codeFlexboxPlayground.replace(
+    'justify-content: flex-start;',
+    `justify-content: ${valor};`,
+  );
+}
+
 export const codeJsFundamentos = `// let para valor que muda, const para valor que não é reatribuído
 let contador = 0;
 const nomeDaTurma = "BSI 2022.1";
@@ -283,3 +368,25 @@ export const codeJsDom = `<p id="msg">Clique no botão.</p>
   const mesmoParagrafo = document.querySelector("#msg");
   console.log(mesmoParagrafo === msg); // true
 </script>`;
+
+/**
+ * O mesmo exemplo de DOM separado em markup e script, que é como o playground
+ * recebe as partes. O `codeJsDom` acima continua exibido como leitura, porque
+ * mostra as duas coisas no mesmo arquivo — que é como o aluno vai escrever.
+ */
+export const htmlJsDom = `<p id="msg">Clique no botão.</p>
+<button id="botao">Trocar texto</button>`;
+
+export const scriptJsDom = `// getElementById busca o elemento pelo id
+const botao = document.getElementById("botao");
+const msg = document.getElementById("msg");
+
+// onclick liga a ação do usuário ao código
+botao.onclick = function () {
+  // innerHTML substitui o conteúdo do elemento
+  msg.innerHTML = "O texto mudou pelo DOM!";
+};
+
+// querySelector aceita seletores CSS: "#msg" busca pelo id
+const mesmoParagrafo = document.querySelector("#msg");
+console.log(mesmoParagrafo === msg); // true`;

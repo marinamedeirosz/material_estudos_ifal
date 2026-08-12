@@ -1,5 +1,5 @@
-import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, PanelList, ColoredPanelList } from '../../../components/sections';
 import { codeFormulario } from './snippets';
 import { newInputTypes, validationAttributes } from './blocks';
@@ -38,7 +38,11 @@ export default function FormulariosSection() {
       </Subsection>
 
       <Subsection title="O formulário de inscrição" accentClass="text-accent3">
-        <CodeBlock code={codeFormulario} language="html" title="form.html — inscrição no estágio" />
+        <CodePlayground
+          html={codeFormulario}
+          title="form.html — inscrição no estágio"
+          challenge="Troque o type do campo email para text e veja a validação do navegador desaparecer. Depois tire o required do nome e compare."
+        />
       </Subsection>
 
       <HighlightBox title="O label é o detalhe que mais se esquece" accent="var(--color-accent2)">

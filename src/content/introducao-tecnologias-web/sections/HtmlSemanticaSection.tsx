@@ -1,5 +1,6 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, ConceptGrid, PanelList } from '../../../components/sections';
 import { codeDuasPaginas, codeListasLinks } from './snippets';
 import { semanticTags, modifiedElements } from './blocks';
@@ -43,7 +44,11 @@ export default function HtmlSemanticaSection() {
       </HighlightBox>
 
       <Subsection title="Texto, listas, imagens e links" accentClass="text-accent5">
-        <CodeBlock code={codeListasLinks} language="html" title="formatação de texto e listas" />
+        <CodePlayground
+          html={codeListasLinks}
+          title="formatação de texto e listas"
+          challenge="Troque a ul por ol e veja os marcadores virarem números. Depois apague o atributo alt da imagem e pense em quem usa leitor de tela."
+        />
       </Subsection>
 
       <HighlightBox title="strong e em, não b e i" accent="var(--color-accent3)">

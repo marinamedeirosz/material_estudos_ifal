@@ -1,5 +1,5 @@
-import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
+import { CodePlayground } from '../../../components/ui/playground';
 import { SectionHeader, Subsection, PanelList } from '../../../components/sections';
 import { codeTabela } from './snippets';
 
@@ -50,7 +50,11 @@ export default function TabelasSection() {
       </Subsection>
 
       <Subsection title="A tabela de resultados" accentClass="text-accent3">
-        <CodeBlock code={codeTabela} language="html" title="tabela.html — resultados da busca" />
+        <CodePlayground
+          html={codeTabela}
+          title="tabela.html — resultados da busca"
+          challenge="Acrescente uma linha na tbody com os dados de outra turma. Repare que o th da primeira coluna usa scope=&quot;row&quot; e os do topo, scope=&quot;col&quot;."
+        />
       </Subsection>
 
       <HighlightBox title="th com scope é acessibilidade, não capricho" accent="var(--color-accent4)">
