@@ -71,13 +71,19 @@ export default function IntroSection() {
         <p>
           Conteúdo resumido e reorganizado a partir do material da disciplina{' '}
           <strong>FNSI — Fundamentos de Sistemas de Informação, BSI/IFAL, 2022.1</strong>, da{' '}
-          <strong>Profa. Wladia Bessa da Cruz</strong>. O acervo da turma reúne três origens distintas:
+          <strong>Profa. Wladia Bessa da Cruz</strong>. A disciplina constava como <strong>FNSI</strong> na época
+          daquela turma e hoje aparece como <strong>FUSI</strong> na matriz do curso — por isso os dois códigos
+          convivem neste guia. O acervo da turma reúne três origens distintas:
         </p>
         <ul className="list-disc pl-5 space-y-1 mt-2">
           <li>
-            <strong>Livro-texto adotado:</strong> os capítulos 1 a 8 e 14 seguem os slides de{' '}
-            <em>Princípios de Sistemas de Informação</em>, de <strong>Ralph M. Stair e George W. Reynolds</strong>{' '}
-            (tradução da 11ª edição norte-americana), que a professora adotou como espinha dorsal da disciplina.
+            <strong>Livro-texto adotado:</strong> as seções deste guia derivam dos <strong>capítulos 1 a 8</strong> dos
+            slides de <em>Princípios de Sistemas de Informação</em>, de{' '}
+            <strong>Ralph M. Stair e George W. Reynolds</strong> (tradução da 11ª edição norte-americana), que a
+            professora adotou como espinha dorsal da disciplina. O{' '}
+            <strong>capítulo 14 (O Impacto Pessoal e Social dos Computadores)</strong> também foi disponibilizado no
+            mural, mas não entrou no cronograma nem em nenhuma das quatro listas de prova — por isso não virou seção
+            aqui; o assunto é tratado na matéria de <strong>Ética e Sociedade</strong>.
           </li>
           <li>
             <strong>Material de terceiros:</strong> a seção de sistemas numéricos deriva das{' '}

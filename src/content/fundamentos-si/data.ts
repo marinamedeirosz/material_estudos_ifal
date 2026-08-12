@@ -37,7 +37,7 @@ GUIA COMPLETO DE FUNDAMENTOS DE SISTEMAS DE INFORMAÇÃO (FUSI) - Resumo:
 DIVISÃO POR AVALIAÇÕES (declarada pela professora no mural da turma):
 - 1ª PROVA (26/09/2022): Introdução aos Sistemas de Informação; Sistemas de Informação nas Organizações; Software de Sistemas e Aplicativos; Hardware.
 - 2ª PROVA (07/11/2022): Banco de Dados e Inteligência de Negócios; Internet, Intranet e Extranet.
-- 3ª PROVA (15/12/2022): Comércio Eletrônico; Conversão de Sistemas Numéricos (decimal, binário, octal, hexadecimal); Soma e Subtração de Binários; Conversão de números fracionários.
+- 3ª PROVA (15/12/2022): Comércio Eletrônico; Conversão de Sistemas Numéricos (decimal, octal, hexadecimal); Soma e Subtração de Binários; Conversão de números fracionários.
 - PROVA FINAL (22/12/2022): SGBD; Software; Hardware; Banco de Dados e Inteligência de Negócios; Comércio Eletrônico; Conversão Numérica (incluindo fracionários); Soma e Subtração de Binários.
 Telecomunicações e Redes foi trabalhado em atividade e mapa mental, não em prova escrita.
 `;
@@ -92,9 +92,23 @@ export const FUNDAMENTOS_SI_EXAMS: ExamDefinition[] = [
         description: 'Comércio eletrônico, conversão numérica e aritmética binária.',
     },
     {
+        // Rótulo "Prova Final" (e não "Final") para não colidir com a avaliação
+        // sintética "Final (tudo)" que a plataforma injeta no seletor. Esta aqui é a
+        // prova de 22/12 da turma, com lista de assuntos própria; a outra é "tudo".
         id: 'final',
-        label: 'Final',
+        label: 'Prova Final',
         description: 'SGBD, software, hardware, banco de dados e BI, comércio eletrônico e conversão numérica.',
+    },
+    {
+        // Telecomunicações e Redes não caiu em nenhuma das quatro listas de prova
+        // escrita do mural, mas teve 4 aulas e duas notas: o mapa mental (3,0 pontos,
+        // 10/10) e a atividade em dupla (27/10). Marcá-lo como 'p2' seria inventar um
+        // fato sobre a prova; deixá-lo sem avaliação nenhuma o fazia sumir do Modo
+        // Prova, inclusive de "Final (tudo)". Esta entrada é o registro fiel: a
+        // avaliação existiu, só não foi prova escrita.
+        id: 'atividades',
+        label: 'Atividades avaliadas',
+        description: 'Mapa mental de Telecomunicações e Redes (3,0 pontos) e atividade em dupla.',
     },
 ];
 
@@ -108,7 +122,7 @@ export const FUNDAMENTOS_SI_SECTIONS = [
     { id: 'hardware', title: 'Hardware', shortTitle: 'Hardware', exams: ['p1', 'final'] },
     { id: 'software', title: 'Software', shortTitle: 'Software', exams: ['p1', 'final'] },
     { id: 'banco-dados', title: 'Banco de Dados e Inteligência de Negócios', shortTitle: 'BD e BI', exams: ['p2', 'final'] },
-    { id: 'redes', title: 'Telecomunicações e Redes', shortTitle: 'Redes' },
+    { id: 'redes', title: 'Telecomunicações e Redes', shortTitle: 'Redes', exams: ['atividades'] },
     { id: 'internet', title: 'Internet, Intranet e Extranet', shortTitle: 'Internet', exams: ['p2'] },
     { id: 'comercio-eletronico', title: 'Comércio Eletrônico e Móvel', shortTitle: 'E-commerce', exams: ['p3', 'final'] },
     { id: 'sistemas-numericos', title: 'Sistemas Numéricos e Conversões', shortTitle: 'Conversões', exams: ['p3', 'final'] },
@@ -436,5 +450,95 @@ export const QUIZ_DATA: QuizQuestionData[] = [
             'Correto. A fita usa ACESSO SEQUENCIAL — os dados devem ser recuperados na ordem em que foram armazenados, e os equipamentos são chamados de SASD. O disco usa ACESSO DIRETO — os registros podem ser recuperados em qualquer ordem, e os equipamentos são os DASD.',
         feedbackWrong:
             'A ordem é acesso SEQUENCIAL (fita) e acesso DIRETO (disco). Na fita, os dados precisam ser recuperados na ordem em que foram gravados — daí o nome SASD. No disco, qualquer registro pode ser lido diretamente — são os DASD. Volatilidade é outra propriedade: diz respeito a perder ou não o conteúdo sem energia.',
+    },
+    // SGBD abre a lista da prova final e não tinha nenhuma questão; q21-q23 cobrem
+    // as funções do SGBD, o datawarehouse e o data mining, os três itens de BD/BI
+    // que a professora cobrou na 2ª prova e repetiu na final.
+    {
+        id: 'q21',
+        exams: ['p2', 'final'],
+        question:
+            'Dois caixas de uma loja tentam atualizar o estoque do mesmo produto no exato momento em que ele é vendido nos dois terminais. O banco precisa impedir que uma atualização sobrescreva a outra. Qual recurso do SGBD trata desse caso?',
+        options: [
+            'O dicionário de dados, que descreve todos os dados usados no sistema',
+            'O controle de simultaneidade, na função de armazenar e recuperar dados',
+            'A DDL, que descreve os dados e as relações do esquema',
+            'O QBE, alternativa visual para montar consultas',
+        ],
+        correctIndex: 1,
+        feedbackCorrect:
+            'Correto. O controle de simultaneidade é o mecanismo que o SGBD usa quando dois ou mais usuários precisam do mesmo registro ao mesmo tempo, dentro da função de armazenar e recuperar dados.',
+        feedbackWrong:
+            'É o controle de simultaneidade. O dicionário de dados apenas detalha os dados usados; a DDL cria e modifica a estrutura do banco; o QBE é uma forma visual de montar consultas. Nenhum deles resolve acesso concorrente — quem faz isso é o controle de simultaneidade.',
+    },
+    {
+        id: 'q22',
+        exams: ['p2', 'final'],
+        question:
+            'Uma rede de farmácias mantém o sistema que registra cada venda no caixa e, separadamente, um banco que reúne dados de vendas, estoque e marketing de todas as filiais para apoiar decisões da diretoria. O segundo banco é um quê?',
+        options: [
+            'Um data mart, porque atende a diretoria',
+            'Um datawarehouse, porque reúne informações de muitas fontes da empresa para apoiar a decisão',
+            'Um sistema transacional, porque registra as vendas',
+            'Uma análise preditiva, porque orienta decisões futuras',
+        ],
+        correctIndex: 1,
+        feedbackCorrect:
+            'Correto. O datawarehouse reúne as informações comerciais de muitas fontes da empresa com a finalidade de apoiar a tomada de decisão — diferente do banco transacional, que registra a operação do dia a dia.',
+        feedbackWrong:
+            'É um datawarehouse: reúne dados de muitas fontes da empresa para apoiar a decisão. O data mart seria um recorte dele para uma área específica; o sistema transacional é o do caixa, que registra a operação; a análise preditiva é uma técnica aplicada sobre os dados, não o banco em si.',
+    },
+    {
+        id: 'q23',
+        exams: ['p2', 'final'],
+        question:
+            'Ao varrer o datawarehouse, o sistema descobre sozinho que clientes que compram protetor solar tendem a comprar repelente na mesma visita — uma relação que ninguém havia formulado como hipótese. Esse processo é o quê?',
+        options: [
+            'Inteligência competitiva, porque gera vantagem sobre concorrentes',
+            'Data mining, pela descoberta automatizada de padrões e relações',
+            'Contrainteligência, porque protege a informação da empresa',
+            'Projeção, porque elimina colunas da tabela',
+        ],
+        correctIndex: 1,
+        feedbackCorrect:
+            'Correto. O data mining é a descoberta AUTOMATIZADA de padrões e relações dentro do datawarehouse — o sistema encontra a relação sem que alguém a tenha proposto antes.',
+        feedbackWrong:
+            'É data mining, definido pela descoberta automatizada de padrões e relações no datawarehouse. A inteligência competitiva trata de informações sobre concorrentes; a contrainteligência protege as próprias informações; a projeção é uma operação relacional que elimina colunas.',
+    },
+    // Telecomunicações e Redes teve 4 aulas e duas notas, mas nenhuma questão. As duas
+    // abaixo cobrem o vocabulário que sustenta o capítulo de Internet (2ª prova).
+    {
+        id: 'q24',
+        exams: ['atividades'],
+        question:
+            'Uma empresa tem filiais em três cidades. Cada filial processa seus próprios dados em servidores locais, e todos os servidores se comunicam por uma rede corporativa. Como se classifica esse processamento?',
+        options: [
+            'Centralizado, porque há uma rede corporativa unificando tudo',
+            'Descentralizado, porque cada filial processa localmente',
+            'Distribuído, porque os locais são remotos mas estão conectados por uma rede',
+            'Half-duplex, porque os dados trafegam nos dois sentidos',
+        ],
+        correctIndex: 2,
+        feedbackCorrect:
+            'Correto. O que separa o distribuído do descentralizado é justamente a conexão: nos dois casos o processamento ocorre em locais remotos, mas no distribuído esses locais estão ligados por uma rede.',
+        feedbackWrong:
+            'É distribuído. No descentralizado os dispositivos também ficam em locais remotos, mas SEM conexão entre si — a rede corporativa é o que muda a classificação. Centralizado seria todo o processamento num único local, e half-duplex descreve o sentido de um canal, não o processamento.',
+    },
+    {
+        id: 'q25',
+        exams: ['atividades'],
+        question:
+            'Um roteador e uma ponte (bridge) aparecem no mesmo projeto de rede. O que distingue as duas funções?',
+        options: [
+            'A ponte conecta duas LANs que usam o mesmo protocolo; o roteador encaminha pacotes entre redes distintas',
+            'A ponte encaminha pacotes entre redes distintas; o roteador conecta LANs de mesmo protocolo',
+            'Ambos modulam e demodulam o sinal, mudando apenas a velocidade',
+            'A ponte combina vários canais num único sinal; o roteador separa esse sinal',
+        ],
+        correctIndex: 0,
+        feedbackCorrect:
+            'Correto. A ponte conecta duas LANs que usam o mesmo protocolo de telecomunicações; o roteador encaminha pacotes de dados através de duas ou mais redes distintas até o destino.',
+        feedbackWrong:
+            'A ordem está trocada: a ponte é que conecta LANs de mesmo protocolo, e o roteador é que atravessa redes distintas. Modular e demodular é função do modem; combinar canais num único sinal é função do multiplexador.',
     },
 ];

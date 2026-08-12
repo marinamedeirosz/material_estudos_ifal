@@ -114,7 +114,9 @@ export default function HardwareSection() {
           Resumo do capítulo 3 de <em>Princípios de Sistemas de Informação</em>, de Stair &amp; Reynolds (tradução da
           11ª edição norte-americana), conforme os slides adotados pela Profa. Wladia Bessa em FNSI 2022.1 — BSI/IFAL.
           Na turma, este tema foi trabalhado sobretudo pelo <strong>seminário de hardware</strong> em equipes, que
-          cobria componentes, tipos de processador, memórias e dispositivos de entrada e saída.
+          cobria componentes, tipos de processador, memórias e dispositivos de entrada e saída. Como o seminário exigia
+          trabalho escrito, a professora disponibilizou a <strong>ABNT NBR 6023</strong> e um modelo de referências —
+          para muitos alunos, a primeira vez em que se cobra formalmente a citação de fontes no curso.
         </p>
       </HighlightBox>
     </section>

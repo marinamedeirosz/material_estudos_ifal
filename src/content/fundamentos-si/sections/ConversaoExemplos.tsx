@@ -49,8 +49,9 @@ export default function ConversaoExemplos() {
           → <strong>527₈</strong>
         </p>
         <p>
-          <strong>Hexa, grupos de 4 bits a partir do LSB:</strong> 110011100₂ → <code>0001 | 1001 | 1100</code> (com
-          zeros à esquerda para completar) → 1, 9, C → <strong>19C₁₆</strong>
+          <strong>Hexa, grupos de 4 bits a partir do LSB:</strong> 110011100₂ tem 9 bits, e 9 não é múltiplo de 4 —
+          então completa-se com zeros à esquerda até 12 bits: 110011100 → <code>000110011100</code> →{' '}
+          <code>0001 | 1001 | 1100</code> → 1, 9, C → <strong>19C₁₆</strong>
         </p>
         <p>
           <strong>No sentido inverso:</strong> 63D₁₆ → 6 = 0110, 3 = 0011, D = 1101 → <strong>11000111101₂</strong>{' '}

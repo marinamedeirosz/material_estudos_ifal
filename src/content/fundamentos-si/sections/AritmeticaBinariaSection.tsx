@@ -1,13 +1,6 @@
 import HighlightBox from '../../../components/ui/HighlightBox';
 import { SectionHeader, Subsection, TheoryBlock, ExampleBox, ComparisonTable } from '../../../components/sections';
-
-const sumRules = [
-  { criterion: '0 + 0', left: '0', right: 'Nenhum transporte' },
-  { criterion: '0 + 1', left: '1', right: 'Nenhum transporte' },
-  { criterion: '1 + 0', left: '1', right: 'Nenhum transporte' },
-  { criterion: '1 + 1', left: '0', right: 'Vai 1 para a coluna seguinte' },
-  { criterion: '1 + 1 + 1', left: '1', right: 'Vai 1 para a coluna seguinte' },
-];
+import { sumRules } from './blocks';
 
 export default function AritmeticaBinariaSection() {
   return (
@@ -38,8 +31,11 @@ export default function AritmeticaBinariaSection() {
 
       <ExampleBox title="Exemplo 1 — soma simples: 1011₂ + 110₂">
         <p>Alinhando pelo bit menos significativo e completando com zero à esquerda:</p>
-        <pre className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto">
-{`   1 1 1        ← transportes
+        <pre
+          className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto"
+          aria-label="Soma de 1011 e 0110 em binário, com transporte nas três colunas à esquerda, resultado 10001."
+        >
+{`  1 1 1        ← transportes
     1 0 1 1     (11)
  +  0 1 1 0     ( 6)
  ──────────
@@ -55,13 +51,21 @@ export default function AritmeticaBinariaSection() {
       </ExampleBox>
 
       <ExampleBox title="Exemplo 2 — transporte em cadeia: 10110₂ + 1101₂" accent="var(--color-accent3)">
-        <pre className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto">
-{`   1 1 1 1      ← transportes
-    1 0 1 1 0    (22)
- +  0 1 1 0 1    (13)
+        <pre
+          className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto"
+          aria-label="Soma de 10110 e 01101 em binário, com transporte em cadeia nas três colunas à esquerda, resultado 100011."
+        >
+{`  1 1 1          ← transportes
+    1 0 1 1 0     (22)
+ +  0 1 1 0 1     (13)
  ────────────
-  1 0 0 0 1 1    (35)`}
+  1 0 0 0 1 1     (35)`}
         </pre>
+        <p>
+          Da direita: 0+1 = 1; 1+0 = 1; 1+1 = 10, escreve 0 e vai 1; 0+1+1 = 10, escreve 0 e vai 1; 1+0+1 = 10, escreve
+          0 e vai 1 — que desce como o bit mais à esquerda. Note que o transporte só aparece a partir da terceira
+          coluna: as duas primeiras somam sem exceder 1.
+        </p>
         <p>
           Resultado: <strong>100011₂</strong>. Conferindo: 22 + 13 = 35, e 35₁₀ = 100011₂.
         </p>
@@ -77,7 +81,10 @@ export default function AritmeticaBinariaSection() {
       </TheoryBlock>
 
       <ExampleBox title="Exemplo 3 — subtração com empréstimo: 1101₂ − 101₂" accent="var(--color-accent2)">
-        <pre className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto">
+        <pre
+          className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto"
+          aria-label="Subtração de 0101 de 1101 em binário, resultado 1000."
+        >
 {`    1 1 0 1     (13)
  −  0 1 0 1     ( 5)
  ──────────
@@ -94,7 +101,10 @@ export default function AritmeticaBinariaSection() {
           Este é o caso que mais confunde. A coluna da direita precisa de empréstimo, mas as vizinhas são todas zero —
           então o empréstimo se propaga até achar um 1:
         </p>
-        <pre className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto">
+        <pre
+          className="font-mono text-xs md:text-sm leading-relaxed overflow-x-auto"
+          aria-label="Subtração de 00001 de 10000 em binário, com empréstimo em cadeia, resultado 01111."
+        >
 {`    1 0 0 0 0     (16)
  −  0 0 0 0 1     ( 1)
  ────────────

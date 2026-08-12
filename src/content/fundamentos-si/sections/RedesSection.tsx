@@ -13,7 +13,7 @@ export default function RedesSection() {
 
       <HighlightBox title="Este tema não caiu em prova escrita">
         <p>
-          Diferente dos demais, Telecomunicações e Redes foi avaliado por{' '}
+          Diferentemente dos demais, Telecomunicações e Redes foi avaliado por{' '}
           <strong>atividade em dupla e mapa mental</strong> (3,0 pontos), não por prova. Isso não o torna dispensável:
           o vocabulário de rede aparece no capítulo de internet, que caiu na 2ª prova, e é base para a disciplina de
           Fundamentos de Redes de Computadores mais adiante no curso.
@@ -56,6 +56,12 @@ export default function RedesSection() {
           <strong>Wi-Fi</strong> (cerca de 90 m ao ar livre e 30 m dentro de um edifício); e longo alcance com
           micro-ondas (300 MHz a 300 GHz), satélites (geoestacionário, LEO e VSAT), malha sem fio, 3G, 4G (5 a 40 Mbps),
           LTE e WiMAX.
+        </p>
+        <p>
+          A lista para no 4G porque o livro-texto adotado é anterior à difusão do <strong>5G</strong>. A atividade em
+          dupla da professora justamente pedia que o aluno pesquisasse os desenvolvimentos recentes do 5G e qual
+          operadora é a mais usada na região — ou seja, o 5G entrou na disciplina como pesquisa do aluno, não como
+          conteúdo do material.
         </p>
       </HighlightBox>
 

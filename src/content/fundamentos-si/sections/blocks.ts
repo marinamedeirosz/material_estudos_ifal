@@ -491,7 +491,7 @@ export const ecommerceChallenges: PanelItem[] = [
 ];
 
 export const paymentSystems: PanelItem[] = [
-    { title: 'Certificado digital', description: 'Anexo a uma mensagem ou dados embutidos em um site que verificam a identidade de um remetente ou de um site.' },
+    { title: 'Certificado digital', description: 'Anexo a uma mensagem ou dados embutidos em um site que verifica a identidade de um remetente ou de um site.' },
     { title: 'Autoridade certificadora (CA)', description: 'Organização terceirizada de confiança que emite os certificados digitais.' },
     { title: 'SSL', description: 'Protocolo usado para proteger dados sensíveis em trânsito.' },
     { title: 'Dinheiro eletrônico', description: 'Quantia computadorizada, armazenada e usada à vista em transações de comércio eletrônico.' },
@@ -517,7 +517,7 @@ export const conversionMethods: PanelItem[] = [
     {
         title: 'Decimal → qualquer base',
         description:
-            'Divisões sucessivas pela base. O resultado é o último quociente seguido dos restos, lidos de trás para frente. Ex.: 412₁₀ ÷ 16 sucessivamente dá 19C₁₆.',
+            'Divisões sucessivas pela base. O resultado é o último quociente seguido dos restos, lidos de baixo para cima. Ex.: 412₁₀ ÷ 16 sucessivamente dá 19C₁₆.',
     },
     {
         title: 'Binário ↔ octal',
@@ -546,4 +546,14 @@ export const numericDetails: PanelItem[] = [
     { title: 'Faixa de N bits', description: 'Com N bits representam-se 2ᴺ valores distintos, indo de 0 até 2ᴺ − 1. Com 8 bits: 256 valores, de 0 a 255.' },
     { title: 'Nibble e byte', description: 'Um grupo de 4 bits é um nibble; um grupo de 8 bits é um byte.' },
     { title: 'Por que octal e hexa existem', description: 'Servem para representar números binários de forma compacta e legível. É mais fácil escrever E6₁₆ do que 11100110₂ — e a conversão entre eles é imediata.' },
+];
+
+/* ---------------------------------------------------- Aritmética binária */
+
+export const sumRules: ComparisonRow[] = [
+    { criterion: '0 + 0', left: '0', right: 'Nenhum transporte' },
+    { criterion: '0 + 1', left: '1', right: 'Nenhum transporte' },
+    { criterion: '1 + 0', left: '1', right: 'Nenhum transporte' },
+    { criterion: '1 + 1', left: '0', right: 'Vai 1 para a coluna seguinte' },
+    { criterion: '1 + 1 + 1', left: '1', right: 'Vai 1 para a coluna seguinte' },
 ];
