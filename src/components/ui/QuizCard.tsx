@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import type { ExamTagged } from '../../lib/exams';
 
+/** Modelo legado de avaliação da questão, ainda usado por matérias não migradas. */
 export type QuizExam = `prova${number}`;
 
 export interface QuizTopicOption {
@@ -8,8 +10,9 @@ export interface QuizTopicOption {
   prompt?: string;
 }
 
-export interface QuizQuestionData {
+export interface QuizQuestionData extends ExamTagged {
   id: string;
+  /** Legado: uma questão só pertence a uma prova. Prefira `exams`. */
   exam?: QuizExam;
   question: string;
   options: string[];
