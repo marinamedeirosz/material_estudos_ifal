@@ -23,31 +23,48 @@ GUIA COMPLETO DE ESTRUTURA DE DADOS - Resumo:
 
 10. PESQUISA/BUSCA: Busca sequencial: percorre elemento por elemento até encontrar ou chegar ao fim. O(n) no pior caso. Em lista ordenada, pode parar ao encontrar elemento maior - média de n/2 comparações mas ainda O(n). Busca binária: exige lista ordenada; compara o elemento do meio e descarta metade da lista a cada passo. O(log n). Estratégia dividir e conquistar. Versão iterativa: usa índices low e high. Versão recursiva: passa sublista (atenção: slice é O(k)). Prática: Python bisect usa busca binária.
 
-11. HASHING: Objetivo: busca e inserção em O(1). Função hash: mapeia um item (chave) a uma posição (slot) na tabela. Fator de carga FC = itens/tamanho_tabela (0 ≤ FC ≤ 1). Colisão: dois itens mapeados para o mesmo slot. Funções hash: módulo (item % m), folding method (divide item em partes iguais e soma), mid-square method (eleva ao quadrado e pega dígitos do meio). Hash para strings: soma dos ord() dos caracteres ponderados pela posição. Resolução de colisões: linear probing (tenta slot seguinte: (h+1)%m, (h+2)%m, ..., sofre clustering), quadratic probing (incrementos quadráticos: 1, 4, 9, ...), chaining (cada slot tem uma lista encadeada). TAD Map: put(key,val), get(key), del key, len(), in. Análise: O(1) sem colisões, O(1 + FC/2) com linear probing; rehash quando FC > 0.5.
+11. HASHING: Objetivo: busca e inserção em O(1). Função hash: mapeia um item (chave) a uma posição (slot) na tabela. Fator de carga FC = itens/tamanho_tabela (0 ≤ FC ≤ 1). Colisão: dois itens mapeados para o mesmo slot. Função hash perfeita mapeia cada item a um slot único, mas não há como construí-la para uma coleção qualquer; a meta é minimizar colisões, ser fácil de computar e distribuir uniformemente. Funções hash: módulo (item % m), folding method (divide o item em pedaços de tamanhos iguais e soma; ex.: telefone (82)7989.1507 em grupos de 2 dá 82+79+89+15+07 = 272, e 272%11 = 8), mid-square method (eleva ao quadrado e pega dígitos do meio: 44² = 1936, extrai 93, 93%11 = 5). Hash para strings: somar apenas os ord() faz anagramas colidirem ("cat" e "tac" somam 312); ponderar pela posição resolve (99·1+97·2+116·3 = 641). Resolução de colisões: linear probing com rehash(pos) = (pos+1)%tamanho (sofre clustering), quadratic probing (incrementos 1, 4, 9, 16), chaining (cada slot referencia uma coleção de itens). TAD Map: put(key,val), get(key), del key, len(), in; a classe HashTable da aula nasce com _tamanho = 11 e mantém as listas paralelas _slots e _valores. Análise: O(1) inicialmente, O(1 + FC/2) considerando colisões. No miniprojeto de hashing o professor pede redimensionamento quando o FC fica entre 0,7 e 0,8, aumentando a tabela para um primo próximo ao dobro e refazendo o hash de todos os itens.
 
-12. ORDENAÇÃO: Bubble sort: compara pares adjacentes e troca se necessário; O(n²) médio e pior, O(n) melhor com flag de otimização. Selection sort: encontra o mínimo da parte não-ordenada e troca com a posição atual; O(n²) sempre. Insertion sort: insere cada elemento na posição correta da parte já ordenada; O(n²) pior, O(n) melhor (quase ordenada). Merge sort: divide ao meio recursivamente e intercala partes ordenadas; O(n log n) sempre; O(n) espaço extra. Quick sort: escolhe pivô e particiona em menores/maiores; O(n log n) médio, O(n²) pior; pivô aleatório melhora desempenho. Shell sort: generaliza insertion sort com gap decrescente; O(n^1.5) típico. Python usa Timsort (híbrido merge+insertion) O(n log n).
+12. ORDENAÇÃO: Bubble sort: faz varreduras comparando posições adjacentes e trocando quando necessário; após a primeira varredura o maior elemento está no lugar; a soma das comparações é (n²/2)−(n/2), logo O(n²); a versão otimizada (shortBubbleSort) para quando uma varredura não faz trocas, chegando a O(n) na lista já ordenada. Selection sort: melhora o bubble fazendo uma única troca por varredura — procura o extremo (na versão da aula, o maior) e o coloca na posição final; faz o mesmo número de comparações do bubble, logo O(n²) sempre. Insertion sort: insere cada elemento na posição correta da parte já ordenada, deslocando os maiores; O(n²) pior, O(n) melhor (quase ordenada). Shell sort: melhora o insertion quebrando a lista em sublistas intercaladas a cada 'gap' posições, com o gap diminuindo até 1 (quando vira um insertion tradicional sobre lista quase ordenada); fica entre O(n) e O(n²) — com incrementos [4,2,1] é O(n²) e com incrementos 2^k−1 (1,3,7,15,…) é O(n^3/2). Merge sort: divide ao meio recursivamente até listas de 0 ou 1 item e depois intercala as metades ordenadas; O(n log n) sempre; usa O(n) de espaço extra. Quick sort: também divide e conquista, mas sem armazenamento adicional; o pivô é o 1º elemento, leftmark avança até achar valor maior que o pivô e rightmark recua até achar valor menor; trocam-se os itens do lado errado até as marcas cruzarem, e a posição de rightmark é o split point, onde o pivô é colocado; O(n log n) médio e O(n²) quando o split point cai muito à esquerda ou à direita; a técnica da mediana de três (primeiro, último e elemento do meio) reduz esse risco. Python usa Timsort (híbrido merge+insertion) O(n log n).
 
-13. ÁRVORES: Estrutura hierárquica não-linear. Raiz: nó sem pai. Folha: nó sem filhos. Pai e filho: relação entre nó e seus descendentes diretos. Grau: número de filhos. Altura: comprimento do maior caminho raiz-folha. Subárvore: qualquer nó e seus descendentes. Árvore Binária (AB): cada nó tem no máximo 2 filhos (esq e dir). Travessias: pré-ordem (raiz→esq→dir), em-ordem (esq→raiz→dir), pós-ordem (esq→dir→raiz). Árvore Binária de Busca (ABB/BST): para cada nó, todos os elementos da subárvore esquerda são menores e da direita são maiores. Busca na BST: O(h) onde h é a altura; O(log n) para BST balanceada, O(n) para degenerada.
+13. ÁRVORES — CONCEITOS E REPRESENTAÇÕES: Tipo de dado não linear, hierárquico, com raiz (root), galhos (branches) e folhas (leaves); a raiz é representada no topo. Vocabulário: nó (node) é a parte fundamental, tem um nome chamado chave e opcionalmente um conteúdo (payload), também é chamado vértice; aresta (edge) conecta dois nós; raiz é o único nó sem aresta de entrada; caminho (path) é uma lista ordenada de nós conectados por arestas; filhos são os nós com aresta de entrada vinda do mesmo nó; pai é o nó conectado por aresta de saída; irmãos têm o mesmo pai; folha é o nó sem filhos; nível é o número de arestas do caminho da raiz até o nó; altura é o maior nível da árvore. Se cada nó tem no máximo dois filhos, é uma árvore binária. Representação em lista de listas: [raiz, subárvore_esquerda, subárvore_direita]; insertLeft insere uma nova lista na segunda posição e, se já havia conteúdo à esquerda, esse filho desce um nível. Representação com nós e referências: classe com key, leftChild e rightChild, em que os filhos são outras instâncias da própria classe. Travessias recursivas: pré-ordem (raiz→esq→dir), em-ordem (esq→raiz→dir), pós-ordem (esq→dir→raiz). ÁRVORE DE ANÁLISE (PARSE TREE): representa a estrutura de uma expressão matemática parentizada, com operadores nos nós internos e operandos nas folhas. Regras de construção a partir da lista de tokens: '(' adiciona novo nó como filho esquerdo e desce até ele; operador (+,−,*,/) altera o valor do nó atual, adiciona filho direito e desce; número altera o valor do nó atual e retorna ao pai; ')' vai ao pai do nó atual. Como a interface só tem getLeftChild e getRightChild, usa-se uma PILHA para guardar os pais durante a construção. A expressão é avaliada por recursão: se o nó tem os dois filhos, aplica o operador da raiz aos resultados de esquerda e direita; senão devolve o próprio valor (folha). A travessia em-ordem com parênteses recupera a expressão original.
 
-DIVISÃO POR AVALIAÇÕES:
-- PROVA 1: Python básico (tipos, operadores, estruturas de controle, funções), strings e listas (imutabilidade, métodos, aliasing, clone), recursividade (caso base, redução, call stack), TAD (definição, objetivos, tipos primitivos vs complexos), listas sequenciais (interface, complexidade de operações), pilhas LIFO (push/pop/top, aplicações), filas FIFO (enqueue/dequeue/first, array circular), deque (add_first/add_last, collections.deque).
-- PROVA 2: Listas encadeadas (Nó, head, add/search/remove), pesquisa sequencial e binária (complexidades, requisitos), hashing (função hash, colisão, resolução, fator de carga), ordenação (bubble, selection, insertion, merge, quick sort), árvores (BST, travessias, altura, propriedades).
+14. ÁRVORE BINÁRIA DE BUSCA (BST) COMO MAP: Implementa Map(), put(key,val), get(key), del, len() e in. Propriedade: cada chave menor que a do pai fica na subárvore esquerda e cada chave maior fica na direita. Classes BinarySearchTree (root, size) e TreeNode (key, payload, leftChild, rightChild, parent), com auxiliares hasLeftChild, isLeftChild, isRoot, isLeaf, hasAnyChildren, hasBothChildren e replaceNodeData. put desce comparando até achar posição livre e cria o TreeNode com referência ao pai; um problema conhecido do algoritmo é que chaves duplicadas não são tratadas — o nó novo nunca seria encontrado numa pesquisa; a saída é substituir o valor antigo. Métodos especiais dão sintaxe de dicionário: __setitem__ chama put, __getitem__ chama get, __contains__ implementa o operador in e __iter__ percorre a árvore em-ordem com yield. REMOÇÃO, três casos: (1) o nó é folha — basta apagar a referência correspondente no pai; (2) o nó tem um filho — promove-se o filho ao lugar do pai, reencadeando as referências dos dois lados, ou usa-se replaceNodeData quando o nó removido é a raiz; (3) o nó tem dois filhos — nenhum filho pode simplesmente subir, então procura-se o sucessor, o nó com a próxima maior chave, que tem garantia de não ter mais de um filho; ele é retirado com spliceOut e assume o lugar do nó removido. Encontrar o sucessor: se o nó tem filho direito, o sucessor é a menor chave da subárvore direita (findMin desce sempre à esquerda); se não tem filho direito e o nó é filho esquerdo do pai, o sucessor é o pai. Complexidade: O(h), sendo h ≈ log n na árvore balanceada e h = n na degenerada.
+
+15. FILA DE PRIORIDADE E BINARY HEAP: A fila de prioridade é uma variação da fila em que o dequeue continua saindo pela frente, mas a ordem interna é dada pela prioridade — alta no início, baixa no fim. Implementada com lista, inserir seria O(n) e ordenar O(n log n); com binary heap, enqueue e dequeue ficam O(log n). Variações: heap mínimo (menor chave sempre na frente) e heap máximo. Propriedade estrutural: árvore balanceada, com o mesmo número de nós à esquerda e à direita exceto no último nível — o que permite representá-la em uma única lista, com o filho esquerdo do nó na posição p em 2p, o filho direito em 2p+1 e o pai do nó n em n//2. Propriedade de ordem: para todo nó x com pai p, a chave de p é menor ou igual à chave de x. Operações: BinaryHeap(), insert(k), findMin(), delMin(), isEmpty(), size(), buildHeap(list). insert anexa a chave ao fim da lista (preservando a estrutura) e percUp compara com o pai em i//2 trocando enquanto for menor. delMin devolve a raiz, move o último item para a raiz e percDown desce trocando com o menor filho, obtido por minChild(i). buildHeap parte da lista inteira e aplica percDown de trás para frente a partir de len(lista)//2, o que é melhor que inserir uma chave por vez (O(n log n)).
+
+16. NOTAÇÃO BIG O (ANÁLISE DE DESEMPENHO): Descreve como o custo de um algoritmo cresce conforme n aumenta — mede quantidade de operações relevantes (comparações, trocas, acessos), não segundos. Melhor, pior e caso médio: na busca sequencial por item presente em lista não ordenada são 1 comparação no melhor caso, n no pior e n/2 em média; para item ausente são n comparações em qualquer caso. Em lista ordenada, o item ausente cai para n/2 em média porque a busca para ao encontrar um valor maior — mas a técnica continua O(n). Constantes são descartadas: (n²/2)−(n/2) vira O(n²). Classes na disciplina: O(1) constante (push, pop, top, enqueue e dequeue na fila circular, add na cabeça da lista encadeada, acesso por índice na lista Python); O(log n) logarítmica (busca binária e BST balanceada — se são necessárias i comparações até restar 1 item, então n/2^i = 1, logo i = log n); O(n) linear (busca sequencial, size, search e remove na lista encadeada, travessia de árvore); O(n log n) log-linear (merge sort sempre, quick sort médio); O(n^3/2) (shell sort com incrementos 2^k−1); O(n²) quadrática (bubble, selection e insertion sort). Este assunto é o único que o professor listou nos três blocos de avaliação: AV1, AV2 e prova final.
+
+MINIPROJETOS APLICADOS DA TURMA:
+- Labirinto com pilhas: matriz m×n em que " " é caminho livre e "#" é parede; o rato parte de (1,0) e quer chegar a (m−2, n−1) movendo-se para os lados, acima ou abaixo; a função eh_possivel_sair() devolve True se há saída; marcam-se as casas visitadas e, ao entrar num caminho sem saída, volta-se — a pilha é a melhor estrutura para o retorno.
+- Dominó com lista encadeada: cria as peças (dois valores de 0 a 6), embaralha, distribui igualmente entre os jogadores, permite jogar peças cujas extremidades correspondam às já jogadas e determina o vencedor; obrigatório usar implementação própria (ou adaptada da aula) do TAD Lista Encadeada.
+- Gerenciador de eventos com HashMap: inserir, remover, buscar por categoria e listar categorias; a chave é a categoria e o valor é a lista de eventos; exige redimensionamento quando o FC fica entre 0,7 e 0,8, para um primo próximo ao dobro do tamanho, com rehashing de todos os itens; não é permitido usar dicionário do Python.
+
+DIVISÃO POR AVALIAÇÕES (declarada pelo professor no mural):
+- AV1: Recursividade, Pilhas, Filas, Deques, Análise de desempenho de algoritmos (Notação Big O). Também cobrados na sequência didática: Python básico, strings e listas, TAD e listas sequenciais.
+- AV2: Listas encadeadas, Algoritmos de Busca, Algoritmos de Ordenação, Árvores, Análise de desempenho de algoritmos (Notação Big O). Hashing entra nesse bloco na sequência das aulas.
+- PROVA FINAL: Recursividade, Pilhas, Filas, Algoritmos de Busca (sequencial e binária), Algoritmos de Ordenação, Árvores, Análise de desempenho de algoritmos (Notação Big O).
 `;
 
 export const ESTRUTURA_DADOS_TOPICS: QuizTopicOption[] = [
     {
         value: 'prova1',
-        label: 'Prova 1: Python, Listas, Pilhas, Filas e Deque',
-        prompt: 'Conteúdo da Prova 1 de Estrutura de Dados: Python básico (tipos primitivos, tipagem dinâmica, operadores //, %, **, input/print, if/elif/else, for/while, range, funções), strings (imutabilidade, indexação, slice, métodos upper/lower/strip/split), listas (mutabilidade, append/insert/remove/pop/sort/reverse, aliasing, clone), recursividade (caso base, redução ao caso base, pilha de chamadas), Tipos Abstratos de Dados TAD (definição, interface vs implementação, tipos primitivos vs complexos), listas sequenciais (interface, complexidade de operações), pilhas LIFO (push, pop, top, is_empty, len, aplicações: matching de parênteses, inversão, call stack), filas FIFO (enqueue, dequeue, first, array circular), deque double-ended queue (add_first, add_last, delete_first, delete_last, collections.deque).',
+        label: 'AV1: Recursividade, Pilhas, Filas, Deques e Big O',
+        prompt: 'Conteúdo da AV1 de Estrutura de Dados, conforme os assuntos declarados pelo professor (recursividade, pilhas, filas, deques e análise de desempenho com notação Big O), mais a sequência didática que os precede: Python básico (tipos primitivos, tipagem dinâmica, operadores //, %, **, input/print, if/elif/else, for/while, range, funções), strings (imutabilidade, indexação, slice, métodos upper/lower/strip/split), listas (mutabilidade, append/insert/remove/pop/sort/reverse, aliasing, clone), recursividade (caso base, redução ao caso base, pilha de chamadas, fatorial, inversão de string, Fibonacci, MDC recursivo, palíndromo), Tipos Abstratos de Dados TAD (definição, interface vs implementação, tipos primitivos vs complexos), listas sequenciais (interface, complexidade de operações), pilhas LIFO (push, pop, top, is_empty, len, aplicações: matching de parênteses, inversão, call stack, labirinto), filas FIFO (enqueue, dequeue, first, array circular com (ini+1)%N, coloração de regiões), deque double-ended queue (add_first, add_last, delete_first, delete_last, collections.deque, palíndromo), e notação Big O (melhor/pior/caso médio, O(1), O(log n), O(n), O(n log n), O(n²), descarte de constantes).',
     },
     {
         value: 'prova2',
-        label: 'Prova 2: Listas Encadeadas, Busca, Hashing, Ordenação e Árvores',
-        prompt: 'Conteúdo da Prova 2 de Estrutura de Dados: listas encadeadas (classe Nó com dado e próximo, head, add O(1), search/remove/size O(n), lista ordenada), pesquisa sequencial (O(n), lista ordenada melhora por interrupção antecipada), busca binária (exige lista ordenada, O(log n), dividir e conquistar, versão iterativa e recursiva), hashing (função hash, fator de carga FC, colisão, linear probing, quadratic probing, chaining, folding method, mid-square, TAD Map com put/get), ordenação (bubble sort O(n²), selection sort O(n²), insertion sort O(n) melhor, merge sort O(n log n), quick sort O(n log n) médio, shell sort), árvores (raiz, folha, grau, altura, árvore binária, travessias pré-ordem/em-ordem/pós-ordem, BST propriedade e busca O(h)).',
+        label: 'AV2: Listas Encadeadas, Busca, Ordenação, Árvores e Big O',
+        prompt: 'Conteúdo da AV2 de Estrutura de Dados: listas encadeadas (classe Nó com dado e próximo, head, add O(1), search/remove/size O(n), lista encadeada ordenada), pesquisa sequencial (O(n); tabelas de melhor, pior e caso médio para item presente e ausente; lista ordenada permite parar ao achar valor maior), busca binária (exige lista ordenada, O(log n) porque n/2^i = 1 implica i = log n, dividir e conquistar, versão iterativa com inicio/fim e versão recursiva cujo slice custa O(k)), hashing (função hash, fator de carga FC, colisão, linear probing com rehash (pos+1)%tamanho, quadratic probing com incrementos 1/4/9/16, chaining, folding method, mid-square, hash de string ponderado por posição para evitar colisão de anagramas, TAD Map com put/get e HashTable com _slots e _valores), ordenação (bubble sort e shortBubbleSort, selection sort com uma troca por varredura, insertion sort, shell sort com gap decrescente, merge sort O(n log n) sempre, quick sort com pivô, leftmark, rightmark, split point e mediana de três), árvores (vocabulário, lista de listas, nós e referências, travessias, parse tree construída com pilha), BST como TAD Map (put, get, __setitem__, __getitem__, __contains__, __iter__, remoção nos três casos e busca do sucessor), binary heap e fila de prioridade (percUp, percDown, minChild, delMin, buildHeap), e notação Big O aplicada a todas essas estruturas.',
     },
     { value: 'python', label: 'Python Básico' },
     { value: 'strings-listas', label: 'Strings e Listas' },
     { value: 'recursividade', label: 'Recursividade' },
+    {
+        value: 'big-o',
+        label: 'Notação Big O (cai nas 3 provas)',
+        prompt: 'Análise de desempenho de algoritmos com notação Big O em Estrutura de Dados: o que a notação mede (crescimento do número de operações conforme n aumenta, não tempo em segundos), melhor caso, pior caso e caso médio, descarte de constantes (a soma das comparações do bubble sort é (n²/2)−(n/2), que vira O(n²)), classes O(1) (push, pop, enqueue, dequeue em fila circular, add na cabeça de lista encadeada, acesso por índice), O(log n) (busca binária, BST balanceada — porque n/2^i = 1 implica i = log n), O(n) (busca sequencial, size e search em lista encadeada, travessia de árvore), O(n log n) (merge sort sempre, quick sort no caso médio), O(n^3/2) (shell sort com incrementos 2^k−1) e O(n²) (bubble, selection e insertion sort). Custo por estrutura: tabela hash O(1) sem colisão e O(1+FC/2) com linear probing; BST O(h), com h ≈ log n se balanceada e h = n se degenerada.',
+    },
     { value: 'tad', label: 'Tipos Abstratos de Dados' },
     { value: 'listas', label: 'Listas Sequenciais' },
     { value: 'pilhas', label: 'Pilhas (Stack)' },
@@ -57,7 +74,16 @@ export const ESTRUTURA_DADOS_TOPICS: QuizTopicOption[] = [
     { value: 'pesquisa', label: 'Pesquisa e Busca' },
     { value: 'hashing', label: 'Hashing e Tabelas Hash' },
     { value: 'ordenacao', label: 'Algoritmos de Ordenação' },
-    { value: 'arvores', label: 'Árvores e BST' },
+    {
+        value: 'arvores',
+        label: 'Árvores: conceitos e representações',
+        prompt: 'Árvores em Estrutura de Dados: tipo de dado não linear e hierárquico com raiz, galhos e folhas. Vocabulário: nó (tem uma chave e opcionalmente um payload; também chamado vértice), aresta (conecta dois nós), raiz (único nó sem aresta de entrada), caminho (lista ordenada de nós conectados), pai, filho, irmão, subárvore, folha (nó sem filhos), nível (número de arestas da raiz até o nó) e altura (maior nível da árvore). Árvore binária: cada nó tem no máximo dois filhos. Representações: lista de listas ([raiz, subárvore_esquerda, subárvore_direita], com insertLeft empurrando o filho antigo um nível para baixo) e nós e referências (classe com key, leftChild e rightChild). Travessias recursivas: pré-ordem (raiz, esquerda, direita), em-ordem (esquerda, raiz, direita) e pós-ordem (esquerda, direita, raiz). Árvore de análise (parse tree): representa expressões matemáticas parentizadas, com operadores nos nós internos e operandos nas folhas; as regras de construção são "(" cria filho esquerdo e desce, operador grava no nó atual e cria filho direito, número grava e volta ao pai, ")" volta ao pai; usa-se uma pilha para guardar os pais porque a interface não tem ponteiro para o pai. Avaliação da expressão por recursão em pós-ordem.',
+    },
+    {
+        value: 'arvores-busca',
+        label: 'Árvores de Busca (BST) e Heap',
+        prompt: 'Árvore Binária de Busca e heap em Estrutura de Dados: a BST implementa o TAD Map com Map(), put(key,val), get(key), del, len() e in. Propriedade: cada chave menor que a do pai está na subárvore esquerda e cada chave maior está na direita. TreeNode guarda key, payload, leftChild, rightChild e parent, com auxiliares isLeaf, hasBothChildren, isLeftChild e replaceNodeData. Métodos especiais do Python dão sintaxe de dicionário: __setitem__ chama put, __getitem__ chama get, __contains__ implementa in e __iter__ percorre em-ordem com yield. Remoção tem três casos: (1) nó folha, basta apagar a referência no pai; (2) nó com um filho, promove-se o filho e reencadeia-se pai e filho, usando replaceNodeData se for a raiz; (3) nó com dois filhos, procura-se o sucessor (a próxima maior chave, que tem garantia de não ter mais de um filho), remove-se com spliceOut e coloca-se no lugar. Achar o sucessor: se há filho direito, é a menor chave da subárvore direita (findMin desce sempre à esquerda); se não há e o nó é filho esquerdo, o sucessor é o pai. Complexidade O(h). Fila de prioridade com binary heap: enqueue e dequeue em O(log n); heap mínimo mantém o menor na raiz; propriedade estrutural de árvore balanceada permite guardar em lista única, com filhos de p em 2p e 2p+1 e pai de n em n//2; insert anexa ao fim e percUp sobe trocando com o pai; delMin retira a raiz, move o último item para a raiz e percDown desce trocando com o menor filho (minChild); buildHeap aplica percDown de trás para frente a partir de len(lista)//2.',
+    },
 ];
 
 export const ESTRUTURA_DADOS_SECTIONS = [
@@ -65,6 +91,7 @@ export const ESTRUTURA_DADOS_SECTIONS = [
     { id: 'python', title: 'Python Básico', shortTitle: 'Python', exam: 'AV1' },
     { id: 'strings-listas', title: 'Strings e Listas', shortTitle: 'Strings/Listas', exam: 'AV1' },
     { id: 'recursividade', title: 'Recursividade', shortTitle: 'Recursividade', exam: 'AV1' },
+    { id: 'big-o', title: 'Análise de Desempenho — Notação Big O', shortTitle: 'Big O', exam: 'AV1' },
     { id: 'tad', title: 'Tipos Abstratos de Dados', shortTitle: 'TAD', exam: 'AV1' },
     { id: 'listas', title: 'Listas Sequenciais', shortTitle: 'Listas', exam: 'AV1' },
     { id: 'pilhas', title: 'Pilhas (Stack)', shortTitle: 'Pilhas', exam: 'AV1' },
@@ -74,7 +101,8 @@ export const ESTRUTURA_DADOS_SECTIONS = [
     { id: 'pesquisa', title: 'Pesquisa e Busca', shortTitle: 'Pesquisa', exam: 'AV2' },
     { id: 'hashing', title: 'Hashing', shortTitle: 'Hashing', exam: 'AV2' },
     { id: 'ordenacao', title: 'Ordenação', shortTitle: 'Ordenação', exam: 'AV2' },
-    { id: 'arvores', title: 'Árvores', shortTitle: 'Árvores', exam: 'AV2' },
+    { id: 'arvores', title: 'Árvores — Conceitos e Representações', shortTitle: 'Árvores', exam: 'AV2' },
+    { id: 'arvores-busca', title: 'Árvores de Busca e Heap', shortTitle: 'BST/Heap', exam: 'AV2' },
     { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ];
 
@@ -495,9 +523,144 @@ const QUIZ_DATA_BASE: QuizQuestionData[] = [
         feedbackCorrect: 'Correto. O(h) onde h é a altura. Em BST balanceada h ≈ log n. Em BST degenerada (tipo lista) h = n.',
         feedbackWrong: 'Busca em BST é O(h). Se balanceada: O(log n). Se degenerada (todos os elementos em um lado): O(n).',
     },
+    {
+        id: 'q33',
+        question: '33. Em uma pilha inicialmente vazia foram executadas 25 operações push, 12 operações top e 10 operações pop, sendo que 3 dos pops lançaram a exceção "Pilha Vazia". Qual é o tamanho atual da pilha?',
+        options: ['15', '18', '13', '25'],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. O top apenas consulta e não altera o tamanho. Dos 10 pops, 3 falharam e não removeram nada, então saíram 7 elementos: 25 − 7 = 18.',
+        feedbackWrong: 'São 18. As 12 operações top não removem nada, e os 3 pops que lançaram exceção também não. Logo: 25 − (10 − 3) = 18.',
+    },
+    {
+        id: 'q34',
+        question: '34. Por que a análise da busca binária recursiva escrita com fatiamento (lista[:meio]) não é realmente O(log n)?',
+        options: [
+            'Porque a recursão consome memória na pilha de chamadas',
+            'Porque o slice copia os elementos, custando O(k) em vez de O(1) por chamada',
+            'Porque a versão recursiva compara duas vezes o elemento do meio',
+            'Porque a lista precisa ser reordenada a cada chamada recursiva',
+        ],
+        correctIndex: 1,
+        feedbackCorrect: 'Exato. A análise supõe que o slice é O(1), mas ele copia os elementos e custa O(k). A versão iterativa com índices inicio e fim evita esse custo.',
+        feedbackWrong: 'O problema é o operador de fatiamento: lista[:meio] não é O(1), e sim O(k), porque copia elementos. Use a versão iterativa com índices.',
+    },
+    {
+        id: 'q35',
+        question: '35. Na função hash para strings que apenas soma os ord() dos caracteres, qual problema aparece?',
+        options: [
+            'Strings com acento geram erro de execução',
+            'Strings muito longas ultrapassam o tamanho da tabela',
+            'Anagramas produzem sempre o mesmo hash e colidem',
+            'Strings vazias produzem hash negativo',
+        ],
+        correctIndex: 2,
+        feedbackCorrect: 'Correto. "cat" e "tac" somam 312 e caem no mesmo slot. A correção é ponderar cada caractere pela sua posição: 99·1 + 97·2 + 116·3 = 641.',
+        feedbackWrong: 'Anagramas colidem: "cat" e "tac" têm a mesma soma de ord(). Ponderar cada caractere pela posição resolve o problema.',
+    },
+    {
+        id: 'q36',
+        question: '36. No quick sort estudado em aula, o que é o split point?',
+        options: [
+            'O elemento do meio da lista, escolhido como pivô',
+            'A posição onde leftmark e rightmark se cruzam, que é o lugar definitivo do pivô',
+            'O ponto em que a lista é dividida exatamente ao meio',
+            'A quantidade de trocas feitas em cada particionamento',
+        ],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. Quando rightmark fica menor que leftmark, as marcas cruzaram: essa posição é o split point, onde o pivô é colocado e a partir da qual a lista é dividida.',
+        feedbackWrong: 'O split point é a posição de encontro de leftmark e rightmark. O pivô é trocado para lá e passa a ocupar seu lugar definitivo na lista ordenada.',
+    },
+    {
+        id: 'q37',
+        question: '37. Qual algoritmo de ordenação tem garantia de O(n log n) mesmo no pior caso?',
+        options: ['Shell Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort'],
+        correctIndex: 2,
+        feedbackCorrect: 'Correto. O merge sort divide sempre ao meio, então é O(n log n) em qualquer entrada. O preço é O(n) de espaço extra.',
+        feedbackWrong: 'É o merge sort. O quick sort cai para O(n²) quando a divisão é desigual, o shell sort depende dos incrementos e o insertion sort é O(n²) no pior caso.',
+    },
+    {
+        id: 'q38',
+        question: '38. Ao construir a árvore de análise de uma expressão como (3+(4*5)), por que é necessária uma pilha?',
+        options: [
+            'Para armazenar os operadores até o fim da leitura dos tokens',
+            'Para guardar os nós pais, já que a interface da árvore só permite descer aos filhos',
+            'Para inverter a expressão antes de montar a árvore',
+            'Para verificar se os parênteses da expressão estão balanceados',
+        ],
+        correctIndex: 1,
+        feedbackCorrect: 'Exato. A interface oferece getLeftChild e getRightChild, mas não referência ao pai. Empilha-se o nó atual antes de descer e desempilha-se ao encontrar ")".',
+        feedbackWrong: 'A pilha guarda os nós pais. Como a árvore só permite descer (getLeftChild/getRightChild), é ela que permite voltar ao pai quando o token é ")".',
+    },
+    {
+        id: 'q39',
+        question: '39. Em um binary heap mínimo representado por uma única lista, onde está o filho esquerdo do nó que ocupa a posição p?',
+        options: ['Na posição p + 1', 'Na posição 2p', 'Na posição p // 2', 'Na posição 2p + 1'],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. O filho esquerdo fica em 2p, o direito em 2p+1 e o pai do nó n em n//2. É essa aritmética que dispensa nós e referências.',
+        feedbackWrong: 'O filho esquerdo fica em 2p. O filho direito fica em 2p+1 e o pai do nó n em n//2.',
+    },
+    {
+        id: 'q40',
+        question: '40. Na remoção de um nó com DOIS filhos em uma BST, o que é feito?',
+        options: [
+            'Promove-se o filho esquerdo ao lugar do nó removido',
+            'A subárvore inteira é reconstruída do zero',
+            'Busca-se o sucessor (próxima maior chave), que é retirado e colocado no lugar do nó removido',
+            'O nó é apenas marcado como removido e permanece na árvore',
+        ],
+        correctIndex: 2,
+        feedbackCorrect: 'Correto. Nenhum dos filhos pode simplesmente subir. O sucessor tem garantia de não ter mais de um filho, por isso pode ser retirado com segurança e assumir o lugar.',
+        feedbackWrong: 'Procura-se o sucessor: o nó com a próxima maior chave. Ele nunca tem mais de um filho, é retirado (spliceOut) e colocado na posição do nó removido.',
+    },
+    {
+        id: 'q41',
+        question: '41. Ao inserir uma nova chave em um binary heap, qual é a sequência correta de passos?',
+        options: [
+            'Insere na raiz e desce trocando com o menor filho (percDown)',
+            'Anexa ao fim da lista e sobe trocando com o pai enquanto for menor (percUp)',
+            'Percorre a lista até achar a posição ordenada e desloca os demais',
+            'Reconstrói o heap inteiro com buildHeap a cada inserção',
+        ],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. Anexar ao fim preserva a propriedade estrutural; o percUp então restaura a propriedade de ordem comparando com o pai em i//2. Custa O(log n).',
+        feedbackWrong: 'Primeiro anexa-se ao fim da lista (preserva a estrutura) e depois o percUp sobe o item trocando com o pai enquanto ele for menor. O percDown é usado no delMin.',
+    },
+    {
+        id: 'q42',
+        question: '42. Por que a notação Big O descarta os termos de menor grau e as constantes?',
+        options: [
+            'Porque eles não afetam o resultado do algoritmo',
+            'Porque só interessa o consumo de memória, não o de tempo',
+            'Porque, à medida que n cresce, o termo dominante determina o comportamento do custo',
+            'Porque os compiladores modernos eliminam essas operações',
+        ],
+        correctIndex: 2,
+        feedbackCorrect: 'Correto. A soma das comparações do bubble sort é (n²/2) − (n/2), mas para n grande o n² domina — por isso escreve-se apenas O(n²).',
+        feedbackWrong: 'Big O descreve o crescimento assintótico: quando n aumenta, o termo de maior grau domina. (n²/2) − (n/2) é simplesmente O(n²).',
+    },
+    {
+        id: 'q43',
+        question: '43. Buscando um item que NÃO está presente em uma lista ordenada com busca sequencial, qual é o número médio de comparações?',
+        options: ['n comparações, sempre', 'n/2 comparações', '1 comparação', 'log n comparações'],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. Em lista ordenada, a busca para assim que encontra um valor maior que o procurado — média n/2. Em lista não ordenada seriam n comparações. A técnica continua O(n).',
+        feedbackWrong: 'São n/2 em média: a lista ordenada permite parar ao encontrar um valor maior que o procurado. Em lista não ordenada, item ausente exige sempre n comparações.',
+    },
 ];
 
-export const QUIZ_DATA: QuizQuestionData[] = QUIZ_DATA_BASE.map((question, index) => ({
+/**
+ * Questões da AV1. As demais pertencem à AV2.
+ * O mapeamento é explícito por id — e não por posição — para que inserir uma
+ * questão no meio da lista não reclassifique as seguintes por acidente.
+ */
+const AV1_QUESTION_IDS = new Set([
+    'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10',
+    'q11', 'q12', 'q13', 'q14', 'q15', 'q16', 'q17',
+    'q33', // pilha: contagem de push/top/pop
+    'q42', // Big O: descarte de constantes (assunto das três avaliações)
+]);
+
+export const QUIZ_DATA: QuizQuestionData[] = QUIZ_DATA_BASE.map(question => ({
     ...question,
-    exam: index < 17 ? 'prova1' as const : 'prova2' as const,
+    exam: AV1_QUESTION_IDS.has(question.id) ? ('prova1' as const) : ('prova2' as const),
 }));
