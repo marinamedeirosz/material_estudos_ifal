@@ -288,8 +288,18 @@ const LANG_CONFIGS: Record<WordLanguage, LangConfig> = {
 const MARKUP_LABELS: Record<'html' | 'css', string> = { html: 'HTML', css: 'CSS' };
 
 /**
+ * Tags cujo conteúdo é outra linguagem. Usado por `tokenizeHtml` para delegar
+ * o miolo ao tokenizador certo em vez de deixá-lo sem destaque.
+ */
+const EMBEDDED_LANGS: Record<string, (code: string) => Token[]> = {
+  script: (code) => tokenize(code, LANG_CONFIGS.javascript),
+  style: (code) => tokenizeCss(code),
+};
+
+/**
  * Tokeniza HTML destacando comentários, doctype, nomes de tag, nomes de
- * atributo e valores entre aspas. O texto entre tags fica sem destaque.
+ * atributo e valores entre aspas. O miolo de <script>/<style> é delegado ao
+ * tokenizador da linguagem correspondente; o resto do texto fica sem destaque.
  */
 function tokenizeHtml(code: string): Token[] {
   const tokens: Token[] = [];
@@ -342,6 +352,20 @@ function tokenizeHtml(code: string): Token[] {
         }
         tokens.push({ type: 'default', text: code[i] });
         i++;
+      }
+
+      // O miolo de <script>/<style> é outra linguagem: delega ao tokenizador
+      // dela para o exemplo de DOM não ficar sem cor nenhuma no meio de blocos
+      // coloridos. `>` é consumido aqui porque o corpo começa logo depois.
+      const embedded = EMBEDDED_LANGS[openTag[1].toLowerCase()];
+      if (embedded && code[i] === '>' && openTag[0][1] !== '/') {
+        tokens.push({ type: 'default', text: '>' });
+        i++;
+        const closing = new RegExp(`</${openTag[1]}\\s*>`, 'i').exec(code.slice(i));
+        const bodyEnd = closing ? i + closing.index : code.length;
+        const body = code.slice(i, bodyEnd);
+        if (body) tokens.push(...embedded(body));
+        i = bodyEnd;
       }
       continue;
     }
