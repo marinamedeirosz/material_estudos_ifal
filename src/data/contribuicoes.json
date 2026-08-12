@@ -1,7 +1,7 @@
 {
   "$schema": "./contribuicoes.schema.json",
   "versao": 1,
-  "atualizadoEm": "2026-08-11T00:00:00-03:00",
+  "atualizadoEm": "2026-08-12T00:00:00-03:00",
   "contribuintes": [
     {
       "id": "isaque-braga",
@@ -320,6 +320,63 @@
         "refatoracao",
         "componente",
         "arquitetura"
+      ]
+    },
+    {
+      "id": "contrib-2026-08-12-enriquecimento-pdsw-sigaa",
+      "contribuinteId": "pericles-feitoza",
+      "quando": {
+        "data": "2026-08-12",
+        "registradoEm": "2026-08-12T00:00:00-03:00",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "processos-desenvolvimento-software",
+        "materiaCodigo": "PDSW",
+        "arquivo": "src/content/processos-desenvolvimento-software/"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Enriquece Processos de Desenvolvimento de Software com uma seção de Exercícios de Padrões, subseção de estimativa ágil (Planning Poker) no capítulo de Requisitos e novas questões de quiz.",
+        "detalhes": "Nova seção Exercícios de Padrões com nove refatorações guiadas (Factory, Singleton, Adapter, Facade, Decorator, Strategy, Observer, Template Method e Visitor), cada uma com código inicial e roteiro de solução, a partir das listas de prática do professor Elvys Alves Soares. O capítulo 3 ganhou a subseção Estimativa ágil e priorização (pontos de história, Planning Poker, priorização). O quiz recebeu cinco questões novas sobre Planning Poker e padrões, e o contexto de IA foi atualizado.",
+        "origem": "material_professor"
+      },
+      "status": "incorporado",
+      "tags": [
+        "processos-desenvolvimento-software",
+        "conteudo",
+        "padroes-de-projeto",
+        "planning-poker",
+        "quiz"
+      ]
+    },
+    {
+      "id": "contrib-2026-08-12-enriquecimento-metc-sigaa",
+      "contribuinteId": "pericles-feitoza",
+      "quando": {
+        "data": "2026-08-12",
+        "registradoEm": "2026-08-12T00:00:00-03:00",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "metodologia-cientifica",
+        "materiaCodigo": "METC",
+        "arquivo": "src/content/metodologia-cientifica/"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Adiciona a seção Escrita Científica à Metodologia Científica, com estrutura do artigo, formato IMRD, boas práticas de redação e novas questões de quiz.",
+        "detalhes": "Nova seção Escrita Científica cobrindo os elementos pré-textuais, textuais e pós-textuais do artigo, o formato IMRD (Introdução, Método, Resultados e Discussão) e boas práticas de redação (clareza, concisão, ordem de escrita, escolha da revista, revisão). Baseada nos slides e artigos da turma no SIGAA (material da professora da disciplina). O quiz recebeu quatro questões novas, e o contexto de IA e o prompt da Prova 2 foram atualizados.",
+        "origem": "material_professor"
+      },
+      "status": "incorporado",
+      "tags": [
+        "metodologia-cientifica",
+        "conteudo",
+        "escrita-cientifica",
+        "quiz"
       ]
     }
   ]
