@@ -20,7 +20,7 @@ const subjects: Subject[] = [
   // ═══════ 1º PERÍODO ═══════
   { id: 'fusi', name: 'Fundamentos de Sistemas de Informação', slug: 'fundamentos-si', code: 'FUSI', period: 1, axis: 'FB', hours: 80, hasContent: false },
   { id: 'alpg', name: 'Algoritmos e Lógica de Programação', slug: 'algoritmos-logica-programacao', code: 'ALPG', period: 1, axis: 'FPG', hours: 80, hasContent: true },
-  { id: 'intw', name: 'Introdução às Tecnologias Web', slug: 'introducao-tecnologias-web', code: 'INTW', period: 1, axis: 'FPG', hours: 40, hasContent: false },
+  { id: 'intw', name: 'Introdução às Tecnologias Web', slug: 'introducao-tecnologias-web', code: 'INTW', period: 1, axis: 'FPG', hours: 40, hasContent: true },
   { id: 'lmmd', name: 'Lógica Matemática e Matemática Discreta', slug: 'logica-matematica-discreta', code: 'LMMD', period: 1, axis: 'FB', hours: 80, hasContent: true },
   { id: 'ingt', name: 'Inglês Técnico', slug: 'ingles-tecnico', code: 'INGT', period: 1, axis: 'FB', hours: 80, hasContent: false },
   { id: 'filo', name: 'Filosofia', slug: 'filosofia', code: 'FILO', period: 1, axis: 'FHS', hours: 80, hasContent: false },
