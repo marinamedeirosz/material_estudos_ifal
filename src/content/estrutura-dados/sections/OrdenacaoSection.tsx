@@ -1,6 +1,6 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, ComparisonTable } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, ComparisonTable } from '../../../components/sections';
 import {
   codeBubble,
   codeShell,
@@ -14,34 +14,29 @@ export default function OrdenacaoSection() {
     <section className="animate-fade-in space-y-6">
       <SectionHeader
         title="Algoritmos de Ordenação"
-        subtitle="Bubble, Selection, Insertion, Shell, Merge e Quick Sort — análise comparativa"
+        subtitle="Bubble, Selection, Insertion, Shell, Merge e Quick Sort em análise comparativa"
         colorClass="text-accent2"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Os principais algoritmos</h3>
+      <Subsection title="Os principais algoritmos">
         <ConceptGrid items={sortConcepts} columns="md:grid-cols-2 lg:grid-cols-3" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Bubble Sort e Selection Sort</h3>
+      <Subsection title="Bubble Sort e Selection Sort" accentClass="text-accent3">
         <CodeBlock code={codeBubble} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Shell Sort</h3>
+      <Subsection title="Shell Sort" accentClass="text-accent2">
         <CodeBlock code={codeShell} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Merge Sort</h3>
+      <Subsection title="Merge Sort" accentClass="text-accent4">
         <CodeBlock code={codeMerge} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Quick Sort com partição in-place</h3>
+      <Subsection title="Quick Sort com partição in-place">
         <CodeBlock code={codeQuick} language="python" />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Mediana de três" accent="var(--color-accent3)">
         <p>
@@ -51,10 +46,9 @@ export default function OrdenacaoSection() {
         </p>
       </HighlightBox>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">Análise de complexidade</h3>
+      <Subsection title="Análise de complexidade" accentClass="text-accent5">
         <ComparisonTable rows={sortComplexity} leftLabel="Complexidade de tempo" rightLabel="Espaço e estabilidade" />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Algoritmo estável">
         <p>

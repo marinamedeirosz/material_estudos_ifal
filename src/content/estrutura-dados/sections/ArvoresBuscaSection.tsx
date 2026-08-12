@@ -1,6 +1,6 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList, ComparisonTable } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, PanelList, ComparisonTable } from '../../../components/sections';
 import {
   codeBst,
   codeSucessor,
@@ -17,30 +17,25 @@ export default function ArvoresBuscaSection() {
         colorClass="text-accent5"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">A BST implementa o TAD Map</h3>
+      <Subsection title="A BST implementa o TAD Map">
         <PanelList items={bstMapOperations} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Implementação da BST</h3>
+      <Subsection title="Implementação da BST" accentClass="text-accent2">
         <CodeBlock code={codeBst} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Remover um nó: os três casos</h3>
+      <Subsection title="Remover um nó: os três casos" accentClass="text-accent3">
         <ConceptGrid items={bstDeleteCases} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Encontrando o sucessor</h3>
+      <Subsection title="Encontrando o sucessor" accentClass="text-accent4">
         <CodeBlock code={codeSucessor} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">Complexidade das operações na BST</h3>
-        <ComparisonTable rows={bstComplexity} leftLabel="Operação" rightLabel="Casos balanceada / degenerada" />
-      </div>
+      <Subsection title="Complexidade das operações na BST" accentClass="text-accent5">
+        <ComparisonTable rows={bstComplexity} leftLabel="Complexidade" rightLabel="Casos balanceada / degenerada" />
+      </Subsection>
 
       <HighlightBox title="BST degenerada" accent="var(--color-accent2)">
         <p>
@@ -49,20 +44,17 @@ export default function ArvoresBuscaSection() {
         </p>
       </HighlightBox>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Fila de prioridade e binary heap</h3>
+      <Subsection title="Fila de prioridade e binary heap">
         <ConceptGrid items={heapConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">As operações do heap</h3>
+      <Subsection title="As operações do heap" accentClass="text-accent3">
         <PanelList items={heapOperations} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Implementação do binary heap</h3>
+      <Subsection title="Implementação do binary heap" accentClass="text-accent4">
         <CodeBlock code={codeHeap} language="python" />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Duas propriedades, sempre nessa ordem">
         <p>

@@ -1,13 +1,12 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import FlowDiagram from '../../../components/ui/FlowDiagram';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, PanelList } from '../../../components/sections';
 import {
   codeRepresentacoes,
   codeTravessias,
 } from './snippets';
 import {
-  treeConcepts,
   treeVocabulary,
   treeRepresentations,
   treeTraversals,
@@ -24,45 +23,33 @@ export default function ArvoresSection() {
         colorClass="text-accent3"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Conceitos fundamentais</h3>
-        <ConceptGrid items={treeConcepts} />
-      </div>
-
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Vocabulário da aula</h3>
+      <Subsection title="Vocabulário da aula">
         <PanelList items={treeVocabulary} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Duas formas de representar</h3>
+      <Subsection title="Duas formas de representar" accentClass="text-accent4">
         <ConceptGrid items={treeRepresentations} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">As duas representações em código</h3>
+      <Subsection title="As duas representações em código" accentClass="text-accent5">
         <CodeBlock code={codeRepresentacoes} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Travessias de árvore binária</h3>
+      <Subsection title="Travessias de árvore binária" accentClass="text-accent2">
         <PanelList items={treeTraversals} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">As três travessias em código</h3>
+      <Subsection title="As três travessias em código" accentClass="text-accent3">
         <CodeBlock code={codeTravessias} language="python" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Árvore de análise (parse tree)</h3>
+      <Subsection title="Árvore de análise (parse tree)">
         <PanelList items={parseTreeConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Regras para construir a árvore de análise</h3>
+      <Subsection title="Regras para construir a árvore de análise" accentClass="text-accent4">
         <FlowDiagram items={parseTreeRules} />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Onde a pilha reaparece" accent="var(--color-accent5)">
         <p>

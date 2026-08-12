@@ -1,42 +1,11 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import FlowDiagram from '../../../components/ui/FlowDiagram';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, PanelList } from '../../../components/sections';
+import { codeRecursividade } from './snippets';
 import { recursionConcepts, recursionExamples, recursionFlow } from './blocks';
 
 export default function RecursividadeSection() {
-  const code = `\
-# ── Dois ingredientes obrigatórios ───────────────
-# 1. Caso base (condição de parada)
-# 2. Redução ao caso base (problema fica menor)
-
-def contagem(n):
-    if n == 0:           # caso base
-        return
-    print(n)
-    contagem(n - 1)      # redução: n → n-1
-
-# contagem(3) imprime: 3  2  1
-
-def soma_ateh(n):
-    if n == 0:           # caso base
-        return 0
-    return n + soma_ateh(n - 1)   # redução
-
-print(soma_ateh(5))   # 15
-# Pilha de chamadas:
-# soma_ateh(5) → 5 + soma_ateh(4)
-#   soma_ateh(4) → 4 + soma_ateh(3)
-#     soma_ateh(3) → 3 + soma_ateh(2)
-#       soma_ateh(2) → 2 + soma_ateh(1)
-#         soma_ateh(1) → 1 + soma_ateh(0)
-#           soma_ateh(0) → 0  ← caso base!
-# ← desempilha retornando: 1, 3, 6, 10, 15
-
-def fib(n):
-    if n <= 1:           # caso base duplo
-        return n
-    return fib(n - 1) + fib(n - 2)   # O(2^n) sem memo!`;
 
   return (
     <section className="animate-fade-in space-y-6">
@@ -46,29 +15,36 @@ def fib(n):
         colorClass="text-accent3"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Conceitos fundamentais</h3>
+      <Subsection title="Conceitos fundamentais">
         <ConceptGrid items={recursionConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Como a recursão funciona</h3>
+      <Subsection title="Como a recursão funciona" accentClass="text-accent2">
         <FlowDiagram items={recursionFlow} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Exemplos clássicos em código</h3>
-        <CodeBlock code={code} language="python" />
-      </div>
+      <Subsection title="Exemplos clássicos em código" accentClass="text-accent3">
+        <CodeBlock code={codeRecursividade} language="python" />
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Mais exemplos</h3>
+      <Subsection title="Mais exemplos" accentClass="text-accent4">
         <PanelList items={recursionExamples} />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Cuidado com recursão infinita" accent="var(--color-accent2)">
         <p>
           Toda função recursiva precisa de: (1) caso base explícito e (2) garantia de que cada chamada aproxima o problema do caso base. Sem isso → recursão infinita → StackOverflow.
+        </p>
+      </HighlightBox>
+
+      <HighlightBox title="Quem subestima recursividade na AV1 paga na AV2" accent="var(--color-accent4)">
+        <p>
+          O assunto tem material curto e cai na AV1 <strong>e</strong> na prova final — mas o custo real de não dominá-lo
+          aparece depois. As três travessias de árvore, a avaliação da árvore de análise, o merge sort e o quick sort são
+          todos definidos recursivamente, e todos caem na AV2. Vale também ligar este tópico à{' '}
+          <strong>busca binária recursiva</strong>: ela é O(log n) em número de chamadas, mas se a recursão passar uma
+          fatia da lista em vez de índices, cada chamada copia elementos e a análise deixa de valer — o detalhe está
+          detalhado na seção Pesquisa e Busca.
         </p>
       </HighlightBox>
     </section>

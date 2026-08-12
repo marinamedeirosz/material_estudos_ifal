@@ -1,17 +1,18 @@
 // Blocos de dados das seções de Estrutura de Dados.
-// Fonte: material do Prof. Ricardo · ESTD · BSI/IFAL · 2023.1
+// Fonte: material do Prof. MSc. Ricardo Nunes (assina "Prof. Ricardo Rubens" nas listas
+// de exercícios; mesmo e-mail institucional) · ESTD · BSI/IFAL · 2023.1
 
 import type { ComparisonRow, ConceptItem, PanelItem, StatItem } from '../../../components/sections';
 
 export const revisionOverview: ConceptItem[] = [
   {
-    title: 'Prova 1',
+    title: 'AV1',
     description:
       'Cobre Python básico, strings e listas, recursividade, Tipos Abstratos de Dados (TAD), listas sequenciais, pilhas (LIFO), filas (FIFO) e deque. Foco em estruturas lineares e princípios fundamentais.',
     accent: 'accent',
   },
   {
-    title: 'Prova 2',
+    title: 'AV2',
     description:
       'Aprofunda listas encadeadas, pesquisa sequencial e binária, hashing e tabelas hash, algoritmos de ordenação e árvores binárias de busca. Foco em eficiência e análise de complexidade.',
     accent: 'accent3',
@@ -194,8 +195,20 @@ export const recursionExamples: PanelItem[] = [
     description: 'soma_ateh(n) = n + soma_ateh(n-1). Caso base: soma_ateh(0) = 0. Gera n frames na pilha.',
   },
   {
+    title: 'Inverter uma palavra',
+    description: 'inverte(s) = inverte(s[1:]) + s[0]. Caso base: string de 0 ou 1 caractere, que já é o próprio resultado. "Python" vira "nohtyP".',
+  },
+  {
+    title: 'Palíndromo (dois casos base)',
+    description: 'Compara a primeira letra com a última e recorre ao miolo. Precisa de DOIS casos base: string vazia (comprimento par) e de um caractere (ímpar) — ambas palíndromas.',
+  },
+  {
+    title: 'MDC pelo algoritmo de Euclides',
+    description: 'A versão iterativa com while vira MDC(a, b) = MDC(b, a % b), com caso base b == 0 devolvendo a. Ex.: MDC(48,18) → MDC(18,12) → MDC(12,6) → MDC(6,0) = 6.',
+  },
+  {
     title: 'Busca binária recursiva',
-    description: 'Compara o elemento do meio e chama recursivamente na metade relevante. O(log n) em chamadas.',
+    description: 'Compara o elemento do meio e chama recursivamente na metade relevante: O(log n) em número de chamadas. Atenção: se a recursão passar uma fatia (lista[:meio]) em vez de índices, cada chamada copia elementos e custa O(k) — a análise deixa de ser O(log n). Veja a seção Pesquisa e Busca.',
   },
   {
     title: 'Fibonacci',
@@ -247,7 +260,7 @@ export const tadObjectives: PanelItem[] = [
   },
   {
     title: 'Separação de responsabilidades',
-    description: 'O usuário do TAD não precisa saber como ele é implementado - apenas quais operações estão disponíveis e o que fazem.',
+    description: 'O usuário do TAD não precisa saber como ele é implementado — apenas quais operações estão disponíveis e o que fazem.',
   },
   {
     title: 'Armazenamento sequencial',
@@ -290,12 +303,12 @@ export const listInterface: PanelItem[] = [
 ];
 
 export const listComplexity: StatItem[] = [
-  { label: 'Adicionar no fim', value: 'O(1)*', accent: 'accent' },
-  { label: 'Inserir em posição', value: 'O(n)', accent: 'accent3' },
-  { label: 'Acessar por índice', value: 'O(1)', accent: 'accent' },
-  { label: 'Buscar elemento', value: 'O(n)', accent: 'accent3' },
-  { label: 'Remover elemento', value: 'O(n)', accent: 'accent3' },
-  { label: 'Tamanho', value: 'O(1)', accent: 'accent' },
+  { label: 'Adicionar no fim', value: 'O(1)*', accent: 'text-accent' },
+  { label: 'Inserir em posição', value: 'O(n)', accent: 'text-accent3' },
+  { label: 'Acessar por índice', value: 'O(1)', accent: 'text-accent' },
+  { label: 'Buscar elemento', value: 'O(n)', accent: 'text-accent3' },
+  { label: 'Remover elemento', value: 'O(n)', accent: 'text-accent3' },
+  { label: 'Tamanho', value: 'O(1)', accent: 'text-accent' },
 ];
 
 export const stackConcepts: ConceptItem[] = [
@@ -345,11 +358,11 @@ export const stackApplications: PanelItem[] = [
 ];
 
 export const stackComplexity: StatItem[] = [
-  { label: 'push(e)', value: 'O(1)*', accent: 'accent' },
-  { label: 'pop()', value: 'O(1)', accent: 'accent' },
-  { label: 'top()', value: 'O(1)', accent: 'accent' },
-  { label: 'is_empty()', value: 'O(1)', accent: 'accent' },
-  { label: 'len()', value: 'O(1)', accent: 'accent' },
+  { label: 'push(e)', value: 'O(1)*', accent: 'text-accent' },
+  { label: 'pop()', value: 'O(1)', accent: 'text-accent' },
+  { label: 'top()', value: 'O(1)', accent: 'text-accent' },
+  { label: 'is_empty()', value: 'O(1)', accent: 'text-accent' },
+  { label: 'len()', value: 'O(1)', accent: 'text-accent' },
 ];
 
 export const queueConcepts: ConceptItem[] = [
@@ -402,6 +415,35 @@ export const queueVsStack: ComparisonRow[] = [
   { criterion: 'Aplicações', left: 'BFS, sistemas de atendimento, impressão', right: 'DFS, undo/redo, call stack, parênteses' },
 ];
 
+// ── Aplicação de filas: coloração de regiões (07-aplicacoes-filas) ───────────
+
+export const floodFillSteps: string[] = [
+  'Obter um ponto inicial P0, de cor C0, pertencente à região R',
+  'Obter a nova cor C1 para a região R',
+  'Colocar P0 numa fila F inicialmente vazia',
+  'Enquanto F não esvaziar: remover um ponto P da fila',
+  'Inserir em F todos os pontos conectados a P cuja cor seja C0, e pintar P de C1',
+];
+
+export const floodFillConcepts: PanelItem[] = [
+  {
+    title: 'O que é uma região',
+    description: 'Um conjunto de pontos conectados entre si que têm a mesma cor. Na implementação, cada ponto é um pixel e a imagem é uma matriz bidimensional em que o valor da célula é a cor (0 = branco, 1 = cinza, 2 = preto, 3 = vermelho).',
+  },
+  {
+    title: 'Conectividade de 4 vizinhos',
+    description: 'P e Pj estão conectados quando se chega de um ao outro incrementando ou decrementando apenas a abscissa OU a ordenada: (x+1,y), (x−1,y), (x,y+1) e (x,y−1). As diagonais não contam — (x−1,y+1) e (x+1,y+1) não são vizinhos de P0.',
+  },
+  {
+    title: 'Por que fila e não pilha',
+    description: 'A fila faz a pintura crescer em ondas a partir do ponto inicial, visitando primeiro todos os vizinhos diretos — é a mesma ideia da busca em largura (BFS) em grafos. Com pilha o efeito seria de busca em profundidade: o resultado final é o mesmo, mas a ordem de visita muda.',
+  },
+  {
+    title: 'Cuidado com o laço infinito',
+    description: 'Só entram na fila os pontos que ainda têm a cor original C0. Como o ponto é repintado de C1 ao sair da fila, ele deixa de ser candidato e não volta a ser enfileirado pelos vizinhos.',
+  },
+];
+
 export const dequeConcepts: ConceptItem[] = [
   {
     title: 'Double-Ended Queue',
@@ -450,8 +492,29 @@ export const linkedListConcepts: ConceptItem[] = [
   },
   {
     title: 'Lista Ordenada',
-    description: 'Mantém os elementos em ordem. Inserção percorre até encontrar a posição correta: O(n). Busca pode parar mais cedo.',
+    description: 'Mantém os elementos em ordem crescente. A inserção percorre até achar a posição correta e continua O(n), mas a busca malsucedida melhora: pode parar ao encontrar um valor maior que o procurado.',
     accent: 'accent5',
+  },
+];
+
+// ── Lista encadeada ordenada (10-listas-encadeadas-ordenadas) ────────────────
+
+export const sortedLinkedList: PanelItem[] = [
+  {
+    title: 'O que muda no add()',
+    description: 'Na lista não ordenada, add() insere sempre na cabeça e custa O(1). Na ordenada, é preciso percorrer mantendo uma referência ao nó anterior até achar o primeiro nó com dado MAIOR que o novo — só então reencadear anterior → novo → atual. A inserção passa a ser O(n).',
+  },
+  {
+    title: 'O que melhora no search()',
+    description: 'A busca malsucedida deixa de percorrer a lista inteira: assim que aparece um nó com valor maior que o procurado, o item não pode estar adiante e a busca para. Na média, isso corta as comparações pela metade quando o item está ausente.',
+  },
+  {
+    title: 'O que NÃO melhora',
+    description: 'A busca continua O(n). Não dá para aplicar busca binária numa lista encadeada, porque não existe acesso por índice em O(1) — chegar ao elemento do meio já exigiria percorrer metade dos nós. O ganho é de constante, não de classe de complexidade.',
+  },
+  {
+    title: 'Inserir na cabeça e no fim',
+    description: 'Dois casos de borda que costumam quebrar a implementação: o novo item ser menor que todos (vira a nova cabeça, e head precisa ser atualizado) e ser maior que todos (o laço chega ao fim da lista com atual = None e a inserção acontece depois do último nó).',
   },
 ];
 
@@ -554,7 +617,7 @@ export const hashFunctions: PanelItem[] = [
   },
   {
     title: 'Folding Method',
-    description: 'Divide o item em partes iguais e soma. Ex: 436-555-4601 → 436+555+460+1 = 1452 → 1452%11 = 0.',
+    description: 'Divide o item em pedaços de tamanhos iguais e soma. Ex. da aula: o telefone (82)7989.1507 em grupos de 2 dá 82+79+89+15+07 = 272, e 272%11 = 8.',
   },
   {
     title: 'Mid-Square Method',
@@ -562,7 +625,7 @@ export const hashFunctions: PanelItem[] = [
   },
   {
     title: 'Hash para Strings',
-    description: 'Soma os ord() dos caracteres ponderados pela posição. Ex: hash("gato") = sum(ord(c) * pos). Distribui melhor que soma simples.',
+    description: 'Somar apenas os ord() faz anagramas colidirem: "cat" e "tac" somam 312 e caem no mesmo slot. Ponderar cada caractere pela posição resolve: 99·1 + 97·2 + 116·3 = 641.',
   },
 ];
 
@@ -580,7 +643,7 @@ export const sortConcepts: ConceptItem[] = [
   },
   {
     title: 'Selection Sort',
-    description: 'Melhora o bubble sort fazendo uma única troca por varredura: acha o extremo da parte não ordenada e o coloca no lugar. Faz o mesmo número de comparações do bubble, logo O(n²) sempre.',
+    description: 'Melhora o bubble sort fazendo uma única troca por varredura: acha o extremo da parte não ordenada (na versão da aula, o maior) e o coloca no lugar. Faz sempre n(n−1)/2 comparações, independentemente da ordem inicial — logo O(n²) sempre, sem melhor caso.',
     accent: 'accent2',
   },
   {
@@ -608,34 +671,15 @@ export const sortConcepts: ConceptItem[] = [
 export const sortComplexity: ComparisonRow[] = [
   { criterion: 'Bubble Sort', left: 'O(n) melhor · O(n²) médio/pior', right: 'O(1) espaço - estável' },
   { criterion: 'Selection Sort', left: 'O(n²) sempre', right: 'O(1) espaço - instável' },
-  { criterion: 'Insertion Sort', left: 'O(n) melhor · O(n²) pior', right: 'O(1) espaço - estável - bom para quase-ordenado' },
+  { criterion: 'Insertion Sort', left: 'O(n) melhor · O(n²) pior', right: 'O(1) espaço - estável - bom para quase ordenado' },
   { criterion: 'Shell Sort', left: 'Entre O(n) e O(n²) · O(n^3/2) com incrementos 2^k − 1', right: 'O(1) espaço - instável - depende da sequência de gaps' },
   { criterion: 'Merge Sort', left: 'O(n log n) sempre', right: 'O(n) espaço - estável' },
   { criterion: 'Quick Sort', left: 'O(n log n) médio · O(n²) pior', right: 'Sem memória extra - instável - mediana de três ajuda' },
 ];
 
-export const treeConcepts: ConceptItem[] = [
-  {
-    title: 'Raiz',
-    description: 'Nó sem pai. É o ponto de entrada da árvore. Toda árvore não-vazia tem exatamente uma raiz.',
-    accent: 'accent',
-  },
-  {
-    title: 'Folha',
-    description: 'Nó sem filhos. Nós folha ficam na borda externa da árvore.',
-    accent: 'accent2',
-  },
-  {
-    title: 'Altura e Grau',
-    description: 'Altura: comprimento do maior caminho raiz-folha. Grau de um nó: número de filhos. Árvore binária: grau ≤ 2.',
-    accent: 'accent3',
-  },
-  {
-    title: 'BST (Árvore Binária de Busca)',
-    description: 'Para cada nó N: todos os elementos da subárvore esquerda < N < todos da subárvore direita.',
-    accent: 'accent5',
-  },
-];
+// O vocabulário da aula (14-arvores-1) vive só em treeVocabulary — o bloco antigo
+// treeConcepts repetia raiz, folha e altura em cards logo acima, e definia a BST,
+// que hoje tem seção própria.
 
 export const treeTraversals: PanelItem[] = [
   {
@@ -720,9 +764,9 @@ export const bigOByStructure: ComparisonRow[] = [
 ];
 
 export const bigOSortSummary: StatItem[] = [
+  { label: 'O(n log n)', value: 'Merge (sempre) e Quick (médio)', accent: 'text-accent5' },
+  { label: 'O(n^3/2)', value: 'Shell sort com incremento 2^k − 1', accent: 'text-accent3' },
   { label: 'O(n²)', value: 'Bubble, Selection e Insertion', accent: 'text-accent2' },
-  { label: 'O(n log n)', value: 'Merge (sempre) e Quick (médio)', accent: 'text-accent3' },
-  { label: 'O(n^3/2)', value: 'Shell sort com incremento 2^k − 1', accent: 'text-accent5' },
 ];
 
 // ── Árvores: vocabulário e representações (14-arvores-1) ─────────────────────
@@ -738,11 +782,11 @@ export const treeVocabulary: PanelItem[] = [
   },
   {
     title: 'Caminho e folha',
-    description: 'Caminho é uma lista ordenada de nós conectados por arestas, como Felidae → Felis → Domestica. Folha é o nó sem filhos.',
+    description: 'Caminho é uma lista ordenada de nós conectados por arestas. O exemplo do slide vem da taxonomia dos felinos — Felidae → Felis → Domestica, da família ao gato doméstico. Folha é o nó sem filhos: fica na borda externa da árvore.',
   },
   {
-    title: 'Nível e altura',
-    description: 'O nível de um nó é o número de arestas no caminho da raiz até ele. A altura da árvore é o maior nível encontrado nela.',
+    title: 'Nível, altura e grau',
+    description: 'O nível de um nó é o número de arestas no caminho da raiz até ele. A altura da árvore é o maior nível encontrado nela. O grau de um nó é o seu número de filhos — quando nenhum nó passa de grau 2, a árvore é binária.',
   },
 ];
 
@@ -800,7 +844,7 @@ export const parseTreeConcepts: PanelItem[] = [
 export const heapConcepts: ConceptItem[] = [
   {
     title: 'Fila de prioridade',
-    description: 'Variação da fila: o dequeue continua saindo pela frente, mas a ordem interna é dada pela prioridade — a maior prioridade fica no início e a menor no fim.',
+    description: 'Variação da fila: o dequeue continua saindo pela frente, mas a ordem interna é dada pela prioridade — o item de maior prioridade fica no início. No heap mínimo, prioridade alta corresponde a chave menor, e por isso a menor chave é que fica na raiz.',
     accent: 'accent',
   },
   {
@@ -810,13 +854,18 @@ export const heapConcepts: ConceptItem[] = [
   },
   {
     title: 'Propriedade estrutural',
-    description: 'O heap é uma árvore balanceada: tem o mesmo número de nós à esquerda e à direita, com exceção do último nível. É isso que permite guardá-lo em uma única lista.',
+    description: 'O heap é uma árvore binária completa: tem o mesmo número de nós à esquerda e à direita, com exceção do último nível, preenchido da esquerda para a direita. É isso que permite guardá-lo em uma única lista.',
     accent: 'accent3',
   },
   {
     title: 'Propriedade de ordem',
     description: 'Em um heap mínimo, para todo nó x com pai p, a chave de p é menor ou igual à chave de x. O menor valor da coleção está sempre na raiz.',
     accent: 'accent5',
+  },
+  {
+    title: 'Daqui sai o heap sort',
+    description: 'Construir o heap com buildHeap e depois extrair repetidamente o mínimo com delMin devolve os elementos em ordem crescente. Esse é o heap sort: O(n log n) mesmo no pior caso, ao lado do merge sort — enquanto o quick sort só garante O(n log n) no caso médio.',
+    accent: 'accent4',
   },
 ];
 
@@ -858,6 +907,10 @@ export const bstMapOperations: PanelItem[] = [
     title: '__contains__ e __iter__',
     description: '__contains__ implementa o operador in devolvendo True quando _get encontra a chave. __iter__ percorre a árvore em-ordem com yield, permitindo escrever for x in arvore.',
   },
+  {
+    title: 'Armadilha: chave duplicada',
+    description: 'O algoritmo da aula manda a chave igual para o ramo direito e soma 1 ao tamanho sempre. O nó novo nunca seria encontrado numa pesquisa — o _get para no primeiro que casa — e o len() passa a mentir. Como o próprio material indica, a saída é comparar a chave no put e substituir o valor antigo em vez de criar outro nó.',
+  },
 ];
 
 export const bstDeleteCases: ConceptItem[] = [
@@ -879,7 +932,7 @@ export const bstDeleteCases: ConceptItem[] = [
   {
     title: 'Achando o sucessor',
     description: 'Se o nó tem filho direito, o sucessor é a menor chave da subárvore direita (desce-se sempre à esquerda, com findMin). Se não tem filho direito e ele é filho esquerdo do pai, o sucessor é o próprio pai.',
-    accent: 'accent2',
+    accent: 'accent4',
   },
 ];
 

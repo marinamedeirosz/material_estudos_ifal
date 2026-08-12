@@ -1,6 +1,40 @@
 // Trechos de código Python usados nas seções de Estrutura de Dados.
 // Todos foram verificados executando em Python 3.
-// Fonte: material do Prof. Ricardo · ESTD · BSI/IFAL · 2023.1
+// Fonte: material do Prof. MSc. Ricardo Nunes (assina "Prof. Ricardo Rubens" nas listas
+// de exercícios; mesmo e-mail institucional) · ESTD · BSI/IFAL · 2023.1
+
+export const codeFloodFill = `\
+from collections import deque
+
+def colorir_regiao(regiao, ponto, nova_cor):
+    """Pinta de nova_cor a região conectada que contém 'ponto'."""
+    matriz = [[c for c in linha] for linha in regiao]   # não altera a original
+    lin, col = ponto
+    cor_original = matriz[lin][col]
+    if cor_original == nova_cor:
+        return matriz
+
+    fila = deque([ponto])
+    while fila:                                 # enquanto a fila não esvaziar
+        i, j = fila.popleft()                   # remove um ponto P da fila
+        if matriz[i][j] != cor_original:
+            continue                            # já foi pintado por outro caminho
+        matriz[i][j] = nova_cor                 # altera a cor de P para C1
+        for vi, vj in ((i+1, j), (i-1, j), (i, j+1), (i, j-1)):   # 4 vizinhos
+            if 0 <= vi < len(matriz) and 0 <= vj < len(matriz[0]):
+                if matriz[vi][vj] == cor_original:
+                    fila.append((vi, vj))       # insere os conectados de cor C0
+    return matriz
+
+# Teste 1 do professor
+regiao1 = [[1,0,0,2,2], [0,2,2,1,2], [2,1,1,1,2], [2,1,2,1,2], [2,2,1,2,2]]
+esperado1 = [[1,0,0,2,2], [0,2,2,2,2], [2,2,2,2,2], [2,2,2,2,2], [2,2,1,2,2]]
+print(colorir_regiao(regiao1, [2,2], 2) == esperado1)   # True
+
+# Teste 2 do professor
+regiao2 = [[1,1,1,2,2,1], [1,2,2,1,2,1], [1,1,1,1,2,1], [1,1,2,1,1,1], [1,2,1,2,2,1]]
+esperado2 = [[0,0,0,2,2,0], [0,2,2,0,2,0], [0,0,0,0,2,0], [0,0,2,0,0,0], [0,2,1,2,2,0]]
+print(colorir_regiao(regiao2, [0,0], 0) == esperado2)   # True`;
 
 export const codeRepresentacoes = `\
 # ── Representação 1: lista de listas ────────────────
@@ -105,22 +139,31 @@ class ArvoreBinariaBusca:
 
     def put(self, chave, valor):
         if self.raiz:
-            self._put(chave, valor, self.raiz)
+            if self._put(chave, valor, self.raiz):   # False = só substituiu
+                self.tamanho += 1
         else:
             self.raiz = NoArvore(chave, valor)
-        self.tamanho += 1
+            self.tamanho += 1
 
     def _put(self, chave, valor, atual):
+        """Devolve True quando um nó NOVO foi criado."""
+        # Chave duplicada: a versão da aula manda a chave igual para a direita
+        # e incrementa o tamanho sempre. O nó novo nunca seria encontrado numa
+        # pesquisa (o _get para no primeiro) e o len() ficaria errado.
+        # A saída indicada no material é substituir o valor antigo:
+        if chave == atual.chave:
+            atual.payload = valor
+            return False
         if chave < atual.chave:                      # menor → esquerda
             if atual.esq:
-                self._put(chave, valor, atual.esq)
-            else:
-                atual.esq = NoArvore(chave, valor, pai=atual)
+                return self._put(chave, valor, atual.esq)
+            atual.esq = NoArvore(chave, valor, pai=atual)
+            return True
         else:                                        # maior → direita
             if atual.dir:
-                self._put(chave, valor, atual.dir)
-            else:
-                atual.dir = NoArvore(chave, valor, pai=atual)
+                return self._put(chave, valor, atual.dir)
+            atual.dir = NoArvore(chave, valor, pai=atual)
+            return True
 
     def _get(self, chave, atual):
         if not atual:
@@ -154,6 +197,11 @@ for chave in [70, 31, 93, 94, 14, 23, 73]:
 
 print(arvore[31])        # valor de 31
 print(70 in arvore)      # True
+print(len(arvore))       # 7
+
+# Chave repetida substitui o valor, sem criar nó novo:
+arvore[31] = 'outro valor'
+print(arvore[31])        # outro valor
 print(len(arvore))       # 7`;
 
 export const codeSucessor = `\
@@ -351,3 +399,434 @@ nums = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 quick_sort(nums)
 print(nums)   # [17, 20, 26, 31, 44, 54, 55, 77, 93]`;
 
+export const codeBigOClasses = `\
+# ── O(1): o custo não depende do tamanho da entrada ──
+def topo(pilha):
+    return pilha[-1]          # 1 acesso, sempre
+
+# ── O(n): percorre a entrada uma vez ─────────────────
+def busca_sequencial(lista, alvo):
+    for item in lista:        # até n comparações
+        if item == alvo:
+            return True
+    return False
+
+# ── O(log n): descarta metade a cada passo ───────────
+def busca_binaria(lista, alvo):   # lista ORDENADA
+    inicio, fim = 0, len(lista) - 1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if lista[meio] == alvo:
+            return True
+        elif alvo < lista[meio]:
+            fim = meio - 1        # descarta metade
+        else:
+            inicio = meio + 1     # descarta metade
+    return False
+
+# ── O(n²): laço dentro de laço ───────────────────────
+def tem_duplicata(lista):
+    for i in range(len(lista)):
+        for j in range(i + 1, len(lista)):   # n * n / 2
+            if lista[i] == lista[j]:
+                return True
+    return False`;
+
+export const codeDeque = `\
+from collections import deque
+
+# Operações nas duas extremidades - todas O(1)
+d = deque()
+d.append(10)         # add_last  → deque([10])
+d.appendleft(5)      # add_first → deque([5, 10])
+d.append(20)         # add_last  → deque([5, 10, 20])
+
+print(d.pop())       # delete_last  → 20
+print(d.popleft())   # delete_first → 5
+print(d)             # deque([10])
+
+# rotate(k): desloca k posições para a direita
+d2 = deque([1, 2, 3, 4, 5])
+d2.rotate(2)
+print(d2)            # deque([4, 5, 1, 2, 3])
+
+# Aplicação: verificar palíndromo
+def eh_palindromo(palavra):
+    letras = deque(palavra)
+    while len(letras) > 1:
+        if letras.popleft() != letras.pop():
+            return False
+    return True
+
+print(eh_palindromo("arara"))    # True
+print(eh_palindromo("python"))   # False`;
+
+export const codeHashTable = `\
+# ── Funções hash ──────────────────────────────────
+def hash_modulo(item, tamanho):
+    return item % tamanho          # simples e eficiente
+
+def hash_string(s, tamanho):
+    total = 0
+    for i, c in enumerate(s):
+        total += ord(c) * (i + 1)  # pondera pela posição
+    return total % tamanho
+
+tabela = [None] * 11
+slot = hash_modulo(44, 11)   # 44 % 11 = 0
+tabela[slot] = 44
+
+# ── Colisão: linear probing ───────────────────────
+# rehash(pos) = (pos + 1) % tamanho_da_tabela
+def rehash(pos, tamanho):
+    return (pos + 1) % tamanho
+
+def inserir(tabela, item):
+    slot = item % len(tabela)
+    while tabela[slot] is not None:
+        slot = rehash(slot, len(tabela))   # tenta o próximo
+    tabela[slot] = item
+
+# Exemplo da aula: h(item) = item % 11
+# itens 54, 26, 93, 17, 77 e 31 ocupam 6 dos 11 slots
+#  slot: 0    1     2     3     4   5   6   7     8     9   10
+#        77  None  None  None   26  93  17  None  None  31  54
+# FC = 6 / 11 ≈ 0,55
+
+# ── Python dict é uma tabela hash otimizada ───────
+dicionario = {}
+dicionario['nome'] = 'Ana'   # put(key, val) → O(1)
+print(dicionario['nome'])    # get(key)       → O(1)
+print('nome' in dicionario)  # in             → O(1)
+del dicionario['nome']       # del key        → O(1)`;
+
+export const codeFilaArray = `\
+class FilaArray:
+    def __init__(self, capacidade=10):
+        self._dados = [None] * capacidade
+        self._ini = 0      # ponteiro do início
+        self._fim = 0      # ponteiro do fim
+        self._tam = 0
+        self._N = capacidade
+
+    def enqueue(self, e):
+        if self._tam == self._N:
+            raise IndexError("fila cheia")
+        self._dados[self._fim] = e
+        self._fim = (self._fim + 1) % self._N   # avança circular
+        self._tam += 1
+
+    def dequeue(self):      # O(1) - sem deslocar elementos!
+        if self.is_empty():
+            raise IndexError("fila vazia")
+        val = self._dados[self._ini]
+        self._dados[self._ini] = None
+        self._ini = (self._ini + 1) % self._N   # avança circular
+        self._tam -= 1
+        return val
+
+    def first(self):        # O(1)
+        if self.is_empty():
+            raise IndexError("fila vazia")
+        return self._dados[self._ini]
+
+    def is_empty(self):
+        return self._tam == 0
+
+# sem array circular: dequeue precisaria deslocar n elementos → O(n)
+# com array circular: ini avança com % N → O(1)`;
+
+export const codeListaEncadeada = `\
+class No:
+    def __init__(self, dado):
+        self._dados = dado
+        self._proximo = None   # aponta para o próximo nó
+
+class ListaNaoOrdenada:
+    def __init__(self):
+        self._head = None      # lista vazia
+
+    def add(self, e):          # O(1) - insere na cabeça
+        novo = No(e)
+        novo._proximo = self._head
+        self._head = novo
+
+    def is_empty(self):        # O(1)
+        return self._head is None
+
+    def size(self):            # O(n) - percorre tudo
+        contador = 0
+        atual = self._head
+        while atual is not None:
+            contador += 1
+            atual = atual._proximo
+        return contador
+
+    def search(self, e):       # O(n)
+        atual = self._head
+        while atual is not None:
+            if atual._dados == e:
+                return True
+            atual = atual._proximo
+        return False
+
+    def remove(self, e):       # O(n)
+        anterior = None
+        atual = self._head
+        while atual is not None:
+            if atual._dados == e:
+                if anterior is None:         # removendo head
+                    self._head = atual._proximo
+                else:
+                    anterior._proximo = atual._proximo
+                return
+            anterior = atual
+            atual = atual._proximo`;
+
+export const codeBusca = `\
+# ── Busca Sequencial - O(n) ──────────────────────
+def busca_sequencial(lista, alvo):
+    for i in range(len(lista)):
+        if lista[i] == alvo:
+            return i       # encontrou na posição i
+    return -1              # não encontrou
+
+# ── Busca Binária - O(log n) ─────────────────────
+# PRÉ-REQUISITO: lista deve estar ORDENADA!
+def busca_binaria(lista, alvo):
+    low = 0
+    high = len(lista) - 1
+
+    while low <= high:
+        mid = (low + high) // 2      # meio do intervalo
+
+        if lista[mid] == alvo:
+            return mid               # encontrou!
+        elif lista[mid] < alvo:
+            low = mid + 1            # descarta metade esquerda
+        else:
+            high = mid - 1           # descarta metade direita
+
+    return -1                        # não encontrou
+
+nums = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
+print(busca_sequencial(nums, 23))   # 5
+print(busca_binaria(nums, 23))      # 5
+print(busca_binaria(nums, 10))      # -1
+
+# Para n=1.000.000: sequencial pode fazer 1.000.000 comparações
+# Binária faz no máximo log2(1.000.000) ≈ 20 comparações!`;
+
+export const codeListaSequencial = `\
+# A list do Python já é um array dinâmico (TAD Lista)
+
+lista = []
+
+# adicionar(e)      → O(1) amortizado
+lista.append(10)
+lista.append(20)
+lista.append(30)
+
+# adicionar_em(pos, e) → O(n) - desloca elementos
+lista.insert(0, 5)    # [5, 10, 20, 30]
+
+# recuperar(pos)    → O(1) - acesso direto por índice
+print(lista[2])       # 20
+
+# remover(pos)      → O(n) - desloca elementos
+lista.pop(0)          # remove o 5
+
+# pertence(e)       → O(n) - busca sequencial
+print(10 in lista)    # True
+
+# tamanho()         → O(1) se guardado como atributo
+print(len(lista))     # 3
+
+# O array dobra de tamanho quando necessário (crescimento exponencial)
+# Isso garante que append() seja O(1) AMORTIZADO`;
+
+export const codePilhaArray = `\
+class PilhaArray:
+    def __init__(self):
+        self._dados = []
+
+    def push(self, e):        # O(1)*
+        self._dados.append(e)
+
+    def pop(self):            # O(1)
+        return self._dados.pop()
+
+    def top(self):            # O(1) - só consulta, não remove
+        return self._dados[-1]
+
+    def is_empty(self):
+        return len(self._dados) == 0
+
+
+# Aplicação: verificar parênteses balanceados
+def is_matched(expr):
+    pares = {')': '(', ']': '[', '}': '{'}
+    pilha = PilhaArray()
+    for c in expr:
+        if c in '([{':
+            pilha.push(c)        # abre → empilha
+        elif c in ')]}':
+            if pilha.is_empty() or pilha.top() != pares[c]:
+                return False     # fecha sem par → inválido
+            pilha.pop()
+    return pilha.is_empty()      # deve estar vazia no fim
+
+print(is_matched("(a + [b * c])"))   # True
+print(is_matched("(a + [b * c)"))    # False - par errado
+print(is_matched("((a + b)"))        # False - falta fechar`;
+
+export const codeRecursividade = `\
+# ── Dois ingredientes obrigatórios ───────────────
+# 1. Caso base (condição de parada)
+# 2. Redução ao caso base (problema fica menor)
+
+def contagem(n):
+    if n == 0:           # caso base
+        return
+    print(n)
+    contagem(n - 1)      # redução: n → n-1
+
+# contagem(3) imprime: 3  2  1
+
+def soma_ateh(n):
+    if n == 0:           # caso base
+        return 0
+    return n + soma_ateh(n - 1)   # redução
+
+print(soma_ateh(5))   # 15
+# Pilha de chamadas:
+# soma_ateh(5) → 5 + soma_ateh(4)
+#   soma_ateh(4) → 4 + soma_ateh(3)
+#     soma_ateh(3) → 3 + soma_ateh(2)
+#       soma_ateh(2) → 2 + soma_ateh(1)
+#         soma_ateh(1) → 1 + soma_ateh(0)
+#           soma_ateh(0) → 0  ← caso base!
+# ← desempilha retornando: 1, 3, 6, 10, 15
+
+def fib(n):
+    if n <= 1:           # caso base duplo
+        return n
+    return fib(n - 1) + fib(n - 2)   # O(2^n) sem memo!
+
+# ── Exercícios da lista de recursividade do professor ────
+def inverte(s):
+    if len(s) <= 1:      # caso base: 0 ou 1 caractere
+        return s
+    return inverte(s[1:]) + s[0]     # tira a 1ª letra e a joga para o fim
+
+print(inverte("Python"))   # nohtyP
+
+def eh_palindromo(s):
+    if len(s) <= 1:      # DOIS casos base: vazia (par) e 1 letra (ímpar)
+        return True
+    if s[0] != s[-1]:    # pontas diferentes → nem precisa recorrer
+        return False
+    return eh_palindromo(s[1:-1])    # redução: remove as duas pontas
+
+print(eh_palindromo("arara"))   # True
+
+def mdc(a, b):
+    """Algoritmo de Euclides: a versão com while vira uma linha."""
+    if b == 0:           # caso base
+        return a
+    return mdc(b, a % b)             # redução: o resto sempre diminui
+
+print(mdc(48, 18))   # 6
+
+def conta_letra(letra, palavra):
+    if not palavra:      # caso base: palavra vazia
+        return 0
+    achou = 1 if palavra[0] == letra else 0
+    return achou + conta_letra(letra, palavra[1:])
+
+print(conta_letra("u", "estrutura"))   # 2`;
+
+export const codePythonBasico = `\
+# Tipos primitivos e tipagem dinâmica
+idade = 25           # int
+altura = 1.75        # float
+ativo = True         # bool
+nome = "Ana"         # str
+
+# Operadores especiais
+print(7 // 2)        # 3   - divisão inteira
+print(7 % 2)         # 1   - resto
+print(2 ** 10)       # 1024 - potência
+
+# Estruturas de controle
+for i in range(1, 6):
+    if i % 2 == 0:
+        print(i, "é par")
+    else:
+        print(i, "é ímpar")
+
+# Funções - input() SEMPRE retorna str!
+def dobrar(n):
+    return n * 2
+
+x = int(input("Digite um número: "))
+print(dobrar(x))`;
+
+export const codeStringsListas = `\
+# ── Strings: IMUTÁVEIS ──────────────────────────
+s = "python"
+print(s[0])          # 'p'   - índice 0
+print(s[-1])         # 'n'   - último
+print(s[1:4])        # 'yth' - slice
+print(s.upper())     # 'PYTHON'
+print(s.split('t'))  # ['py', 'hon']
+# s[0] = 'P'        # TypeError! strings não mudam
+
+# ── Listas: MUTÁVEIS ─────────────────────────────
+lista = [10, 20, 30]
+lista.append(40)     # [10, 20, 30, 40]
+lista.insert(0, 5)   # [5, 10, 20, 30, 40]
+lista.pop(0)         # remove o 5 → [10, 20, 30, 40]
+lista[0] = 99        # [99, 20, 30, 40]
+
+# ── Aliasing vs Clonar ───────────────────────────
+a = [1, 2, 3]
+b = a          # aliasing: b e a são o MESMO objeto
+c = a[:]       # clone:    c é uma cópia independente
+
+b.append(4)
+print(a)       # [1, 2, 3, 4] - afetado pelo alias!
+print(b)       # [1, 2, 3, 4]
+print(c)       # [1, 2, 3]    - clone não foi afetado
+print(a is b)  # True  - mesmo objeto
+print(a is c)  # False - objetos diferentes`;
+
+export const codeTad = `\
+# TAD define O QUÊ - a interface abstrata
+# Implementação define COMO - a classe concreta
+
+class Data:
+    """TAD Data: operações dia(), mes(), ano(), eh_valido()"""
+    def __init__(self, d, m, a):
+        self._dia = d    # dados privados (implementação)
+        self._mes = m
+        self._ano = a
+
+    # Interface pública (O QUÊ o usuário pode fazer)
+    def dia(self):
+        return self._dia
+
+    def mes(self):
+        return self._mes
+
+    def ano(self):
+        return self._ano
+
+    def eh_valido(self):
+        return 1 <= self._mes <= 12 and 1 <= self._dia <= 31
+
+# Quem usa o TAD não precisa saber COMO está implementado
+d = Data(15, 6, 2025)
+print(d.dia())        # 15
+print(d.eh_valido())  # True
+# d._dia = 99  ← possível, mas viola o contrato do TAD`;

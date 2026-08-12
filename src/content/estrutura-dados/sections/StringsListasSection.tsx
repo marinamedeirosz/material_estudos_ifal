@@ -1,37 +1,10 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, ComparisonTable } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, ComparisonTable } from '../../../components/sections';
+import { codeStringsListas } from './snippets';
 import { stringConcepts, listConcepts, strVsListComparison } from './blocks';
 
 export default function StringsListasSection() {
-  const code = `\
-# ── Strings: IMUTÁVEIS ──────────────────────────
-s = "python"
-print(s[0])          # 'p'   - índice 0
-print(s[-1])         # 'n'   - último
-print(s[1:4])        # 'yth' - slice
-print(s.upper())     # 'PYTHON'
-print(s.split('t'))  # ['py', 'hon']
-# s[0] = 'P'        # TypeError! strings não mudam
-
-# ── Listas: MUTÁVEIS ─────────────────────────────
-lista = [10, 20, 30]
-lista.append(40)     # [10, 20, 30, 40]
-lista.insert(0, 5)   # [5, 10, 20, 30, 40]
-lista.pop(0)         # remove o 5 → [10, 20, 30, 40]
-lista[0] = 99        # [99, 20, 30, 40]
-
-# ── Aliasing vs Clonar ───────────────────────────
-a = [1, 2, 3]
-b = a          # aliasing: b e a são o MESMO objeto
-c = a[:]       # clone:    c é uma cópia independente
-
-b.append(4)
-print(a)       # [1, 2, 3, 4] - afetado pelo alias!
-print(b)       # [1, 2, 3, 4]
-print(c)       # [1, 2, 3]    - clone não foi afetado
-print(a is b)  # True  - mesmo objeto
-print(a is c)  # False - objetos diferentes`;
 
   return (
     <section className="animate-fade-in space-y-6">
@@ -41,25 +14,21 @@ print(a is c)  # False - objetos diferentes`;
         colorClass="text-accent2"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Propriedades de Strings</h3>
+      <Subsection title="Propriedades de Strings">
         <ConceptGrid items={stringConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Propriedades de Listas</h3>
+      <Subsection title="Propriedades de Listas" accentClass="text-accent3">
         <ConceptGrid items={listConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">String vs Lista</h3>
+      <Subsection title="String vs Lista" accentClass="text-accent5">
         <ComparisonTable rows={strVsListComparison} leftLabel="String" rightLabel="Lista" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Exemplo: aliasing, clone e imutabilidade</h3>
-        <CodeBlock code={code} language="python" />
-      </div>
+      <Subsection title="Exemplo: aliasing, clone e imutabilidade" accentClass="text-accent2">
+        <CodeBlock code={codeStringsListas} language="python" />
+      </Subsection>
 
       <HighlightBox title="Identidade vs igualdade">
         <p>

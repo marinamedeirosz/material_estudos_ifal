@@ -1,75 +1,34 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList, ComparisonTable } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, PanelList, ComparisonTable } from '../../../components/sections';
+import { codeHashTable } from './snippets';
 import { hashConcepts, hashFunctions, collisionMethods } from './blocks';
 
 export default function HashingSection() {
-  const code = `\
-# ── Funções hash ──────────────────────────────────
-def hash_modulo(item, tamanho):
-    return item % tamanho          # simples e eficiente
-
-def hash_string(s, tamanho):
-    total = 0
-    for i, c in enumerate(s):
-        total += ord(c) * (i + 1)  # pondera pela posição
-    return total % tamanho
-
-tabela = [None] * 11
-slot = hash_modulo(44, 11)   # 44 % 11 = 0
-tabela[slot] = 44
-
-# ── Colisão: linear probing ───────────────────────
-# rehash(pos) = (pos + 1) % tamanho_da_tabela
-def rehash(pos, tamanho):
-    return (pos + 1) % tamanho
-
-def inserir(tabela, item):
-    slot = item % len(tabela)
-    while tabela[slot] is not None:
-        slot = rehash(slot, len(tabela))   # tenta o próximo
-    tabela[slot] = item
-
-# Exemplo da aula: h(item) = item % 11
-# itens 54, 26, 93, 17, 77 e 31 ocupam 6 dos 11 slots
-#  slot: 0    1     2     3     4   5   6   7     8     9   10
-#        77  None  None  None   26  93  17  None  None  31  54
-# FC = 6 / 11 ≈ 0,55
-
-# ── Python dict é uma tabela hash otimizada ───────
-dicionario = {}
-dicionario['nome'] = 'Ana'   # put(key, val) → O(1)
-print(dicionario['nome'])    # get(key)       → O(1)
-print('nome' in dicionario)  # in             → O(1)
-del dicionario['nome']       # del key        → O(1)`;
 
   return (
     <section className="animate-fade-in space-y-6">
       <SectionHeader
         title="Hashing e Tabelas Hash"
-        subtitle="Busca em O(1) - função hash, colisão e resolução"
+        subtitle="Busca em O(1): função hash, colisão e resolução"
         colorClass="text-accent"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Conceitos fundamentais</h3>
+      <Subsection title="Conceitos fundamentais" accentClass="text-accent2">
         <ConceptGrid items={hashConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Funções hash</h3>
+      <Subsection title="Funções hash" accentClass="text-accent3">
         <PanelList items={hashFunctions} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Implementação e TAD Map</h3>
-        <CodeBlock code={code} language="python" />
-      </div>
+      <Subsection title="Implementação e TAD Map" accentClass="text-accent4">
+        <CodeBlock code={codeHashTable} language="python" />
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">Métodos de resolução de colisão</h3>
+      <Subsection title="Métodos de resolução de colisão" accentClass="text-accent5">
         <ComparisonTable rows={collisionMethods} leftLabel="Como funciona" rightLabel="Problema/característica" />
-      </div>
+      </Subsection>
 
       <HighlightBox title="TAD Map (dicionário)">
         <p>

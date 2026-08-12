@@ -1,6 +1,6 @@
 import FlowDiagram from '../../../components/ui/FlowDiagram';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, PanelList } from '../../../components/sections';
 import { revisionOverview, examTopics, miniProjects } from './blocks';
 
 export default function IntroSection() {
@@ -8,7 +8,7 @@ export default function IntroSection() {
     <section className="animate-fade-in space-y-6">
       <SectionHeader
         title="Estrutura de Dados"
-        subtitle="Da representação em memória à análise de complexidade - escolha a estrutura certa para cada problema"
+        subtitle="Da representação em memória à análise de complexidade: escolher a estrutura certa para cada problema"
         colorClass="text-accent"
       />
 
@@ -20,13 +20,11 @@ export default function IntroSection() {
         </p>
       </HighlightBox>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Visão geral da disciplina</h3>
+      <Subsection title="Visão geral da disciplina" accentClass="text-accent2">
         <ConceptGrid items={revisionOverview} columns="md:grid-cols-3" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Fluxo de aprendizado</h3>
+      <Subsection title="Fluxo de aprendizado" accentClass="text-accent3">
         <FlowDiagram
           items={[
             'Python Básico (tipos, controle, funções)',
@@ -40,12 +38,11 @@ export default function IntroSection() {
             'Árvores, BST e Heap (estruturas hierárquicas)',
           ]}
         />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">Assuntos declarados pelo professor</h3>
+      <Subsection title="Assuntos declarados pelo professor" accentClass="text-accent5">
         <PanelList items={examTopics} columns="" />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Big O cai nas três avaliações" accent="var(--color-accent3)">
         <p>
@@ -55,17 +52,17 @@ export default function IntroSection() {
         </p>
       </HighlightBox>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Os três miniprojetos da turma</h3>
+      <Subsection title="Os três miniprojetos da turma" accentClass="text-accent4">
         <PanelList items={miniProjects} columns="" />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Fonte do conteúdo" accent="var(--color-accent5)">
         <p>
           Todo o material desta matéria foi resumido e reorganizado a partir das aulas, listas de exercícios e
-          miniprojetos do <strong>Prof. Ricardo · ESTD · BSI/IFAL · 2023.1</strong>. A bibliografia indicada por ele
-          inclui <em>Problem Solving with Algorithms and Data Structures using Python</em>, de Miller e Ranum, e{' '}
-          <em>Algoritmo e Estrutura de Dados I e II</em>, de A. C. Santos.
+          miniprojetos do <strong>Prof. MSc. Ricardo Nunes · ESTD · BSI/IFAL · 2023.1</strong> — que assina as listas
+          de exercícios como <em>Prof. Ricardo Rubens</em>, sob o mesmo e-mail institucional. A bibliografia indicada
+          por ele inclui <em>Problem Solving with Algorithms and Data Structures using Python</em>, de Miller e Ranum,
+          e <em>Algoritmo e Estrutura de Dados I e II</em>, de A. C. Santos.
         </p>
       </HighlightBox>
     </section>

@@ -1,7 +1,7 @@
 {
   "$schema": "./contribuicoes.schema.json",
   "versao": 1,
-  "atualizadoEm": "2026-06-21T15:00:00-03:00",
+  "atualizadoEm": "2026-08-11T00:00:00-03:00",
   "contribuintes": [
     {
       "id": "isaque-braga",
@@ -54,8 +54,14 @@
         "referencia": "#17"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["quiz", "refatoracao", "typescript"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "quiz",
+        "refatoracao",
+        "typescript"
+      ]
     },
     {
       "id": "contrib-2026-05-31-metodologia-cientifica",
@@ -80,8 +86,14 @@
         "referencia": "#18"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["metodologia-cientifica", "conteudo", "quiz"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "metodologia-cientifica",
+        "conteudo",
+        "quiz"
+      ]
     },
     {
       "id": "contrib-2026-06-11-componente-codeblock",
@@ -104,8 +116,14 @@
         "referencia": "#19"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["componente", "syntax-highlighting", "ui"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "componente",
+        "syntax-highlighting",
+        "ui"
+      ]
     },
     {
       "id": "contrib-2026-06-11-conteudo-estrutura-dados",
@@ -130,8 +148,14 @@
         "referencia": "#19"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["estrutura-dados", "conteudo", "codeblock"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "estrutura-dados",
+        "conteudo",
+        "codeblock"
+      ]
     },
     {
       "id": "contrib-2026-06-21-conteudo-apbd",
@@ -153,8 +177,13 @@
         "origem": "revisao_manual"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["administracao-projeto-banco-dados", "conteudo"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "administracao-projeto-banco-dados",
+        "conteudo"
+      ]
     },
     {
       "id": "contrib-2026-04-13-conteudo-mkce",
@@ -175,8 +204,13 @@
         "origem": "revisao_manual"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["marketing-comercio-eletronico", "conteudo"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "marketing-comercio-eletronico",
+        "conteudo"
+      ]
     },
     {
       "id": "contrib-2026-05-12-conteudo-corg",
@@ -197,8 +231,13 @@
         "origem": "revisao_manual"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["comportamento-organizacional", "conteudo"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "comportamento-organizacional",
+        "conteudo"
+      ]
     },
     {
       "id": "contrib-2026-06-17-conteudo-pdsw",
@@ -221,8 +260,67 @@
         "referencia": "#21"
       },
       "status": "incorporado",
-      "revisadoPor": ["periclesanfe"],
-      "tags": ["processos-desenvolvimento-software", "conteudo"]
+      "revisadoPor": [
+        "periclesanfe"
+      ],
+      "tags": [
+        "processos-desenvolvimento-software",
+        "conteudo"
+      ]
+    },
+    {
+      "id": "contrib-2026-08-11-enriquecimento-estrutura-dados",
+      "contribuinteId": "pericles-feitoza",
+      "quando": {
+        "data": "2026-08-11",
+        "registradoEm": "2026-08-11T00:00:00-03:00",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "materia",
+        "materiaSlug": "estrutura-dados",
+        "materiaCodigo": "ESTD",
+        "arquivo": "src/content/estrutura-dados/"
+      },
+      "tipo": "conteudo_materia",
+      "como": {
+        "resumo": "Enriquece Estrutura de Dados com seção própria de Notação Big O, desdobramento de árvores em conceitos e BST/heap, aplicação de filas na coloração de regiões e 25 novas questões de quiz.",
+        "detalhes": "Criadas as seções Big O e Árvores de Busca e Heap; a seção de Filas ganhou o algoritmo de coloração de regiões com os dois testes da atividade do professor; a lista encadeada ordenada e a recursividade foram aprofundadas com exercícios das listas. O quiz passou de 43 para 58 questões, com exercícios das listas 03, 08 e 09 e as três questões de traço de execução dos slides de ordenação. Corrigidos o fator de carga do rehash (0,7-0,8), o exemplo do folding method, o número de comparações do selection sort e o tratamento de chave duplicada na BST. Todo o código Python foi verificado por execução.",
+        "origem": "material_professor"
+      },
+      "status": "incorporado",
+      "tags": [
+        "estrutura-dados",
+        "conteudo",
+        "big-o",
+        "arvores",
+        "quiz"
+      ]
+    },
+    {
+      "id": "contrib-2026-08-11-refatoracao-sections",
+      "contribuinteId": "pericles-feitoza",
+      "quando": {
+        "data": "2026-08-11",
+        "registradoEm": "2026-08-11T00:00:00-03:00",
+        "timezone": "America/Maceio"
+      },
+      "onde": {
+        "escopo": "projeto",
+        "arquivo": "src/components/sections/index.tsx"
+      },
+      "tipo": "melhoria",
+      "como": {
+        "resumo": "Quebra o arquivo único de seções de Estrutura de Dados em um componente por seção e cria o componente Subsection, reaproveitável pelas demais matérias.",
+        "detalhes": "O EstruturaDadosSections.tsx de 1.740 linhas virou um mapa id → componente com 17 arquivos de seção, todos abaixo de 150 linhas, separando dados (blocks.ts), código Python (snippets.ts) e composição (*.tsx). O Subsection substitui o par div + h3 que se repetia 78 vezes.",
+        "origem": "revisao_manual"
+      },
+      "status": "incorporado",
+      "tags": [
+        "refatoracao",
+        "componente",
+        "arquitetura"
+      ]
     }
   ]
 }

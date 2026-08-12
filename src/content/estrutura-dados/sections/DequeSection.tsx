@@ -1,37 +1,10 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, ComparisonTable } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, ComparisonTable } from '../../../components/sections';
+import { codeDeque } from './snippets';
 import { dequeConcepts, dequeVsOthers } from './blocks';
 
 export default function DequeSection() {
-  const code = `\
-from collections import deque
-
-# Operações nas duas extremidades - todas O(1)
-d = deque()
-d.append(10)         # add_last  → deque([10])
-d.appendleft(5)      # add_first → deque([5, 10])
-d.append(20)         # add_last  → deque([5, 10, 20])
-
-print(d.pop())       # delete_last  → 20
-print(d.popleft())   # delete_first → 5
-print(d)             # deque([10])
-
-# rotate(k): desloca k posições para a direita
-d2 = deque([1, 2, 3, 4, 5])
-d2.rotate(2)
-print(d2)            # deque([4, 5, 1, 2, 3])
-
-# Aplicação: verificar palíndromo
-def eh_palindromo(palavra):
-    letras = deque(palavra)
-    while len(letras) > 1:
-        if letras.popleft() != letras.pop():
-            return False
-    return True
-
-print(eh_palindromo("arara"))    # True
-print(eh_palindromo("python"))   # False`;
 
   return (
     <section className="animate-fade-in space-y-6">
@@ -41,20 +14,17 @@ print(eh_palindromo("python"))   # False`;
         colorClass="text-accent3"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Conceitos fundamentais</h3>
+      <Subsection title="Conceitos fundamentais">
         <ConceptGrid items={dequeConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Deque vs Fila</h3>
+      <Subsection title="Deque vs Fila" accentClass="text-accent4">
         <ComparisonTable rows={dequeVsOthers} leftLabel="Deque" rightLabel="Fila" />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">collections.deque na prática</h3>
-        <CodeBlock code={code} language="python" />
-      </div>
+      <Subsection title="collections.deque na prática" accentClass="text-accent2">
+        <CodeBlock code={codeDeque} language="python" />
+      </Subsection>
 
       <HighlightBox title="collections.deque em Python">
         <p>

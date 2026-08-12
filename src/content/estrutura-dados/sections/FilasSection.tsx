@@ -1,44 +1,11 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
+import FlowDiagram from '../../../components/ui/FlowDiagram';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList, ComparisonTable } from '../../../components/sections';
-import { queueConcepts, queueCircular, queueVsStack } from './blocks';
+import { SectionHeader, Subsection, ConceptGrid, PanelList, ComparisonTable } from '../../../components/sections';
+import { queueConcepts, queueCircular, queueVsStack, floodFillConcepts, floodFillSteps } from './blocks';
+import { codeFilaArray, codeFloodFill } from './snippets';
 
 export default function FilasSection() {
-  const code = `\
-class FilaArray:
-    def __init__(self, capacidade=10):
-        self._dados = [None] * capacidade
-        self._ini = 0      # ponteiro do início
-        self._fim = 0      # ponteiro do fim
-        self._tam = 0
-        self._N = capacidade
-
-    def enqueue(self, e):
-        if self._tam == self._N:
-            raise IndexError("fila cheia")
-        self._dados[self._fim] = e
-        self._fim = (self._fim + 1) % self._N   # avança circular
-        self._tam += 1
-
-    def dequeue(self):      # O(1) - sem deslocar elementos!
-        if self.is_empty():
-            raise IndexError("fila vazia")
-        val = self._dados[self._ini]
-        self._dados[self._ini] = None
-        self._ini = (self._ini + 1) % self._N   # avança circular
-        self._tam -= 1
-        return val
-
-    def first(self):        # O(1)
-        if self.is_empty():
-            raise IndexError("fila vazia")
-        return self._dados[self._ini]
-
-    def is_empty(self):
-        return self._tam == 0
-
-# sem array circular: dequeue precisaria deslocar n elementos → O(n)
-# com array circular: ini avança com % N → O(1)`;
 
   return (
     <section className="animate-fade-in space-y-6">
@@ -48,29 +15,39 @@ class FilaArray:
         colorClass="text-accent2"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent mb-3">Conceitos fundamentais</h3>
+      <Subsection title="Conceitos fundamentais">
         <ConceptGrid items={queueConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Por que usar array circular?</h3>
+      <Subsection title="Por que usar array circular?" accentClass="text-accent3">
         <PanelList items={queueCircular} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Implementação com array circular</h3>
-        <CodeBlock code={code} language="python" />
-      </div>
+      <Subsection title="Implementação com array circular" accentClass="text-accent4">
+        <CodeBlock code={codeFilaArray} language="python" />
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">Pilha vs Fila</h3>
+      <Subsection title="Pilha vs Fila" accentClass="text-accent5">
         <ComparisonTable rows={queueVsStack} leftLabel="Fila (FIFO)" rightLabel="Pilha (LIFO)" />
-      </div>
+      </Subsection>
 
-      <HighlightBox title="Flood Fill (coloração de regiões)" accent="var(--color-accent3)">
+      <Subsection title="Aplicação: coloração de regiões">
+        <PanelList items={floodFillConcepts} />
+      </Subsection>
+
+      <Subsection title="O algoritmo em cinco passos" accentClass="text-accent3">
+        <FlowDiagram items={floodFillSteps} />
+      </Subsection>
+
+      <Subsection title="Implementação com os testes da atividade" accentClass="text-accent2">
+        <CodeBlock code={codeFloodFill} language="python" />
+      </Subsection>
+
+      <HighlightBox title="É a mesma ideia do BFS" accent="var(--color-accent3)">
         <p>
-          Algoritmo usando fila: insere pixel inicial, processa pixel, enfileira vizinhos não coloridos da mesma cor. Continua até fila esvaziar. Similar ao BFS em grafos.
+          O professor dedicou um material inteiro a esta aplicação em computação gráfica, com duas atividades e os
+          resultados esperados prontos para conferir. Trocar a fila por uma pilha transforma o mesmo algoritmo em
+          busca em profundidade — o desenho final fica igual, muda a ordem em que os pixels são visitados.
         </p>
       </HighlightBox>
     </section>

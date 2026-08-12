@@ -1,43 +1,10 @@
 import CodeBlock from '../../../components/ui/CodeBlock';
 import HighlightBox from '../../../components/ui/HighlightBox';
-import { SectionHeader, ConceptGrid, PanelList, StatStrip } from '../../../components/sections';
+import { SectionHeader, Subsection, ConceptGrid, PanelList, StatStrip } from '../../../components/sections';
+import { codePilhaArray } from './snippets';
 import { stackConcepts, stackApplications, stackComplexity } from './blocks';
 
 export default function PilhasSection() {
-  const code = `\
-class PilhaArray:
-    def __init__(self):
-        self._dados = []
-
-    def push(self, e):        # O(1)*
-        self._dados.append(e)
-
-    def pop(self):            # O(1)
-        return self._dados.pop()
-
-    def top(self):            # O(1) - só consulta, não remove
-        return self._dados[-1]
-
-    def is_empty(self):
-        return len(self._dados) == 0
-
-
-# Aplicação: verificar parênteses balanceados
-def is_matched(expr):
-    pares = {')': '(', ']': '[', '}': '{'}
-    pilha = PilhaArray()
-    for c in expr:
-        if c in '([{':
-            pilha.push(c)        # abre → empilha
-        elif c in ')]}':
-            if pilha.is_empty() or pilha.top() != pares[c]:
-                return False     # fecha sem par → inválido
-            pilha.pop()
-    return pilha.is_empty()      # deve estar vazia no fim
-
-print(is_matched("(a + [b * c])"))   # True
-print(is_matched("(a + [b * c)"))    # False - par errado
-print(is_matched("((a + b)"))        # False - falta fechar`;
 
   return (
     <section className="animate-fade-in space-y-6">
@@ -47,25 +14,21 @@ print(is_matched("((a + b)"))        # False - falta fechar`;
         colorClass="text-accent"
       />
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent2 mb-3">Conceitos fundamentais</h3>
+      <Subsection title="Conceitos fundamentais" accentClass="text-accent2">
         <ConceptGrid items={stackConcepts} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent3 mb-3">Complexidade das operações</h3>
+      <Subsection title="Complexidade das operações" accentClass="text-accent3">
         <StatStrip items={stackComplexity} />
-      </div>
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent4 mb-3">Implementação e aplicação</h3>
-        <CodeBlock code={code} language="python" />
-      </div>
+      <Subsection title="Implementação e aplicação" accentClass="text-accent4">
+        <CodeBlock code={codePilhaArray} language="python" />
+      </Subsection>
 
-      <div>
-        <h3 className="font-display font-bold text-xl text-accent5 mb-3">Outras aplicações de pilhas</h3>
+      <Subsection title="Outras aplicações de pilhas" accentClass="text-accent5">
         <PanelList items={stackApplications} />
-      </div>
+      </Subsection>
 
       <HighlightBox title="Algoritmo is_matched()">
         <p>
