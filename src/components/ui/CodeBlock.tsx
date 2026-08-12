@@ -14,7 +14,12 @@ export type Language =
   | 'php'
   | 'sql'
   | 'dax'
-  | 'mdx';
+  | 'mdx'
+  | 'html'
+  | 'css';
+
+/** Token type produced by a tokenizer, paired with its raw text. */
+type Token = { type: TokenType; text: string };
 
 interface LangConfig {
   label: string;
@@ -25,7 +30,10 @@ interface LangConfig {
   hasTemplateLiteral: boolean;
 }
 
-const LANG_CONFIGS: Record<Language, LangConfig> = {
+/** Linguagens cujo destaque vem do tokenizador genérico de palavras. */
+type WordLanguage = Exclude<Language, 'html' | 'css'>;
+
+const LANG_CONFIGS: Record<WordLanguage, LangConfig> = {
   python: {
     label: 'Python',
     keywords: new Set([
@@ -269,6 +277,178 @@ const LANG_CONFIGS: Record<Language, LangConfig> = {
   },
 };
 
+/**
+ * HTML e CSS não têm sintaxe baseada em palavras reservadas como as demais
+ * linguagens: o que importa é a estrutura (tag/atributo/valor, seletor/
+ * propriedade/valor). Por isso cada um tem seu próprio tokenizador em vez de
+ * uma entrada em LANG_CONFIGS.
+ */
+
+/** Rótulo exibido no cabeçalho das linguagens de marcação/estilo. */
+const MARKUP_LABELS: Record<'html' | 'css', string> = { html: 'HTML', css: 'CSS' };
+
+/**
+ * Tokeniza HTML destacando comentários, doctype, nomes de tag, nomes de
+ * atributo e valores entre aspas. O texto entre tags fica sem destaque.
+ */
+function tokenizeHtml(code: string): Token[] {
+  const tokens: Token[] = [];
+  let i = 0;
+
+  while (i < code.length) {
+    // Comentário <!-- ... -->
+    if (code.startsWith('<!--', i)) {
+      const end = code.indexOf('-->', i + 4);
+      const text = end === -1 ? code.slice(i) : code.slice(i, end + 3);
+      tokens.push({ type: 'comment', text });
+      i += text.length;
+      continue;
+    }
+
+    // Doctype <!DOCTYPE html>
+    if (/^<!/.test(code.slice(i))) {
+      const end = code.indexOf('>', i);
+      const text = end === -1 ? code.slice(i) : code.slice(i, end + 1);
+      tokens.push({ type: 'keyword', text });
+      i += text.length;
+      continue;
+    }
+
+    // Abertura de tag: <nome  ou  </nome
+    const openTag = /^<\/?([a-zA-Z][a-zA-Z0-9-]*)/.exec(code.slice(i));
+    if (openTag) {
+      const punct = openTag[0].slice(0, openTag[0].length - openTag[1].length);
+      tokens.push({ type: 'default', text: punct });
+      tokens.push({ type: 'function', text: openTag[1] });
+      i += openTag[0].length;
+
+      // Atributos até fechar a tag
+      while (i < code.length && code[i] !== '>') {
+        const attr = /^\s*([a-zA-Z_:][a-zA-Z0-9_.:-]*)/.exec(code.slice(i));
+        if (attr) {
+          tokens.push({ type: 'default', text: attr[0].slice(0, attr[0].length - attr[1].length) });
+          tokens.push({ type: 'builtin', text: attr[1] });
+          i += attr[0].length;
+          continue;
+        }
+        if (code[i] === '"' || code[i] === "'") {
+          const quote = code[i];
+          let j = i + 1;
+          while (j < code.length && code[j] !== quote) j++;
+          if (j < code.length) j++;
+          tokens.push({ type: 'string', text: code.slice(i, j) });
+          i = j;
+          continue;
+        }
+        tokens.push({ type: 'default', text: code[i] });
+        i++;
+      }
+      continue;
+    }
+
+    tokens.push({ type: 'default', text: code[i] });
+    i++;
+  }
+
+  return tokens;
+}
+
+/**
+ * Tokeniza CSS destacando comentários, seletores, nomes de propriedade,
+ * valores em string, números com unidade e at-rules (@media, @keyframes).
+ */
+function tokenizeCss(code: string): Token[] {
+  const tokens: Token[] = [];
+  let i = 0;
+  // Dentro de um bloco {...} o texto antes de ':' é propriedade; fora, é seletor.
+  let inBlock = false;
+  let afterColon = false;
+
+  while (i < code.length) {
+    if (code.startsWith('/*', i)) {
+      const end = code.indexOf('*/', i + 2);
+      const text = end === -1 ? code.slice(i) : code.slice(i, end + 2);
+      tokens.push({ type: 'comment', text });
+      i += text.length;
+      continue;
+    }
+
+    const ch = code[i];
+
+    if (ch === '{') {
+      inBlock = true;
+      afterColon = false;
+      tokens.push({ type: 'default', text: ch });
+      i++;
+      continue;
+    }
+    if (ch === '}') {
+      inBlock = false;
+      afterColon = false;
+      tokens.push({ type: 'default', text: ch });
+      i++;
+      continue;
+    }
+    if (ch === ':' && inBlock) {
+      afterColon = true;
+      tokens.push({ type: 'default', text: ch });
+      i++;
+      continue;
+    }
+    if (ch === ';') {
+      afterColon = false;
+      tokens.push({ type: 'default', text: ch });
+      i++;
+      continue;
+    }
+
+    if (ch === '"' || ch === "'") {
+      let j = i + 1;
+      while (j < code.length && code[j] !== ch) j++;
+      if (j < code.length) j++;
+      tokens.push({ type: 'string', text: code.slice(i, j) });
+      i = j;
+      continue;
+    }
+
+    // At-rule: @media, @keyframes, @font-face…
+    const atRule = /^@[a-zA-Z-]+/.exec(code.slice(i));
+    if (atRule) {
+      tokens.push({ type: 'keyword', text: atRule[0] });
+      i += atRule[0].length;
+      continue;
+    }
+
+    // Número com unidade opcional: 1.5rem, 100%, 12px, 0
+    const num = /^-?\d*\.?\d+(px|rem|em|%|vh|vw|s|ms|deg|fr|ch)?/.exec(code.slice(i));
+    if (num && /\d/.test(num[0])) {
+      tokens.push({ type: 'number', text: num[0] });
+      i += num[0].length;
+      continue;
+    }
+
+    const word = /^[a-zA-Z_-][a-zA-Z0-9_-]*/.exec(code.slice(i));
+    if (word) {
+      let type: TokenType;
+      if (!inBlock) {
+        type = 'function'; // seletor
+      } else if (afterColon) {
+        type = 'string'; // valor
+      } else {
+        type = 'builtin'; // propriedade
+      }
+      tokens.push({ type, text: word[0] });
+      i += word[0].length;
+      continue;
+    }
+
+    tokens.push({ type: 'default', text: ch });
+    i++;
+  }
+
+  return tokens;
+}
+
 function tokenize(code: string, lang: LangConfig) {
   const tokens: Array<{ type: TokenType; text: string }> = [];
   let i = 0;
@@ -387,16 +567,23 @@ interface CodeBlockProps {
   title?: string;
 }
 
-export default function CodeBlock({ code, language, title }: CodeBlockProps) {
+/** Escolhe o tokenizador certo: markup tem regras próprias, o resto usa LANG_CONFIGS. */
+function tokenizeFor(code: string, language: Language): { tokens: Token[]; label: string } {
+  if (language === 'html') return { tokens: tokenizeHtml(code), label: MARKUP_LABELS.html };
+  if (language === 'css') return { tokens: tokenizeCss(code), label: MARKUP_LABELS.css };
   const lang = LANG_CONFIGS[language];
-  const tokens = tokenize(code.trim(), lang);
+  return { tokens: tokenize(code, lang), label: lang.label };
+}
+
+export default function CodeBlock({ code, language, title }: CodeBlockProps) {
+  const { tokens, label } = tokenizeFor(code.trim(), language);
 
   return (
     <div className="rounded-xl overflow-hidden border border-border">
       <div className="flex items-center gap-3 px-4 py-2.5 bg-card border-b border-border">
         {title && <span className="text-text-muted text-xs">{title}</span>}
         <span className={`${title ? 'ml-auto' : ''} text-[10px] font-bold text-accent3 uppercase tracking-widest`}>
-          {lang.label}
+          {label}
         </span>
       </div>
       <pre
