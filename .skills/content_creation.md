@@ -49,41 +49,73 @@ export const QUIZ_DATA: QuizQuestionData[] = [
 ];
 ```
 
-### 3. Criar o componente `<NomeDaMateria>Content.tsx`
+### 2b. Declarar as avaliações da matéria
 
-Estrutura obrigatória:
-- Hero com título, subtítulos de seção, e metadata (período, eixo, ch)
-- Nav sticky com pills para cada seção
-- Renderização condicional por `activeSection`
-- Últimas 2 seções sempre: Quiz estático + Quiz IA
+Seções e questões apontam para as avaliações por id, via `exams: string[]`. Uma seção pode
+valer para **mais de uma prova** — Big O, por exemplo, cai na AV1 e na AV2.
 
-Componentes disponíveis:
+```typescript
+import type { ExamDefinition } from '../../lib/exams';
+
+export const NOME_DA_MATERIA_EXAMS: ExamDefinition[] = [
+  { id: 'av1', label: 'AV1', description: 'O que a primeira avaliação cobra' },
+  { id: 'av2', label: 'AV2', description: 'O que a segunda avaliação cobra' },
+];
+```
+
+Use o vocabulário do professor (AV1/AV2, N1, S1 — o que estiver no mural da turma).
+O campo `exam` (singular) ainda é aceito como legado, mas **matéria nova usa `exams`**.
+
+### 3. Criar os componentes
+
+O padrão atual é **uma seção por arquivo**, não um arquivo único gigante:
+
+```
+src/content/<slug>/
+  data.ts                    GUIDE_CONTEXT, EXAMS, TOPICS, SECTIONS, QUIZ_DATA
+  <Nome>Content.tsx          casca: monta o SubjectContentLayout
+  <Nome>Sections.tsx         mapa id → componente
+  sections/
+    IntroSection.tsx         uma por seção, < 150 linhas cada
+    ...
+    blocks.ts                dados dos cards, tabelas e listas
+    snippets.ts              trechos de código (quando houver)
+```
+
+`<Nome>Content.tsx` passa `sections` e `exams` ao `SubjectContentLayout`, que já cuida do
+hero, do nav sticky, da folha mobile e do Modo Prova — não reimplemente nada disso.
+
+Componentes disponíveis (`src/components/ui/` e `src/components/sections/`):
 - `ConceptCard` — conceitos com título + descrição
 - `HighlightBox` — definições importantes
 - `FlowDiagram` — sequências com setas
-- `QuizCard` — perguntas fixas
-- `AIQuizGenerator` — quiz IA completo
+- `ComparisonTable` — comparação entre duas abordagens
+- `CodeBlock` — código com destaque (Python, JS, TS, Java, C, C++, Go, Rust)
+- `VideoEmbed` — YouTube e Google Drive
+- `AlgorithmVisualizer` — visualização passo a passo de algoritmos de ordenação
+- `QuizCard`, `ExamQuizSelector`, `AIQuizGenerator`
 
 ### 4. Registrar
 
 1. Em `src/data/curriculum.ts` → marcar `hasContent: true`
-2. Em `src/pages/SubjectPage.tsx` → adicionar ao `contentRegistry`
+2. Em `src/pages/SubjectPage.tsx` → adicionar ao `contentRegistry`, **com `lazy()`**
 
 ```typescript
-import NomeDaMateriaContent from '../content/<slug>/NomeDaMateriaContent';
-
-const contentRegistry: Record<string, React.ComponentType> = {
+const contentRegistry: Record<string, ComponentType> = {
   // ...existentes
-  '<slug>': NomeDaMateriaContent,
+  '<slug>': lazy(() => import('../content/<slug>/<Nome>Content')),
 };
 ```
 
+O `lazy()` é obrigatório: sem ele, o conteúdo de todas as matérias entra no bundle inicial.
+
 ### 5. Verificar
-- `npm run dev` — visual ok
-- `npm run build` — sem erros
-- Todas as seções navegáveis
+- `npx tsc -b`, `npm run lint` e `npm run build` — sem erros
+- Dev server: **suba numa porta livre e confirme que é o seu que responde** antes de medir
+- Todas as seções navegáveis, em desktop (1280px) e mobile (375px)
 - Quiz com pelo menos 10 perguntas
-- Quiz IA funcional (com API key configurada)
+- Todo código de exemplo **executado**, não só revisado
 
 ## Referência: Matéria Modelo
-Use `src/content/marketing-comercio-eletronico/` como referência.
+Use `src/content/estrutura-dados/` — é a que segue o padrão atual (`sections/`, `exams`,
+`lazy()`). As matérias mais antigas ainda usam o arquivo único e não devem ser copiadas.
