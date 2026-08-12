@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -31,6 +31,7 @@
 
   --font-display: 'Playfair Display', serif;
   --font-body: 'Source Sans 3', sans-serif;
+  --font-logo: 'Orbitron', var(--font-body);
 
   --animate-fade-in: fade-in 0.5s ease;
   --animate-fade-up: fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -279,6 +280,66 @@ html[data-theme='light'] .glass {
 
 .sidebar-brand {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%);
+}
+
+/* Marca "SI" — ver src/components/ui/Logo.tsx.
+
+   O brilho é montado em duas camadas de text-shadow: um halo curto que dá o
+   corpo da luz e um largo que espalha. As distâncias estão em `em` para que a
+   logo possa ser reescalada por font-size sem recalibrar o brilho.
+
+   `--logo-ink` é a cor da letra e `--logo-glow` a do halo; cada tema
+   redefine as duas mais abaixo. */
+.site-logo {
+  --logo-ink: #cfefff;
+  --logo-glow: 125, 211, 255;
+
+  display: inline-block;
+  font-family: var(--font-logo);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  /* A Orbitron tem tracking à direita da última letra; o padding-left
+     compensa para o bloco ficar opticamente alinhado à margem. */
+  padding-left: 0.06em;
+  line-height: 1;
+  color: var(--logo-ink);
+  text-shadow:
+    0 0 0.14em rgba(var(--logo-glow), 0.95),
+    0 0 0.42em rgba(var(--logo-glow), 0.65),
+    0 0 0.9em rgba(var(--logo-glow), 0.35);
+}
+
+/* No tema claro o halo largo some (vira véu cinza sobre fundo branco) e a
+   letra escurece, senão o texto perde contraste contra o fundo. */
+html[data-theme='light'] .site-logo {
+  --logo-ink: #0b6ea8;
+  --logo-glow: 34, 150, 220;
+  text-shadow:
+    0 0 0.1em rgba(var(--logo-glow), 0.45),
+    0 0 0.3em rgba(var(--logo-glow), 0.22);
+}
+
+/* Clean mode: brilho discreto, mantendo a marca legível sem competir com o
+   texto. É o único acento que sobrevive neste modo — ver o bloco
+   html[data-clean-mode='true'], onde todos os outros viram cinza. */
+html[data-clean-mode='true'] .site-logo {
+  --logo-ink: #1f2933;
+  --logo-glow: 90, 140, 175;
+  text-shadow:
+    0 0 0.08em rgba(var(--logo-glow), 0.3),
+    0 0 0.22em rgba(var(--logo-glow), 0.16);
+}
+
+/* Quem pediu menos movimento não perde a marca, só o brilho pulsante que o
+   hover aplicaria. Mantido estático. */
+@media (prefers-reduced-motion: no-preference) {
+  .sidebar-brand:hover .site-logo {
+    text-shadow:
+      0 0 0.14em rgba(var(--logo-glow), 1),
+      0 0 0.5em rgba(var(--logo-glow), 0.75),
+      0 0 1.1em rgba(var(--logo-glow), 0.45);
+    transition: text-shadow 0.25s ease;
+  }
 }
 
 html[data-theme='light'] .main-surface {
