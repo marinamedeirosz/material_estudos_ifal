@@ -27,6 +27,28 @@ export function SectionHeader({ title, subtitle, colorClass = 'text-accent', bad
   );
 }
 
+/**
+ * Subseção: título `h3` com cor de acento seguido do conteúdo.
+ * Substitui o par `<div><h3 className="font-display …">…</h3>{filhos}</div>`,
+ * que se repetia dezenas de vezes nos arquivos de seção.
+ */
+export function Subsection({
+  title,
+  accentClass = 'text-accent',
+  children,
+}: {
+  title: string;
+  accentClass?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div>
+      <h3 className={`font-display font-bold text-xl ${accentClass} mb-3`}>{title}</h3>
+      {children}
+    </div>
+  );
+}
+
 /** Grade de cards de conceito. */
 export function ConceptGrid({
   items,

@@ -15,7 +15,7 @@ export default function EstruturaDadosContent() {
           Estrutura<br /><span className="gradient-text">de Dados</span>
         </>
       )}
-      description="Python · Recursividade · TAD · Pilhas · Filas · Hashing · Árvores"
+      description="Python · Recursividade · Big O · TAD · Pilhas · Filas · Hashing · Ordenação · Árvores e BST"
       heroBackground={heroBackground}
       renderSection={sectionId => <EstruturaDadosSections activeSection={sectionId} />}
     />
