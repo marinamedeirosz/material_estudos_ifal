@@ -10,6 +10,7 @@ export default function TicSection() {
         title="Tecnologias da Informação e Comunicação"
         subtitle="Onde as TICs já estão e o que isso cobra de quem as desenvolve"
         colorClass="text-accent"
+        badge="AV1"
       />
 
       <HighlightBox title="O que são TICs">

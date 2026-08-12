@@ -21,13 +21,27 @@ export default function TabelasSection() {
         title="Tabelas"
         subtitle="Para dados tabulares — e só para eles"
         colorClass="text-accent"
+        badge="AV2"
       />
 
       <HighlightBox title="A atividade da turma">
         <p>
           A primeira metade da AV2 pediu duas páginas: uma com um <strong>formulário de busca</strong> e outra com a{' '}
-          <strong>tabela de resultados</strong>, seguindo o modelo da consulta de turmas do SIGAA. É um caso realista —
-          a tabela existe para exibir dados que têm linhas e colunas de verdade.
+          <strong>tabela de resultados</strong>, seguindo o modelo da consulta de turmas do SIGAA. O enunciado veio
+          acompanhado de um PDF — <em>formulario_busca_turmas.pdf</em> — com a <strong>captura da tela real do
+          SIGAA</strong> que o aluno deveria reproduzir. É por isso que o exemplo abaixo tem a forma que tem: ele
+          persegue um modelo visual concreto, não um layout inventado.
+        </p>
+      </HighlightBox>
+
+      <HighlightBox title="De onde vem este conteúdo" accent="var(--color-accent5)">
+        <p>
+          Vale o mesmo aviso que a seção de flexbox faz: a apostila de HTML5 do Curso W3C indicada pelo professor{' '}
+          <strong>não tem capítulo sobre tabelas</strong>. Ela trata das <em>novidades</em> do HTML5 — novos campos de
+          formulário, validação, canvas, geolocation — e a tabela não é novidade do HTML5, então ficou de fora. Mesmo
+          assim o assunto foi cobrado numa atividade avaliativa, e o próprio professor anexou ao enunciado as
+          referências que faltavam: a página do <strong>MDN sobre o elemento table</strong> e o{' '}
+          <strong>HTML Tables do W3Schools</strong>. É de lá, e do modelo do SIGAA, que sai o que você lê aqui.
         </p>
       </HighlightBox>
 

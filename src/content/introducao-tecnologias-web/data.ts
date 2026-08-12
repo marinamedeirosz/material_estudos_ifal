@@ -16,7 +16,7 @@ GUIA DE INTRODUÇÃO ÀS TECNOLOGIAS WEB (INTW) - Resumo:
 
 6. MOTORES DE RENDERIZAÇÃO: cada navegador usa um motor responsável por processar o código da página. Webkit (Safari e Google Chrome), Gecko (Firefox, Mozilla, Camino), Trident (Internet Explorer 4 ao 9) e Presto (Opera 7 ao 10). Focar a compatibilidade nos motores, e não em cada navegador, alcança uma amplitude maior de meios de acesso. Com HTML5 e CSS3 o desenvolvimento passou a ser modular: as propriedades foram divididas em grupos independentes que lançam novidades a qualquer momento, o que torna a evolução mais dinâmica mas aumenta a chance de incompatibilidade entre navegadores.
 
-7. ESTRUTURA BÁSICA DE UM DOCUMENTO HTML5: o Doctype é a primeira linha do documento, antes da tag html, e não é uma tag — é uma instrução que informa ao navegador qual especificação usar. No HTML5 ele é simplesmente <!DOCTYPE html>. O elemento html é a raiz da árvore de elementos e leva o atributo lang (ex.: lang="pt-br"), necessário para que os user-agents saibam o idioma principal do documento; lang pode ser usado em qualquer elemento. O head guarda os metadados — informações sobre a página. A metatag charset define a tabela de caracteres: <meta charset="utf-8">, forma que substitui o antigo <meta http-equiv="Content-Type" content="text/html; charset=utf-8">. A tabela Unicode suporta cerca de um milhão de caracteres e fornece um número único para cada caractere, independente de plataforma, programa ou língua. Há dois tipos de link no HTML: a tag a, que leva o usuário a outros documentos, e a tag link, que referencia fontes externas usadas pelo documento — por exemplo <link rel="stylesheet" href="estilo.css">.
+7. ESTRUTURA BÁSICA DE UM DOCUMENTO HTML5: o Doctype é a primeira linha do documento, antes da tag html, e não é uma tag — é uma instrução que informa ao navegador qual especificação usar. No HTML5 ele é simplesmente <!DOCTYPE html>. O elemento html é a raiz da árvore de elementos e leva o atributo lang (ex.: lang="pt-br"), necessário para que os agentes de usuário saibam o idioma principal do documento; lang pode ser usado em qualquer elemento. O head guarda os metadados — informações sobre a página. A metatag charset define a tabela de caracteres: <meta charset="utf-8">, forma que substitui o antigo <meta http-equiv="Content-Type" content="text/html; charset=utf-8">. A tabela Unicode suporta cerca de um milhão de caracteres e fornece um número único para cada caractere, independentemente de plataforma, programa ou língua. Há dois tipos de link no HTML: a tag a, que leva o usuário a outros documentos, e a tag link, que referencia fontes externas usadas pelo documento — por exemplo <link rel="stylesheet" href="estilo.css">.
 
 8. ELEMENTOS DE LINHA E DE BLOCO: elementos de linha marcam na maioria das vezes texto (a, strong, em, img, input, abbr, span). Elementos de bloco são caixas que dividem o conteúdo em seções do layout. Regras: elementos de linha podem conter outros elementos de linha, dependendo da categoria; elementos de linha nunca podem conter elementos de bloco; elementos de bloco sempre podem conter elementos de linha; elementos de bloco podem conter outros elementos de bloco dependendo da categoria — um parágrafo não pode conter um div, mas o contrário é possível.
 
@@ -54,6 +54,12 @@ GUIA DE INTRODUÇÃO ÀS TECNOLOGIAS WEB (INTW) - Resumo:
 
 25. JAVASCRIPT E O DOM: quando o navegador carrega a página, ele constrói uma coleção de objetos que representam os elementos HTML — o DOM (Document Object Model). Cada elemento vira um objeto. É pelo DOM que o JavaScript lê e altera a página. document.getElementById busca um elemento pelo id. O HTML5 acrescentou getElementsByClassName, que busca por classe, e a Selector API com querySelector e querySelectorAll, que aceitam seletores CSS. innerHTML lê ou substitui o conteúdo de um elemento. Eventos conectam a ação do usuário ao código: onclick para clique, oninput para modificação de valor de campo, onchange para o fim da edição. O atributo hidden esconde um elemento e pode ser manipulado por JavaScript.
 
+26. PROJETO FINAL — AS TRÊS CAMADAS JUNTAS: o cronograma da unidade reservou três encontros ao fim da disciplina para o Projeto Final ("Projeto Final - Aula presencial dia 17/dezembro - Avaliação AV2-2" em 23/11, e "Projeto de WebSite - Aula Extra Adicional" em 07/12 e 14/12), e o material de datas e prazos marca a AV2-2 de JavaScript para 17 de dezembro. Ressalva: o aviso de lançamento de notas de 29/12 define a AV2 apenas pelas atividades de formulário, tabela e CSS, sem citar o projeto — tudo indica que ele não chegou a ser cobrado como nota. O projeto integra as três camadas num site publicado: HTML semântico com Doctype, lang e charset em todas as páginas, links relativos entre elas, imagens com alt descritivo, formulário com label for e validação pelo próprio HTML, folha de estilo externa reaproveitada por todas as páginas, layout organizado com flexbox e pelo menos uma interação real pelo DOM. As plataformas indicadas pelo professor para hospedar e testar são o Replit (já usado na AV1-1, em que a entrega era o link do repositório HTML/CSS/JS) e o CodePen. O valor didático do projeto está nos problemas de integração, que não aparecem em atividades de camada única: o CSS que quebra quando o HTML muda, o link relativo que funciona localmente e falha depois de publicado, e o script que não encontra o elemento por rodar antes de a página carregar. Erro mais comum ao publicar: o href do link rel="stylesheet" aponta para um caminho que existia na máquina local e não existe no servidor, então a página abre sem estilo nenhum.
+
+27. ACESSIBILIDADE — O QUE MUDA PARA QUEM USA LEITOR DE TELA: as decisões de acessibilidade que a disciplina cobre atuam na marcação, não na aparência. Tags semânticas dizem o que cada bloco é; o alt descreve a imagem; o label com for liga o rótulo ao campo; o th com scope diz a que linha ou coluna cada dado pertence. Sobre o alt, a pergunta certa é qual texto ocuparia o lugar da imagem sem perda de informação: alt="imagem" ou alt="foto1.jpg" é inútil, porque não descreve conteúdo; um alt descritivo diz o que a imagem mostra na medida em que isso importa ao texto ao redor; e alt="" (vazio, mas presente) é o correto para imagem puramente decorativa, porque instrui o leitor de tela a pular o elemento — omitir o atributo não é equivalente, já que sem alt alguns leitores anunciam o nome do arquivo. Aumentar fonte e contraste ajuda quem enxerga com dificuldade, mas não altera o que é anunciado pelo leitor de tela.
+
+LACUNAS DAS APOSTILAS (declaradas ao aluno): a apostila de CSS do Curso W3C é de CSS3 avançado e não cobre flexbox, box model nem seletores básicos; a apostila de HTML5 trata das novidades do HTML5 e não tem capítulo sobre tabelas. Nos dois casos o assunto foi cobrado em atividade avaliativa e a fonte real são as referências que o professor anexou aos enunciados: MDN (Flexbox, elemento table, validação de formulários, blocos de CSS) e W3Schools (HTML Forms, HTML Tables).
+
 DIVISÃO POR AVALIAÇÕES (declarada pelo professor no mural da turma):
 - AV1: composta pela Atividade 1 (Introdução à TIC, Internet e Web, criação e formatação básica de hipertexto com html, head, body, h1 a h6, strong, em, img) e pela Atividade de HTML (avaliação presencial de formatação de documento: duas páginas HTML com links entre elas sobre Internet e Web, usando h1, h2, h3, strong, em, img, a, p; tags semânticas article e section; listas ordenadas e não ordenadas).
 - AV2: composta pela Atividade de Formulário e Tabela (páginas de formulário de busca e de tabela de resultados, no modelo do SIGAA) e pela Atividade de Formulário com CSS (cadastro de estágio: arquivo form.html mais style.css, com validação de campos input e select no HTML, flexbox com display:flex, seletores de id, class e tag, e as propriedades background-image, background-color, box-shadow, border-radius, margin, padding, align-items, width, height, font e color).
@@ -70,7 +76,7 @@ export const INTW_TOPICS: QuizTopicOption[] = [
     value: 'prova2',
     label: 'AV2: Tabelas, Formulários, CSS e JavaScript',
     prompt:
-      'Conteúdo da AV2 de Introdução às Tecnologias Web: tabelas em HTML (table, tr, th, td, thead, tbody, tfoot, caption, colspan, rowspan, scope; tabela é para dados tabulares e não para layout); formulários (form com action e method, input, label com for apontando para o id do campo, select com option, textarea, radio e checkbox, fieldset e legend); novos tipos de campo do HTML5 (tel, search, email, url, date e demais tipos de data e hora, number com min, max e step, range e color); validação de formulários sem JavaScript (required, placeholder, autofocus, maxlength também em textarea, pattern com expressão regular, novalidate e formnovalidate, evento oninput e método setCustomValidity); o que é CSS e a separação entre estrutura e apresentação; sintaxe seletor, propriedade e valor; seletores de tag, de classe, de id, encadeado/descendente, agrupado, seletores complexos E > F e E + F, seletores de atributo e pseudo-classes como :nth-child, :checked e :disabled; formas de aplicar CSS (inline, interno e externo com a tag link); modelo de caixa com content, padding, border e margin; propriedades exigidas na atividade (background-image, background-color, box-shadow, border-radius, margin, padding, width, height, font e color); cores em hexadecimal e RGBA e a diferença entre RGBA e opacity; recursos do CSS3 (gradientes e stops, columns, transform 2D com scale, skew, translation e rotate, transform-origin, transitions e @keyframes); flexbox com display:flex, flex-direction, justify-content, align-items e gap; e JavaScript como client-side script (variáveis com let e const, tipos, operadores, === versus ==, if/else, while e for, funções com parâmetros e return, arrays com índice a partir de 0 e length, alert, prompt que sempre devolve string e console.log, e manipulação do DOM com getElementById, querySelector, innerHTML e eventos como onclick).',
+      'Conteúdo da AV2 de Introdução às Tecnologias Web: tabelas em HTML (table, tr, th, td, thead, tbody, tfoot, caption, colspan, rowspan, scope; tabela é para dados tabulares e não para layout); formulários (form com action e method, input, label com for apontando para o id do campo, select com option, textarea, radio e checkbox, fieldset e legend); novos tipos de campo do HTML5 (tel, search, email, url, date e demais tipos de data e hora, number com min, max e step, range e color); validação de formulários sem JavaScript (required, placeholder, autofocus, maxlength também em textarea, pattern com expressão regular, novalidate e formnovalidate, evento oninput e método setCustomValidity); o que é CSS e a separação entre estrutura e apresentação; sintaxe seletor, propriedade e valor; seletores de tag, de classe, de id, encadeado/descendente, agrupado, seletores complexos E > F e E + F, seletores de atributo e pseudo-classes como :nth-child, :checked e :disabled; formas de aplicar CSS (inline, interno e externo com a tag link); modelo de caixa com content, padding, border e margin; propriedades exigidas na atividade (background-image, background-color, box-shadow, border-radius, margin, padding, width, height, font e color); cores em hexadecimal e RGBA e a diferença entre RGBA e opacity; recursos do CSS3 (gradientes e stops, columns, transform 2D com scale, skew, translation e rotate, transform-origin, transitions e @keyframes); flexbox com display:flex, flex-direction, justify-content, align-items e gap; e JavaScript como client-side script (variáveis com let e const, tipos, operadores, === versus ==, if/else, while e for, funções com parâmetros e return, arrays com índice a partir de 0 e length, alert, prompt que sempre devolve string e console.log, e manipulação do DOM com getElementById, querySelector, innerHTML e eventos como onclick). Inclui ainda o projeto final previsto no cronograma, que integra as três camadas num site publicado (HTML semântico, links relativos, folha de estilo externa, flexbox e interação pelo DOM), as plataformas indicadas para hospedagem (Replit e CodePen) e os problemas típicos de integração e de publicação, como o href da folha de estilo apontando para um caminho que não existe no servidor.',
   },
   { value: 'tic', label: 'TIC e sociedade' },
   { value: 'internet-web', label: 'Internet, Web e HTTP' },
@@ -81,6 +87,7 @@ export const INTW_TOPICS: QuizTopicOption[] = [
   { value: 'css-fundamentos', label: 'CSS: seletores e box model' },
   { value: 'css-layout', label: 'CSS: flexbox e CSS3' },
   { value: 'javascript', label: 'JavaScript e DOM' },
+  { value: 'projeto-final', label: 'Projeto final e acessibilidade' },
 ];
 
 /**
@@ -112,12 +119,81 @@ export const INTW_SECTIONS = [
   { id: 'css-fundamentos', title: 'CSS: Seletores e Box Model', shortTitle: 'CSS: base', exams: ['av2'] },
   { id: 'css-layout', title: 'CSS: Flexbox e Recursos do CSS3', shortTitle: 'Flexbox/CSS3', exams: ['av2'] },
   { id: 'javascript', title: 'JavaScript e o DOM', shortTitle: 'JavaScript', exams: ['av2'] },
+  { id: 'projeto-final', title: 'Projeto Final', shortTitle: 'Projeto Final', exams: ['av2'] },
   { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ] as const;
 
 export type IntwSectionId = (typeof INTW_SECTIONS)[number]['id'];
 
 export const QUIZ_DATA: QuizQuestionData[] = [
+  {
+    id: 'q15',
+    exams: ['av1'],
+    question:
+      'A primeira aula da disciplina classifica o caixa automático de um banco como sistema interativo, mas não o sistema que processa em lote as informações bancárias durante a madrugada. O que separa os dois?',
+    options: [
+      'O caixa automático é mais moderno; sistemas em batch são tecnologia legada.',
+      'No caixa automático há uma pessoa dialogando com o sistema por meio de uma interface; o processamento em lote roda sem essa interação.',
+      'O caixa automático é uma TIC e o sistema em batch não é.',
+      'O caixa automático lida com dinheiro, e sistemas que movimentam valores são sempre interativos.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Exato. O critério é a interação: no caixa automático um usuário com um objetivo dialoga com o sistema por meio de uma interface. O processamento em lote cumpre sua função sem ninguém do outro lado. Sistemas interativos são um subconjunto das TICs — os dois exemplos são TIC, só um é interativo.',
+    feedbackWrong:
+      'O critério não é idade, importância nem valor movimentado: é a presença de uma pessoa interagindo por meio de uma interface. Os dois sistemas são TICs — o diagrama da aula coloca os sistemas interativos como um subconjunto dentro das TICs, com o batch fora desse subconjunto mas ainda dentro das TICs.',
+  },
+  {
+    id: 'q16',
+    exams: ['av1'],
+    question:
+      'Você desenvolve o aplicativo de agendamento de consultas de uma rede pública de saúde. Segundo a responsabilidade do desenvolvedor de TIC apresentada na aula, o que se espera de você além de entregar o sistema funcionando?',
+    options: [
+      'Garantir que o sistema nunca apresente falhas, já que se trata de saúde.',
+      'Prever os impactos do trabalho para encaminhar boas soluções, reduzir os impactos negativos previstos e oferecer salvaguardas para os imprevistos.',
+      'Transferir a responsabilidade pelos impactos ao gestor que contratou o sistema.',
+      'Restringir o uso do aplicativo a quem tem familiaridade com tecnologia, evitando erros de usuários inexperientes.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Correto. A aula é explícita: estar ciente de que o trabalho afeta a vida das pessoas e tentar prever os impactos — para encaminhar boas intervenções, diminuir os impactos negativos previstos e fornecer salvaguardas para os impactos negativos imprevistos. Repare que a terceira parte admite que nem tudo é previsível; por isso existe a salvaguarda.',
+    feedbackWrong:
+      'A resposta é a tríade da aula: prever impactos, reduzir os negativos previstos e criar salvaguardas para os imprevistos. Prometer ausência de falhas é irreal — e é justamente por isso que existe a salvaguarda. Transferir a responsabilidade contraria o ponto de partida ("seu trabalho afeta a vida das pessoas"), e restringir quem pode usar um serviço público inverte o problema: excluir usuários é o impacto negativo, não a solução.',
+  },
+  {
+    id: 'q17',
+    exams: ['av1'],
+    question:
+      'Na evolução das interfaces apresentada na aula, o que caracteriza a etapa dos anos 1980 em relação à etapa imediatamente anterior?',
+    options: [
+      'A interface deixa de ser feita de painéis eletromecânicos e passa a usar linguagens de programação como COBOL e FORTRAN.',
+      'A interface deixa de ser terminal com linguagens de comando e passa a ser interação para diálogo, com interfaces gráficas e multimídia.',
+      'A interface torna-se onipresente, com dispositivos móveis, tecnologia embarcada e aplicações em nuvem.',
+      'A interface passa a servir para realizar trabalho em grupo, com redes conectando as pessoas.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Isso mesmo. A sequência é: 1940-1950 hardware para engenheiros (painéis eletromecânicos), 1960-1970 interface de programação (COBOL, FORTRAN), 1970-1980 primeiros aplicativos e terminais com linguagens de comando, 1980 interação para diálogo com GUIs e multimídia, 1990 interface para realizar trabalho em rede, e a partir de 2000 a interface onipresente.',
+    feedbackWrong:
+      'Os anos 1980 são a etapa das GUIs e da multimídia — a interface vira diálogo, deixando para trás o terminal de linha de comando dos anos 1970-1980. As outras alternativas descrevem etapas reais da mesma linha do tempo, mas em outras décadas: COBOL/FORTRAN nos anos 1960-1970, trabalho em rede nos anos 1990, e a onipresença a partir de 2000.',
+  },
+  {
+    id: 'q18',
+    exams: ['av1'],
+    question:
+      'Na situação típica de uso descrita na aula, um usuário com um objetivo interage com um sistema por meio de uma interface. O que o modelo entende por "contexto de uso"?',
+    options: [
+      'O conjunto de funcionalidades que o sistema oferece ao usuário.',
+      'O tempo e o ambiente físico, social e cultural em que a interação acontece.',
+      'O histórico de ações que o usuário executou anteriormente no sistema.',
+      'O hardware sobre o qual o sistema foi instalado.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Certo. O contexto de uso envolve a interação inteira e inclui o tempo e o ambiente físico, social e cultural. É o que explica por que a mesma interface funciona bem num escritório silencioso e mal num caixa de supermercado com fila atrás — o sistema é o mesmo, o contexto não.',
+    feedbackWrong:
+      'Contexto de uso é o tempo e o ambiente físico, social e cultural em que a interação ocorre. As funcionalidades pertencem ao sistema e o hardware é a plataforma que o executa — nenhum dos dois é contexto. O contexto é o que está em volta da interação, não dentro do sistema.',
+  },
   {
     id: 'q1',
     exams: ['av1'],
@@ -277,7 +353,7 @@ export const QUIZ_DATA: QuizQuestionData[] = [
       'A regra p, porque seletores de tag são avaliados por último.',
       'A regra .destaque, porque classes são mais flexíveis que ids.',
       'A regra #aviso, porque o seletor de id é o mais específico dos três.',
-      'A que estiver escrita por último no arquivo, independente do seletor.',
+      'A que estiver escrita por último no arquivo, independentemente do seletor.',
     ],
     correctIndex: 2,
     feedbackCorrect:
@@ -352,5 +428,243 @@ export const QUIZ_DATA: QuizQuestionData[] = [
       'Correto. getElementById localiza o elemento pelo id, innerHTML substitui seu conteúdo, e o onclick liga a ação ao clique do usuário. É assim que o JavaScript altera a página já carregada.',
     feedbackWrong:
       'A forma correta é getElementById("msg").innerHTML no onclick. Não existe getElementByClass (o nome é getElementsByClassName, no plural). O DOM não é somente leitura — alterá-lo é justamente o papel do JavaScript. E querySelector("msg") buscaria uma tag chamada "msg"; para id seria "#msg", e value serve para campos de formulário, não para parágrafos.',
+  },
+  {
+    id: 'q19',
+    exams: ['av1'],
+    question:
+      'Um colega afirma: "escrevi um programa que troca mensagens por um socket na porta 9000, então ele usa a Web". A afirmação está correta?',
+    options: [
+      'Sim, porque qualquer programa que se comunica pela rede usa a Web.',
+      'Não. Ele usa a Internet, mas não a Web: aplicações web falam HTTP, que é uma camada sobre o TCP e tradicionalmente usa a porta 80.',
+      'Sim, desde que o programa use TCP, porque a Web é definida pelo uso do TCP.',
+      'Não, porque a porta 9000 é reservada e não pode ser usada por programas de usuário.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Exato. Esse é o teste que separa os dois conceitos: aplicações de Internet em geral podem usar TCP ou UDP em qualquer porta, enquanto aplicações web usam HTTP — uma camada sobre o TCP, tradicionalmente na porta 80. Enviar dados por um socket numa porta arbitrária é usar a Internet sem usar a Web.',
+    feedbackWrong:
+      'Usar a rede não é usar a Web. A Web é o que se acessa via HTTP, protocolo que roda sobre TCP e tradicionalmente na porta 80; um socket numa porta arbitrária usa a infraestrutura da Internet sem passar pela Web. E o TCP sozinho não define a Web — muita coisa que não é web usa TCP.',
+  },
+  {
+    id: 'q20',
+    exams: ['av1'],
+    question:
+      'Ao revisar uma página, você encontra <!DOCTYPE html> na primeira linha. Um colega quer "fechar essa tag" para deixar o código consistente. O que responder?',
+    options: [
+      'Ele tem razão: toda tag precisa ser fechada, e o correto é </!DOCTYPE>.',
+      'O Doctype não é uma tag: é uma instrução que informa ao navegador qual especificação usar, e por isso não tem fechamento.',
+      'Ele tem razão, mas o fechamento é opcional no HTML5 por retrocompatibilidade.',
+      'O Doctype é uma tag, mas pertence ao head e por isso é fechada junto com ele.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Correto. O Doctype vem antes da tag html e não é uma tag — é uma instrução ao navegador sobre qual especificação seguir. No HTML5 ele foi reduzido a <!DOCTYPE html>, bem mais curto que as declarações longas das versões anteriores.',
+    feedbackWrong:
+      'O Doctype não é uma tag e não se fecha. É uma instrução que precede o elemento html e diz ao navegador qual especificação usar. Também não fica dentro do head: ele vem antes da abertura do próprio html, que é a raiz da árvore de elementos.',
+  },
+  {
+    id: 'q21',
+    exams: ['av1'],
+    question:
+      'Uma página em português exibe acentos corretamente no seu computador, mas mostra caracteres estranhos na máquina de um colega. Qual linha no head resolve isso na origem?',
+    options: [
+      '<meta name="language" content="pt-br">',
+      '<meta charset="utf-8">',
+      '<html lang="pt-br">',
+      '<link rel="stylesheet" href="estilo.css">',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Isso. A metatag charset define a tabela de caracteres que o navegador deve usar para interpretar os bytes do arquivo — sem ela, cada navegador adivinha, e é daí que vêm os caracteres corrompidos. O Unicode dá um número único a cada caractere, independentemente de plataforma, programa ou língua.',
+    feedbackWrong:
+      'Quem resolve é <meta charset="utf-8">. O atributo lang informa o idioma do conteúdo aos agentes de usuário — útil para leitores de tela e buscadores, mas não decide como os bytes viram letras. A tag link referencia arquivos externos, e não existe meta "language" padronizada para essa finalidade.',
+  },
+  {
+    id: 'q22',
+    exams: ['av1'],
+    question:
+      'Duas tags do HTML se chamam "link" no sentido comum, mas fazem coisas diferentes: <a> e <link>. Qual é a distinção?',
+    options: [
+      'A tag a leva o usuário a outro documento; a tag link referencia fontes externas usadas pelo próprio documento, como a folha de estilo.',
+      'A tag a é usada para links internos ao site e a tag link para endereços externos.',
+      'A tag link é a versão moderna da tag a, que foi descontinuada no HTML5.',
+      'A tag a funciona no body e a tag link é a mesma coisa, mas escrita dentro do head.',
+    ],
+    correctIndex: 0,
+    feedbackCorrect:
+      'Certo. São dois tipos de link com propósitos distintos: o a é navegação — leva a pessoa a outro documento, a uma âncora ou a um endereço externo. O link é uma relação entre documentos que o navegador resolve sozinho, como em <link rel="stylesheet" href="estilo.css">.',
+    feedbackWrong:
+      'A diferença não é interno versus externo nem antigo versus moderno — a tag a continua sendo a forma de criar links navegáveis no HTML5. O a leva o usuário a outro documento; o link referencia recursos que o próprio documento usa, tipicamente a folha de estilo.',
+  },
+  {
+    id: 'q23',
+    exams: ['av2'],
+    question:
+      'Na tabela de resultados da busca de turmas, uma célula precisa ocupar duas colunas para servir de subtítulo de um grupo. Qual atributo faz isso, e qual é a diferença para o outro do par?',
+    options: [
+      'rowspan="2", que estende a célula por duas colunas; colspan estende por linhas.',
+      'colspan="2", que estende a célula por duas colunas; rowspan estende por linhas.',
+      'scope="2", que define quantas colunas o cabeçalho abrange.',
+      'width="2", que define a largura da célula em número de colunas.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Correto. colspan faz a célula ocupar várias colunas (na horizontal) e rowspan faz ocupar várias linhas (na vertical). O nome ajuda: col de coluna, row de linha. O scope é outra coisa — diz a que direção um th se refere semanticamente, sem mexer no formato.',
+    feedbackWrong:
+      'É colspan que estende por colunas; rowspan estende por linhas — as duas alternativas trocadas são o erro clássico aqui. O scope não recebe número: ele vale "col" ou "row" e trata do significado do cabeçalho, não do tamanho da célula. E os atributos de formatação como width foram descontinuados no HTML5, porque isso é território do CSS.',
+  },
+  {
+    id: 'q24',
+    exams: ['av2'],
+    question:
+      'Você precisa exibir na página um bloco com a foto do aluno à esquerda e os dados dele à direita. Um colega sugere montar isso com uma tabela de duas colunas. Qual é a avaliação correta dessa escolha?',
+    options: [
+      'É a solução adequada: tabelas foram feitas para dividir a página em colunas.',
+      'É inadequada. O conteúdo não é tabular — dividir a página em colunas é responsabilidade do CSS, hoje com flexbox.',
+      'É adequada desde que a tabela use th com scope, o que preserva a acessibilidade.',
+      'É inadequada apenas porque tabelas são lentas de renderizar em telas pequenas.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Isso. Houve uma época em que sites inteiros eram diagramados com tabelas aninhadas, e isso acabou: use table quando o conteúdo tiver linhas e colunas de verdade — notas, horários, a listagem de turmas. Posicionar blocos na tela é trabalho do CSS, e é exatamente para isso que a atividade pedia display:flex.',
+    feedbackWrong:
+      'O problema é semântico, não de desempenho. Uma foto ao lado de dados não é um conjunto de linhas e colunas de dados: é layout, e layout pertence ao CSS. Acrescentar th e scope só piora — passa a anunciar ao leitor de tela cabeçalhos de uma tabela que não existe conceitualmente.',
+  },
+  {
+    id: 'q25',
+    exams: ['av2'],
+    question:
+      'No cadastro de estágio, o campo "quantidade de horas semanais" deve aceitar apenas números entre 10 e 30, variando de 5 em 5. Qual marcação expressa isso sem JavaScript?',
+    options: [
+      '<input type="text" min="10" max="30" step="5">',
+      '<input type="number" min="10" max="30" step="5">',
+      '<input type="range" pattern="10-30">',
+      '<input type="number" maxlength="30" required>',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Exato. O type="number" traz os atributos min, max e step; o step define a diferença mínima entre dois valores, então step="5" produz 10, 15, 20, 25 e 30. É o HTML5 automatizando validação que antes exigia JavaScript.',
+    feedbackWrong:
+      'A resposta é type="number" com min, max e step. Num campo de texto os atributos min, max e step não têm efeito — eles pertencem aos tipos numéricos e de data. O range usa os mesmos atributos, mas troca a apresentação por um controle deslizante, o que não é o pedido, e o maxlength limita a quantidade de caracteres digitados, não o valor.',
+  },
+  {
+    id: 'q26',
+    exams: ['av2'],
+    question:
+      'Um formulário longo tem um botão "Salvar rascunho" que não deve disparar a validação dos campos obrigatórios, embora o botão "Enviar" deva. Como resolver?',
+    options: [
+      'Colocar novalidate no form, o que desliga a validação para os dois botões.',
+      'Colocar formnovalidate no botão de rascunho, mantendo a validação no envio normal.',
+      'Remover o required de todos os campos e validar tudo por JavaScript.',
+      'Não é possível: a validação do HTML5 vale para o formulário inteiro, sem exceção.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Correto. O par existe justamente para esse caso: novalidate no form desliga a validação do formulário inteiro, enquanto formnovalidate no botão desliga apenas quando o envio parte daquele botão. O "salvar rascunho" é o exemplo canônico.',
+    feedbackWrong:
+      'O atributo certo é formnovalidate, no botão. O novalidate no form resolveria demais — desligaria também a validação do envio de verdade. Abrir mão do required e reescrever tudo em JavaScript joga fora o que o HTML5 já oferece, e a afirmação de que não há saída é falsa: o formnovalidate existe exatamente para isso.',
+  },
+  {
+    id: 'q27',
+    exams: ['av2'],
+    question:
+      'Numa folha de estilo você quer que apenas os parágrafos que estão dentro de um elemento com id "conteudo" fiquem em cinza. Qual seletor faz isso?',
+    options: [
+      '#conteudo, p { color: gray; }',
+      '#conteudo p { color: gray; }',
+      '.conteudo p { color: gray; }',
+      'p#conteudo { color: gray; }',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Isso mesmo. O espaço entre os seletores forma o seletor encadeado (descendente): "#conteudo p" atinge os p que estão dentro do elemento de id conteudo. É a diferença que o espaço faz — e é por isso que ele não é decorativo em CSS.',
+    feedbackWrong:
+      'O correto é "#conteudo p", com espaço. Com vírgula o seletor vira agrupado e pinta duas coisas independentes: o elemento #conteudo e todos os p da página. O ponto seleciona classe, não id. E "p#conteudo" sem espaço significa um p que ele próprio tem id="conteudo" — outra coisa.',
+  },
+  {
+    id: 'q28',
+    exams: ['av2'],
+    question:
+      'Você aplica opacity: 0.5 num card para deixar o fundo translúcido, mas o texto dentro dele também desbota. Qual é a explicação e a correção?',
+    options: [
+      'É comportamento esperado do opacity, que afeta o elemento inteiro e seus filhos; para atingir só o fundo, use rgba na cor de fundo.',
+      'O texto desbotou porque falta z-index; basta elevar o texto acima do fundo.',
+      'O opacity só deveria afetar o fundo; o problema é bug de navegador, contornado com background-opacity.',
+      'É preciso aplicar opacity: 1 no texto para restaurá-lo.',
+    ],
+    correctIndex: 0,
+    feedbackCorrect:
+      'Certo. A propriedade opacity afeta o elemento inteiro e todos os seus filhos, texto incluído. Já no rgba(0, 0, 0, 0.5) o quarto valor é o alfa e afeta somente aquela cor — dá para ter fundo semitransparente com o texto por cima totalmente opaco.',
+    feedbackWrong:
+      'Não é bug nem questão de empilhamento: o opacity foi projetado para afetar o elemento e toda a sua descendência, e por isso o texto acompanha. A saída é aplicar a transparência na cor, com rgba no background. Não existe propriedade background-opacity, e opacity: 1 num filho não desfaz a do pai.',
+  },
+  {
+    id: 'q29',
+    exams: ['av2'],
+    question:
+      'Considere o trecho: let notas = [8, 7.5, 9]; O que notas.length devolve, e como acessar o primeiro elemento?',
+    options: [
+      'Devolve 2 (o último índice), e o primeiro elemento é notas[1].',
+      'Devolve 3 (a quantidade de itens), e o primeiro elemento é notas[0].',
+      'Devolve 3, e o primeiro elemento é notas[1], porque a contagem começa em 1.',
+      'Devolve 24.5 (a soma dos itens), e o primeiro elemento é notas[0].',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Exato. O length é a quantidade de itens — 3 —, mas os índices começam em 0, então o primeiro elemento é notas[0] e o último é notas[length - 1], ou seja, notas[2]. Confundir os dois é a origem do erro de "estourar" o fim do array.',
+    feedbackWrong:
+      'O length devolve a quantidade de itens (3), não o último índice nem a soma. Como a indexação começa em 0, o primeiro elemento é notas[0] e o último é notas[2] — nunca notas[3], que estaria fora do array.',
+  },
+  {
+    id: 'q30',
+    exams: ['av2'],
+    question:
+      'No console do navegador, "5" == 5 resulta em true, mas "5" === 5 resulta em false. Por quê, e qual operador usar?',
+    options: [
+      'O == compara apenas o valor após converter o tipo; o === compara valor e tipo. O recomendado é o ===, que evita conversões silenciosas.',
+      'O == está errado e sempre deve ser evitado porque não funciona com números.',
+      'O === compara os endereços das variáveis na memória, e o == compara o conteúdo.',
+      'Os dois são equivalentes; a diferença é só de estilo de escrita.',
+    ],
+    correctIndex: 0,
+    feedbackCorrect:
+      'Correto. O == faz conversão de tipo antes de comparar, então a string "5" vira o número 5 e a comparação dá true. O === é estrito: compara valor e tipo, e string nunca é igual a number. Por isso o === é o recomendado — a conversão automática esconde bugs.',
+    feedbackWrong:
+      'O == não está errado nem é inútil: ele funciona, só que convertendo os tipos antes de comparar, o que produz resultados surpreendentes. O === compara valor e tipo, sem conversão — não tem relação com endereços de memória. E os dois não são equivalentes: este exemplo é a prova.',
+  },
+  {
+    id: 'q31',
+    exams: ['av2'],
+    question:
+      'Você publica o projeto final e o site abre, mas nenhum estilo é aplicado — a página aparece com a formatação padrão do navegador. Qual é a causa mais provável?',
+    options: [
+      'O arquivo CSS não pode ser publicado junto; é preciso colar todo o CSS em style inline.',
+      'O caminho do href no <link rel="stylesheet"> não corresponde ao local real do arquivo depois de publicado.',
+      'Folhas de estilo externas não funcionam em sites publicados, apenas localmente.',
+      'Falta declarar o <meta charset="utf-8">, sem o qual o CSS não é interpretado.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Isso. É o erro número um ao publicar: o href apontava para um caminho que existia na sua máquina e não existe no servidor — nome de pasta diferente, maiúscula trocada, caminho absoluto em vez de relativo. A página carrega normalmente porque o HTML está certo; só o CSS não é encontrado.',
+    feedbackWrong:
+      'A causa quase sempre é o caminho do href. CSS externo é a forma recomendada justamente por funcionar em qualquer lugar — inclusive publicado —, e a folha externa é o que permite reaproveitar o mesmo estilo em todas as páginas. O charset trata de acentuação do texto, não do carregamento da folha de estilo.',
+  },
+  {
+    id: 'q32',
+    exams: ['av2'],
+    question:
+      'No projeto final você quer que o site funcione bem para quem usa leitor de tela. Qual conjunto de decisões atende melhor a esse objetivo?',
+    options: [
+      'Aumentar o tamanho da fonte e usar cores de alto contraste em toda a página.',
+      'Usar tags semânticas, alt descritivo nas imagens, label for nos campos e th com scope nas tabelas.',
+      'Colocar um aviso no rodapé informando que o site é acessível.',
+      'Substituir as imagens por descrições em texto, já que leitores de tela não processam imagens.',
+    ],
+    correctIndex: 1,
+    feedbackCorrect:
+      'Correto. São as quatro decisões que a disciplina cobre e que atuam onde o leitor de tela lê: a semântica diz o que cada bloco é, o alt descreve a imagem, o label for liga o rótulo ao campo, e o th com scope diz a que linha ou coluna cada dado pertence. Nenhuma delas aparece na tela — todas mudam o que é anunciado.',
+    feedbackWrong:
+      'Fonte grande e contraste alto ajudam quem enxerga com dificuldade, mas não mudam nada para quem usa leitor de tela — a informação lida vem da marcação. Um aviso no rodapé não torna nada acessível, e abrir mão das imagens é desnecessário: para isso existe o alt, que dá à imagem uma versão em texto sem removê-la da página.',
   },
 ];

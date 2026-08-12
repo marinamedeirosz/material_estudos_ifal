@@ -22,6 +22,7 @@ export default function FormulariosSection() {
         title="Formulários e Validação"
         subtitle="O HTML5 assumiu boa parte do trabalho que antes era só de JavaScript"
         colorClass="text-accent"
+        badge="AV2"
       />
 
       <HighlightBox title="A atividade de cadastro de estágio">

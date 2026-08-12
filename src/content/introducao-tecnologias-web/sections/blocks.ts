@@ -21,16 +21,21 @@ export const disciplineOverview: ConceptItem[] = [
   },
 ];
 
+/**
+ * Um item por seção de conteúdo, na mesma ordem de INTW_SECTIONS — a lista é
+ * usada como índice mental pelo aluno, então precisa bater com a navegação.
+ */
 export const learningPath = [
   'TIC e o papel de quem desenvolve',
   'Internet, Web e protocolo HTTP',
   'HTML5: estrutura do documento',
-  'Semântica, texto, listas e links',
+  'Semântica e formatação de texto',
   'Tabelas de dados',
   'Formulários e validação',
   'CSS: seletores e box model',
   'Flexbox e recursos do CSS3',
   'JavaScript e manipulação do DOM',
+  'Projeto final: as três camadas juntas',
 ];
 
 export const examBreakdown: PanelItem[] = [
@@ -43,6 +48,11 @@ export const examBreakdown: PanelItem[] = [
     title: 'AV2 — Formulário e Tabela + Formulário com CSS',
     description:
       'A primeira parte pede uma página com formulário de busca e outra com a tabela de resultados, no modelo do SIGAA. A segunda é o cadastro de estágio: form.html e style.css, com validação dos campos input e select no HTML, flexbox com display:flex, seletores de id, class e tag, e as propriedades background-image, background-color, box-shadow, border-radius, margin, padding, align-items, width, height, font e color.',
+  },
+  {
+    title: 'Projeto Final — previsto no cronograma',
+    description:
+      'O cronograma da unidade reservou três encontros para um projeto de website integrando as três camadas, com a AV2-2 marcada para 17 de dezembro. O aviso de notas de 29/12, porém, define a AV2 apenas pelas duas atividades acima — o projeto aparentemente não chegou a ser cobrado. Ele continua sendo o melhor roteiro de revisão da matéria, e por isso ganhou seção própria neste guia.',
   },
 ];
 
@@ -200,7 +210,7 @@ export const documentParts: ConceptItem[] = [
   {
     title: '<html lang="pt-br">',
     description:
-      'A raiz da árvore de elementos. O atributo lang informa o idioma principal do documento aos user-agents — e pode ser usado em qualquer outro elemento.',
+      'A raiz da árvore de elementos. O atributo lang informa o idioma principal do documento aos agentes de usuário — e pode ser usado em qualquer outro elemento.',
     accent: 'accent2',
   },
   {
@@ -212,7 +222,7 @@ export const documentParts: ConceptItem[] = [
   {
     title: '<meta charset="utf-8">',
     description:
-      'Define a tabela de caracteres. Substitui a forma antiga com http-equiv. O Unicode dá um número único a cada caractere, independente de plataforma ou língua.',
+      'Define a tabela de caracteres. Substitui a forma antiga com http-equiv. O Unicode dá um número único a cada caractere, independentemente de plataforma ou língua.',
     accent: 'accent4',
   },
   {
@@ -233,7 +243,7 @@ export const contentCategories: PanelItem[] = [
   {
     title: 'Metadata content',
     description:
-      'base, command, link, meta, noscript, script, style e title. Vem antes da apresentação e relaciona o documento a outros documentos.',
+      'base, command, link, meta, noscript, script, style e title. Vêm antes da apresentação e relacionam o documento a outros documentos.',
   },
   {
     title: 'Flow content',
@@ -606,5 +616,95 @@ export const ioFunctions: ComparisonRow[] = [
     criterion: 'console.log',
     left: 'Escreve no console do navegador.',
     right: 'A ferramenta de depuração: mostra valores sem atrapalhar quem usa a página.',
+  },
+];
+
+/**
+ * Projeto Final. O cronograma da unidade reservou três encontros para ele
+ * (23/11, 07/12 e 14/12) e o material "Datas e Prazos" marca a AV2-2 de
+ * JavaScript para 17/dezembro. O roteiro e o checklist abaixo derivam do que a
+ * própria disciplina cobrou nas atividades — não há enunciado publicado do
+ * projeto no mural da turma.
+ */
+export const projetoFinalRoteiro = [
+  'Escolher um tema com conteúdo real para escrever',
+  'Estruturar as páginas em HTML semântico',
+  'Ligar as páginas com links relativos',
+  'Escrever o CSS num arquivo externo',
+  'Organizar o layout com flexbox',
+  'Acrescentar comportamento com JavaScript',
+  'Publicar e testar pelo link',
+];
+
+export const projetoFinalChecklist: PanelItem[] = [
+  {
+    title: 'HTML — estrutura e semântica',
+    description:
+      'Doctype, lang no elemento html e meta charset em todas as páginas. Tags semânticas (header, nav, article, section, aside, footer) em vez de div genérica. Títulos em ordem, de h1 a h3, sem pular nível por questão de tamanho. Listas ordenadas e não ordenadas onde há enumeração de verdade.',
+  },
+  {
+    title: 'HTML — links, imagens e acessibilidade',
+    description:
+      'Links entre as páginas com caminho relativo, testados depois de publicado. Toda imagem com alt descritivo. Se houver dados tabulares, table com caption e th com scope — e nunca tabela para diagramar.',
+  },
+  {
+    title: 'HTML — formulário',
+    description:
+      'Um formulário com label for apontando para o id de cada campo, tipos adequados (email, tel, date, number) e validação pelo próprio HTML: required, placeholder, maxlength e pattern quando fizer sentido.',
+  },
+  {
+    title: 'CSS — as propriedades que a atividade cobrou',
+    description:
+      'A atividade de CSS é uma lista fechada e vale como conferência: background-image, background-color, box-shadow, border-radius, margin, padding, align-items, width, height, font e color. Some a isso os três tipos de seletor — id, class e tag — e display:flex no container.',
+  },
+  {
+    title: 'CSS — organização',
+    description:
+      'Folha externa referenciada por link rel="stylesheet", reaproveitada por todas as páginas. Nada de style inline espalhado: se a mesma regra aparece duas vezes, ela pertence a uma classe.',
+  },
+  {
+    title: 'JavaScript — comportamento',
+    description:
+      'Pelo menos uma interação real pelo DOM: getElementById ou querySelector para achar o elemento, innerHTML ou value para ler e alterar, e um evento (onclick, oninput) ligando a ação do usuário ao código. Se usar prompt, converta com Number antes de calcular.',
+  },
+];
+
+export const projetoFinalPlataformas: PanelItem[] = [
+  {
+    title: 'Replit',
+    description:
+      'Plataforma indicada pelo professor e já usada na AV1-1, em que a entrega era o link de um repositório HTML/CSS/JS. Edita e hospeda no mesmo lugar, então o link que você entrega é a página funcionando.',
+  },
+  {
+    title: 'CodePen',
+    description:
+      'Também indicada no mural. Boa para testar um trecho isolado — um efeito de CSS, uma função de JavaScript — sem montar o projeto inteiro em volta.',
+  },
+];
+
+/**
+ * Checklist da atividade de CSS (AV2). O enunciado do professor é uma lista
+ * fechada e verificável, o que o torna útil como conferência antes da entrega.
+ */
+export const cssAtividadeChecklist: PanelItem[] = [
+  {
+    title: 'Validação no HTML',
+    description:
+      'Os campos input e select do formulário precisam ser validados pelo próprio HTML — required nos obrigatórios, type adequado para e-mail e telefone, e pattern quando o formato for específico. O enunciado pede a validação na marcação, sem recorrer a JavaScript.',
+  },
+  {
+    title: 'display:flex',
+    description:
+      'O enunciado é literal: "No CSS flexbox, usar display:flex". Aplicado no container, com flex-direction, justify-content e align-items organizando os campos.',
+  },
+  {
+    title: 'Os três tipos de seletor',
+    description:
+      'Usar seletores de id, de class e de tag no mesmo arquivo — a atividade cobra os três, o que na prática obriga a pensar quando cada um cabe: id para o elemento único, class para o padrão repetido, tag para a regra ampla.',
+  },
+  {
+    title: 'As onze propriedades nomeadas',
+    description:
+      'background-image, background-color, box-shadow, border-radius, margin, padding, align-items, width, height, font e color. Todas aparecem nesta seção e na anterior; a lista serve para conferir antes de entregar.',
   },
 ];

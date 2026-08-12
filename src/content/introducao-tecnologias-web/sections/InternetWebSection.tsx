@@ -9,13 +9,14 @@ export default function InternetWebSection() {
         title="Internet, Web e Protocolo HTTP"
         subtitle="Duas coisas diferentes que quase todo mundo trata como sinônimo"
         colorClass="text-accent"
+        badge="AV1"
       />
 
       <HighlightBox title="A pergunta que abre a aula">
         <p>
           <em>Internet e Web são a mesma coisa?</em> Não. A <strong>Internet</strong> é uma rede global de redes — a
           infraestrutura. A <strong>Web</strong> (World Wide Web, WWW) é uma coleção de informações acessada por meio
-          dela. A Internet é a livraria; a Web é a coleção de livros naquela loja. Em alto nível: a Internet é o
+          dela. A Internet é a livraria; a Web é a coleção de livros daquela livraria. Em alto nível: a Internet é o
           hardware, a Web é o software.
         </p>
       </HighlightBox>
