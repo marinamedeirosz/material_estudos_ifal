@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import CurriculumChart from '../components/ui/CurriculumChart';
 import SubjectCatalog from '../components/ui/SubjectCatalog';
 import subjects, { getTotalSubjects, getSubjectsWithContentCount } from '../data/curriculum';
 import { SITE_LAST_UPDATED_LABEL } from '../data/siteMetadata';
@@ -37,6 +38,8 @@ export default function HomePage() {
           Atualizado em {SITE_LAST_UPDATED_LABEL}
         </NavLink>
       </section>
+
+      <CurriculumChart />
 
       <section className="study-surface p-5 md:p-6">
         <div className="flex items-baseline justify-between mb-3">
