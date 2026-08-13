@@ -334,7 +334,8 @@
         "escopo": "materia",
         "materiaSlug": "empreendedorismo-digital",
         "materiaCodigo": "EMPD",
-        "arquivo": "src/content/empreendedorismo-digital/"
+        "arquivo": "src/content/empreendedorismo-digital/",
+        "pullRequest": "#47"
       },
       "tipo": "conteudo_materia",
       "como": {
