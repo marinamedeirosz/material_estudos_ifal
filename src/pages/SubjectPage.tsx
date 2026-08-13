@@ -15,6 +15,7 @@ const contentRegistry: Record<string, ComponentType> = {
   'topicos-avancados-banco-dados': lazy(() => import('../content/topicos-avancados-banco-dados/TABDContent')),
   'linguagem-programacao': lazy(() => import('../content/linguagem-programacao/LPGMContent')),
   'logica-matematica-discreta': lazy(() => import('../content/logica-matematica-discreta/LmmdContent')),
+  'empreendedorismo-digital': lazy(() => import('../content/empreendedorismo-digital/EmpdContent')),
 };
 
 function SubjectContentFallback() {
