@@ -1,4 +1,5 @@
 import ChapterSection from './sections/ChapterSection';
+import ExerciciosPadroesSection from './sections/ExerciciosPadroesSection';
 import IntroSection from './sections/IntroSection';
 import LivroSection from './sections/LivroSection';
 import QuizSection from './sections/QuizSection';
@@ -16,6 +17,7 @@ interface ProcessosDesenvolvimentoSoftwareSectionsProps {
  */
 const SECTION_COMPONENTS: Record<string, () => React.ReactElement> = {
   intro: IntroSection,
+  'exercicios-padroes': ExerciciosPadroesSection,
   seminario: SeminarioSection,
   livro: LivroSection,
   quiz: QuizSection,

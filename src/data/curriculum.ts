@@ -7,6 +7,8 @@ export interface Subject {
   axis: 'FB' | 'FPG' | 'FHS' | 'FPF' | 'EXT';
   hours: number;
   optativeCategory?: 'desenvolvimento' | 'gestao' | 'infraestrutura' | 'humanistica';
+  /** Ids dos componentes que são pré-requisito desta matéria (setas da figura 3 do PPC). */
+  prerequisites?: string[];
   hasContent: boolean;
 }
 
@@ -18,9 +20,9 @@ export interface Period {
 
 const subjects: Subject[] = [
   // ═══════ 1º PERÍODO ═══════
-  { id: 'fusi', name: 'Fundamentos de Sistemas de Informação', slug: 'fundamentos-si', code: 'FUSI', period: 1, axis: 'FB', hours: 80, hasContent: false },
+  { id: 'fusi', name: 'Fundamentos de Sistemas de Informação', slug: 'fundamentos-si', code: 'FUSI', period: 1, axis: 'FB', hours: 80, hasContent: true },
   { id: 'alpg', name: 'Algoritmos e Lógica de Programação', slug: 'algoritmos-logica-programacao', code: 'ALPG', period: 1, axis: 'FPG', hours: 80, hasContent: true },
-  { id: 'intw', name: 'Introdução às Tecnologias Web', slug: 'introducao-tecnologias-web', code: 'INTW', period: 1, axis: 'FPG', hours: 40, hasContent: false },
+  { id: 'intw', name: 'Introdução às Tecnologias Web', slug: 'introducao-tecnologias-web', code: 'INTW', period: 1, axis: 'FPG', hours: 40, hasContent: true },
   { id: 'lmmd', name: 'Lógica Matemática e Matemática Discreta', slug: 'logica-matematica-discreta', code: 'LMMD', period: 1, axis: 'FB', hours: 80, hasContent: true },
   { id: 'ingt', name: 'Inglês Técnico', slug: 'ingles-tecnico', code: 'INGT', period: 1, axis: 'FB', hours: 80, hasContent: false },
   { id: 'filo', name: 'Filosofia', slug: 'filosofia', code: 'FILO', period: 1, axis: 'FHS', hours: 80, hasContent: false },
@@ -29,26 +31,26 @@ const subjects: Subject[] = [
   { id: 'mtsi', name: 'Matemática para Sistemas de Informação', slug: 'matematica-si', code: 'MTSI', period: 2, axis: 'FB', hours: 80, hasContent: false },
   { id: 'fgeo', name: 'Fundamentos da Gestão Organizacional', slug: 'fundamentos-gestao-organizacional', code: 'FGEO', period: 2, axis: 'FB', hours: 80, hasContent: false },
   { id: 'aocp', name: 'Arquitetura e Organização de Computadores', slug: 'arquitetura-organizacao-computadores', code: 'AOCP', period: 2, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'lpgm', name: 'Linguagem de Programação', slug: 'linguagem-programacao', code: 'LPGM', period: 2, axis: 'FPG', hours: 80, hasContent: true },
+  { id: 'lpgm', name: 'Linguagem de Programação', slug: 'linguagem-programacao', code: 'LPGM', period: 2, axis: 'FPG', hours: 80, prerequisites: ['alpg'], hasContent: true },
   { id: 'sorg', name: 'Sociologia das Organizações', slug: 'sociologia-organizacoes', code: 'SORG', period: 2, axis: 'FHS', hours: 80, hasContent: false },
 
   // ═══════ 3º PERÍODO ═══════
   { id: 'etap', name: 'Estatística Aplicada', slug: 'estatistica-aplicada', code: 'ETAP', period: 3, axis: 'FB', hours: 80, hasContent: false },
   { id: 'fdbd', name: 'Fundamentos de Banco de Dados', slug: 'fundamentos-banco-dados', code: 'FDBD', period: 3, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'sope', name: 'Sistemas Operacionais', slug: 'sistemas-operacionais', code: 'SOPE', period: 3, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'estd', name: 'Estrutura de Dados', slug: 'estrutura-dados', code: 'ESTD', period: 3, axis: 'FPG', hours: 80, hasContent: true },
+  { id: 'estd', name: 'Estrutura de Dados', slug: 'estrutura-dados', code: 'ESTD', period: 3, axis: 'FPG', hours: 80, prerequisites: ['lpgm'], hasContent: true },
   { id: 'metc', name: 'Metodologia Científica', slug: 'metodologia-cientifica', code: 'METC', period: 3, axis: 'FB', hours: 80, hasContent: true },
 
   // ═══════ 4º PERÍODO ═══════
   { id: 'ihcc', name: 'Interação Humano-Computador', slug: 'interacao-humano-computador', code: 'IHCC', period: 4, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'apbd', name: 'Administração e Projeto de Banco de Dados', slug: 'administracao-projeto-banco-dados', code: 'APBD', period: 4, axis: 'FPG', hours: 80, hasContent: true },
+  { id: 'apbd', name: 'Administração e Projeto de Banco de Dados', slug: 'administracao-projeto-banco-dados', code: 'APBD', period: 4, axis: 'FPG', hours: 80, prerequisites: ['fdbd'], hasContent: true },
   { id: 'frdc', name: 'Fundamentos de Redes de Computadores', slug: 'fundamentos-redes-computadores', code: 'FRDC', period: 4, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'poob', name: 'Programação Orientada a Objetos', slug: 'programacao-orientada-objetos', code: 'POOB', period: 4, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'gpti', name: 'Gestão de Pessoas em TI', slug: 'gestao-pessoas-ti', code: 'GPTI', period: 4, axis: 'FB', hours: 40, hasContent: false },
 
   // ═══════ 5º PERÍODO ═══════
   { id: 'gvti', name: 'Governança em Tecnologia da Informação', slug: 'governanca-ti', code: 'GVTI', period: 5, axis: 'FPG', hours: 80, hasContent: false },
-  { id: 'tabd', name: 'Tópicos Avançados de Banco de Dados', slug: 'topicos-avancados-banco-dados', code: 'TABD', period: 5, axis: 'FPG', hours: 80, hasContent: true },
+  { id: 'tabd', name: 'Tópicos Avançados de Banco de Dados', slug: 'topicos-avancados-banco-dados', code: 'TABD', period: 5, axis: 'FPG', hours: 80, prerequisites: ['apbd'], hasContent: true },
   { id: 'pint', name: 'Projeto Integrador', slug: 'projeto-integrador', code: 'PINT', period: 5, axis: 'EXT', hours: 40, hasContent: false },
   { id: 'pgwb', name: 'Programação Web', slug: 'programacao-web', code: 'PGWB', period: 5, axis: 'FPG', hours: 80, hasContent: false },
   { id: 'apsi', name: 'Análise e Projeto de Sistemas de Informação', slug: 'analise-projeto-si', code: 'APSI', period: 5, axis: 'FPG', hours: 80, hasContent: false },
@@ -66,7 +68,7 @@ const subjects: Subject[] = [
   { id: 'tosi', name: 'Tópicos Especiais em SI', slug: 'topicos-especiais-si', code: 'TOSI', period: 7, axis: 'FPG', hours: 40, hasContent: false },
 
   // ═══════ 8º PERÍODO ═══════
-  { id: 'psif', name: 'Pesquisa em Sistemas de Informação', slug: 'pesquisa-si', code: 'PSIF', period: 8, axis: 'FB', hours: 40, hasContent: false },
+  { id: 'psif', name: 'Pesquisa em Sistemas de Informação', slug: 'pesquisa-si', code: 'PSIF', period: 8, axis: 'FB', hours: 40, prerequisites: ['ppap'], hasContent: false },
   { id: 'tsas', name: 'Tecnologias Sociais e Assistivas', slug: 'tecnologias-sociais-assistivas', code: 'TSAS', period: 8, axis: 'EXT', hours: 40, hasContent: false },
   { id: 'sade', name: 'Sistemas de Apoio à Decisão', slug: 'sistemas-apoio-decisao', code: 'SADE', period: 8, axis: 'FPG', hours: 80, hasContent: false },
 
@@ -106,6 +108,21 @@ const subjects: Subject[] = [
   { id: 'libr', name: 'Libras', slug: 'libras', code: 'LIBR', period: 'optativa', axis: 'FHS', hours: 40, optativeCategory: 'humanistica', hasContent: false },
   { id: 'etso', name: 'Ética e Sociedade', slug: 'etica-sociedade', code: 'ETSO', period: 'optativa', axis: 'FHS', hours: 40, optativeCategory: 'humanistica', hasContent: false },
 ];
+
+/**
+ * Eixos formativos conforme a seção 9.7 do PPC. As cores seguem a legenda das
+ * figuras 3 e 4: básica em azul, humanística em vermelho escuro, profissional
+ * geral em verde, profissional flexível em lilás e extensão em marrom.
+ */
+export const axes = {
+  FB: { label: 'Formação Básica', color: '#4a7fd0' },
+  FHS: { label: 'Formação Humanística e Suplementar', color: '#b4595f' },
+  FPG: { label: 'Formação Profissional Geral', color: '#5d9e58' },
+  FPF: { label: 'Formação Profissional Flexível', color: '#8f7bc4' },
+  EXT: { label: 'Atividades de Extensão', color: '#a08a5e' },
+} as const;
+
+export type AxisId = keyof typeof axes;
 
 export const optativeCategories = {
   desenvolvimento: { label: 'Desenvolvimento de Software' },

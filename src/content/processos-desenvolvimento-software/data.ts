@@ -191,6 +191,17 @@ export const PDSW_CHAPTER_CONTENT: PdswChapterContent[] = [
           { title: 'Protótipos e testes A/B', description: 'Ajudam a comparar alternativas antes de consolidar investimento em implementação completa.', accent: 'accent4' },
         ],
       },
+      {
+        title: 'Estimativa ágil e priorização',
+        description: 'Depois de descobrir o que fazer, o time estima esforço relativo e decide a ordem de entrega. Planning Poker é uma dinâmica de estimativa por consenso que expõe divergências de entendimento antes de codificar.',
+        panels: [
+          { title: 'Pontos de história', description: 'Estimam esforço relativo (complexidade, incerteza, volume), não horas exatas. Escala comum: sequência de Fibonacci (1, 2, 3, 5, 8, 13...).' },
+          { title: 'Planning Poker', description: 'Cada pessoa escolhe uma carta em segredo; todas revelam ao mesmo tempo. Divergências grandes viram discussão e nova rodada até convergir.' },
+          { title: 'Priorização', description: 'Ordena o backlog por valor e urgência: o que é essencial agora, o que pode vir depois e o que tem menor prioridade.' },
+          { title: 'Entrega incremental', description: 'Itens de maior prioridade viram as primeiras entregas; o resto é incorporado em iterações seguintes.' },
+        ],
+        flow: ['Ler a história', 'Estimar em segredo', 'Revelar cartas', 'Discutir divergências', 'Nova rodada', 'Consenso'],
+      },
     ],
   },
   {
@@ -428,16 +439,262 @@ export const PDSW_SECTIONS = [
     shortTitle: `Cap. ${chapter.number}`,
     exam: chapter.exam.replace('N1 / ', '').replace('N2 / ', ''),
   })),
+  { id: 'exercicios-padroes', title: 'Exercícios de Padrões', shortTitle: 'Exercícios', exam: 'AV2' },
   { id: 'seminario', title: 'Seminário', shortTitle: 'Seminário', exam: 'S1' },
   { id: 'livro', title: 'Livro Base', shortTitle: 'Livro' },
   { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ] as const;
 
+/**
+ * Exercícios de refatoração com padrões de projeto, das duas listas do professor
+ * Elvys Alves Soares (material local de PDSW). Cada um traz o cenário, o código
+ * inicial que motiva o padrão e o roteiro de resolução em passos. A linguagem
+ * acompanha a lista de origem: JavaScript na primeira e Java na segunda.
+ */
+export interface PdswPatternExercise {
+  id: string;
+  name: string;
+  category: 'Criacional' | 'Estrutural' | 'Comportamental';
+  scenario: string;
+  language: Language;
+  initialCode: string;
+  steps: string[];
+}
+
+export const PDSW_PATTERN_EXERCISES: PdswPatternExercise[] = [
+  {
+    id: 'factory',
+    name: 'Factory',
+    category: 'Criacional',
+    scenario:
+      'Uma aplicação de e-commerce cria objetos de usuário (cliente e administrador) por uma função com condicionais. Adicionar novos tipos de usuário fica difícil. Refatore com o padrão Factory para encapsular a criação por tipo.',
+    language: 'javascript',
+    initialCode: `function createUser(type, name) {
+  if (type === "client") {
+    return { type: "client", name, permissions: ["browse", "purchase"] };
+  } else if (type === "admin") {
+    return { type: "admin", name, permissions: ["manage_users", "manage_products"] };
+  } else {
+    throw new Error("Invalid user type!");
+  }
+}
+
+const user1 = createUser("client", "Alice");
+const user2 = createUser("admin", "Bob");`,
+    steps: [
+      'Identifique o problema: a criação de objetos está espalhada em condicionais dentro de uma função.',
+      'Crie a fábrica UserFactory com um método responsável por instanciar cada tipo de usuário.',
+      'Extraia classes separadas por tipo (ClientUser e AdminUser) com suas propriedades e métodos.',
+      'No método da fábrica, verifique o tipo e retorne a instância correspondente.',
+      'Substitua a função createUser pela fábrica e teste com diferentes tipos.',
+    ],
+  },
+  {
+    id: 'singleton',
+    name: 'Singleton',
+    category: 'Criacional',
+    scenario:
+      'A aplicação precisa de uma única conexão com o banco de dados, mas o código atual permite criar várias instâncias, gerando desperdício e inconsistência. Garanta instância única com o padrão Singleton.',
+    language: 'javascript',
+    initialCode: `class DatabaseConnection {
+  constructor() {
+    this.connectionId = Math.random(); // identificador simulado
+    console.log(\`Nova conexão criada: \${this.connectionId}\`);
+  }
+  connect() {
+    console.log("Conectado ao banco de dados");
+  }
+}
+
+const connection1 = new DatabaseConnection();
+const connection2 = new DatabaseConnection();
+console.log(connection1.connectionId !== connection2.connectionId); // conexões diferentes`,
+    steps: [
+      'Identifique o problema: múltiplas instâncias de DatabaseConnection convivem no ciclo de vida da aplicação.',
+      'Adicione uma propriedade estática para armazenar a instância única.',
+      'No construtor, verifique se a instância já existe e, se sim, retorne a existente.',
+      'Instancie a classe várias vezes e confirme que todas as variáveis apontam para a mesma instância.',
+    ],
+  },
+  {
+    id: 'adapter',
+    name: 'Adapter',
+    category: 'Estrutural',
+    scenario:
+      'Um sistema de pagamentos espera o método processPayment, mas um novo provedor expõe makePayment. Sem alterar o código existente, integre o novo provedor com o padrão Adaptador.',
+    language: 'javascript',
+    initialCode: `class OldPaymentProvider {
+  processPayment(amount) {
+    console.log(\`Pagamento de R$\${amount} pelo provedor antigo.\`);
+  }
+}
+
+class NewPaymentProvider {
+  makePayment(value) {
+    console.log(\`Pagamento de R$\${value} pelo novo provedor.\`);
+  }
+}
+
+function executePayment(paymentProvider, amount) {
+  paymentProvider.processPayment(amount);
+}
+
+executePayment(new OldPaymentProvider(), 100);
+// executePayment(new NewPaymentProvider(), 100); // erro: interface incompatível`,
+    steps: [
+      'Identifique o problema: o sistema depende de processPayment, mas o novo provedor usa makePayment.',
+      'Crie a classe NewPaymentAdapter que expõe processPayment e, internamente, chama makePayment.',
+      'Use o adaptador para encapsular o novo provedor sem tocar em executePayment.',
+      'Teste que tanto o provedor antigo quanto o novo (via adaptador) funcionam.',
+    ],
+  },
+  {
+    id: 'facade',
+    name: 'Facade',
+    category: 'Estrutural',
+    scenario:
+      'Uma biblioteca digital tem serviços separados de livros, usuários e empréstimos, e realizar um empréstimo exige orquestrar várias chamadas. Simplifique o uso com o padrão Fachada.',
+    language: 'javascript',
+    initialCode: `const book = bookService.findBook("JavaScript Básico");
+if (book.available) {
+  const user = userService.getUser("Alice");
+  if (userService.verifyUser(user)) {
+    loanService.createLoan(user, book);
+    bookService.reserveBook(book);
+  }
+}`,
+    steps: [
+      'Identifique o problema: uma operação simples exige chamadas diretas a várias classes.',
+      'Crie a classe LibraryFacade que encapsula BookService, UserService e LoanService.',
+      'Exponha um método de alto nível (por exemplo, emprestarLivro) que orquestra as chamadas internas.',
+      'Substitua o uso das classes individuais pela fachada.',
+    ],
+  },
+  {
+    id: 'decorator',
+    name: 'Decorator',
+    category: 'Estrutural',
+    scenario:
+      'Uma cafeteria permite adicionar ingredientes (leite, chocolate, chantilly) ao café. Criar uma classe por combinação explode o número de classes. Adicione ingredientes dinamicamente com o padrão Decorator.',
+    language: 'java',
+    initialCode: `class Cafe {
+    private String descricao = "Café simples";
+    private double preco = 5.0;
+    public String getDescricao() { return descricao; }
+    public double getPreco() { return preco; }
+}
+
+class CafeComLeite extends Cafe {
+    @Override public String getDescricao() { return super.getDescricao() + " com leite"; }
+    @Override public double getPreco() { return super.getPreco() + 2.0; }
+}
+// cada novo ingrediente exigiria mais uma subclasse...`,
+    steps: [
+      'Crie a interface Cafe com getDescricao() e custo().',
+      'Implemente a classe concreta CafeSimples, representando o café puro.',
+      'Crie a classe abstrata IngredienteDecorator, que implementa Cafe e serve de base aos ingredientes.',
+      'Crie ingredientes concretos (Leite, Chocolate, Chantilly) herdando de IngredienteDecorator.',
+      'Teste adicionando ingredientes ao café dinamicamente, empilhando decoradores.',
+    ],
+  },
+  {
+    id: 'strategy',
+    name: 'Strategy',
+    category: 'Comportamental',
+    scenario:
+      'Um cálculo de frete usa condicionais por tipo (Sedex, PAC, Transportadora). Cada novo tipo obriga a alterar a classe principal, violando o princípio Aberto/Fechado. Use o padrão Strategy.',
+    language: 'java',
+    initialCode: `class CalculadoraFrete {
+    public double calcularFrete(String tipoFrete, double peso) {
+        if (tipoFrete.equalsIgnoreCase("Sedex")) return peso * 10.0;
+        else if (tipoFrete.equalsIgnoreCase("PAC")) return peso * 5.0;
+        else if (tipoFrete.equalsIgnoreCase("Transportadora")) return peso * 8.0;
+        else return -1; // tipo inválido
+    }
+}`,
+    steps: [
+      'Crie a interface FreteStrategy com o método calcularFrete().',
+      'Implemente uma classe concreta por tipo de frete (Sedex, PAC, Transportadora).',
+      'Faça a CalculadoraFrete receber uma estratégia e delegar o cálculo a ela.',
+      'Permita trocar a estratégia dinamicamente, sem alterar a calculadora.',
+    ],
+  },
+  {
+    id: 'observer',
+    name: 'Observer',
+    category: 'Comportamental',
+    scenario:
+      'Um portal de notícias precisa avisar automaticamente vários leitores quando uma notícia é publicada. Acoplar a atualização dentro do portal dificulta escalar. Use o padrão Observer.',
+    language: 'java',
+    initialCode: `class PortalNoticias {
+    private Noticia noticiaAtual;
+    public void publicarNoticia(String titulo, String conteudo) {
+        this.noticiaAtual = new Noticia(titulo, conteudo);
+        System.out.println("Nova notícia publicada: " + noticiaAtual.getTitulo());
+    }
+}
+// leitores não são notificados automaticamente`,
+    steps: [
+      'Crie a interface Observer com o método atualizar(), chamado quando há mudança.',
+      'Crie a interface Observable com métodos de registro e notificação.',
+      'Faça PortalNoticias implementar Observable, mantendo a lista de leitores registrados.',
+      'Crie a classe Leitor (implementa Observer), notificada a cada publicação.',
+      'Teste cadastrando leitores e verificando a notificação automática.',
+    ],
+  },
+  {
+    id: 'template-method',
+    name: 'Template Method',
+    category: 'Comportamental',
+    scenario:
+      'Um processamento de pedidos repete as mesmas etapas (validar, calcular, processar, confirmar) em cada forma de pagamento, gerando duplicação. Fixe o esqueleto com o padrão Template Method.',
+    language: 'java',
+    initialCode: `class PagamentoCartao {
+    public void processarPagamento(Pedido pedido) {
+        System.out.println("Validando cartão de crédito...");
+        System.out.println("Calculando valor: R$" + pedido.getValor());
+        System.out.println("Processando pagamento via cartão...");
+        System.out.println("Pagamento aprovado!");
+    }
+}
+// PagamentoBoleto e PagamentoPix repetem as mesmas etapas`,
+    steps: [
+      'Crie a classe abstrata ProcessadorPagamento com o método template processarPagamento().',
+      'Implemente na classe base os passos comuns (validar, calcular valor, confirmar).',
+      'Declare abstrato apenas o passo que varia (realizarPagamento()).',
+      'Crie subclasses concretas (PagamentoCartao, PagamentoBoleto, PagamentoPix).',
+      'Teste garantindo que todas seguem o mesmo fluxo, personalizando só o passo específico.',
+    ],
+  },
+  {
+    id: 'visitor',
+    name: 'Visitor',
+    category: 'Comportamental',
+    scenario:
+      'Documentos (Relatório, Contrato, Memorando) precisam de novas operações (resumo, exportar PDF, revisão ortográfica). Adicionar métodos nas classes de documento as deixa rígidas. Use o padrão Visitor.',
+    language: 'java',
+    initialCode: `abstract class Documento {
+    protected String conteudo;
+    public Documento(String conteudo) { this.conteudo = conteudo; }
+    // cada nova operação obriga a modificar esta hierarquia
+    public abstract void gerarResumo();
+    public abstract void exportarPDF();
+}`,
+    steps: [
+      'Crie a interface Visitor com um método por tipo de documento.',
+      'Faça Documento aceitar um Visitor (método accept), permitindo operações externas.',
+      'Crie as subclasses Relatorio, Contrato e Memorando que implementam accept.',
+      'Crie visitantes concretos (GeradorResumoVisitor, ExportarPDFVisitor, RevisorOrtograficoVisitor).',
+      'Teste adicionando uma nova operação sem alterar as classes de documento.',
+    ],
+  },
+];
+
 export const PDSW_GUIDE_CONTEXT = `
 GUIA COMPLETO DE PROCESSOS DE DESENVOLVIMENTO DE SOFTWARE:
 1. Introdução: software é abstrato, maleável, invisível e sujeito a mudanças. Engenharia de Software integra produto, processo, pessoas e qualidade para construir, manter e evoluir sistemas complexos.
 2. Processos: modelos tradicionais favorecem previsibilidade; modelos iterativos e ágeis reduzem risco por feedback. XP enfatiza práticas técnicas, Scrum organiza sprints e papéis, Kanban visualiza fluxo e limita WIP.
-3. Requisitos: requisitos funcionais descrevem comportamentos; não funcionais descrevem qualidades; requisitos de domínio expressam regras específicas. Histórias, casos de uso, protótipos, MVPs e testes A/B validam valor.
+3. Requisitos: requisitos funcionais descrevem comportamentos; não funcionais descrevem qualidades; requisitos de domínio expressam regras específicas. Histórias, casos de uso, protótipos, MVPs e testes A/B validam valor. Estimativa ágil: pontos de história medem esforço relativo (escala Fibonacci); Planning Poker estima por consenso com revelação simultânea de cartas para evitar ancoragem; priorização ordena o backlog por valor e urgência (essencial agora, pode vir depois, menor prioridade).
 4. Modelos: UML deve ser usada como esboço de comunicação. Diagramas de classes e pacotes tratam estrutura; sequência e atividades tratam interação e fluxo.
 5. Princípios de Projeto: decomposição, abstração, ocultamento de informação, integridade conceitual, alta coesão, baixo acoplamento, SOLID, Demeter e composição orientam design evolutivo.
 6. Padrões de Projeto: padrões criacionais, estruturais e comportamentais registram soluções recorrentes. Factory Method, Singleton, Adapter, Facade, Strategy, Observer e Template Method têm intenção, contexto e tradeoffs.
@@ -452,7 +709,7 @@ export const PDSW_TOPICS: QuizTopicOption[] = [
   {
     value: 'av1',
     label: 'N1 / AV1: Introdução, Processos, Requisitos e Modelos',
-    prompt: 'Capítulos 1 a 4: natureza do software, áreas da Engenharia de Software, processos tradicionais e ágeis, XP, Scrum, Kanban, requisitos funcionais e não funcionais, histórias de usuário, casos de uso, MVP, protótipos, testes A/B e modelos UML estruturais e comportamentais.',
+    prompt: 'Capítulos 1 a 4: natureza do software, áreas da Engenharia de Software, processos tradicionais e ágeis, XP, Scrum, Kanban, requisitos funcionais e não funcionais, histórias de usuário, casos de uso, MVP, protótipos, testes A/B, estimativa ágil (pontos de história, Planning Poker, priorização) e modelos UML estruturais e comportamentais.',
   },
   {
     value: 'av2',
@@ -944,6 +1201,38 @@ const quizSeeds: QuizSeed[] = [
     correctIndex: 0,
     feedbackCorrect: 'Correto. Passos pequenos reduzem risco e facilitam revisão.',
     feedbackWrong: 'Refatoração segura exige controle de escopo e verificação.',
+  },
+  {
+    exam: 'prova1',
+    question: 'No Planning Poker, os pontos de história representam:',
+    options: ['Esforço relativo (complexidade, incerteza, volume), não horas exatas', 'O preço final do projeto em reais', 'O número de desenvolvedores necessários', 'A quantidade de linhas de código a escrever'],
+    correctIndex: 0,
+    feedbackCorrect: 'Correto. Pontos estimam esforço relativo, geralmente numa escala tipo Fibonacci.',
+    feedbackWrong: 'Pontos de história medem esforço relativo (complexidade, incerteza, volume), não horas nem custo exatos.',
+  },
+  {
+    exam: 'prova1',
+    question: 'A principal razão de todos revelarem as cartas ao mesmo tempo no Planning Poker é:',
+    options: ['Evitar ancoragem e expor divergências de entendimento para discussão', 'Acelerar a reunião eliminando qualquer debate', 'Garantir que o mais experiente decida sozinho', 'Registrar a estimativa média automaticamente'],
+    correctIndex: 0,
+    feedbackCorrect: 'Correto. A revelação simultânea evita que uns influenciem os outros e revela onde o entendimento difere.',
+    feedbackWrong: 'A revelação simultânea evita ancoragem: divergências grandes viram discussão e nova rodada até convergir.',
+  },
+  {
+    exam: 'prova2',
+    question: 'Ao refatorar um cálculo de frete cheio de "if/else" por tipo (Sedex, PAC, Transportadora), qual padrão evita alterar a classe a cada novo tipo?',
+    options: ['Strategy', 'Singleton', 'Observer', 'Adapter'],
+    correctIndex: 0,
+    feedbackCorrect: 'Correto. Strategy encapsula algoritmos intercambiáveis e respeita o princípio Aberto/Fechado.',
+    feedbackWrong: 'Strategy encapsula cada cálculo em uma classe e permite trocar a estratégia sem alterar a calculadora.',
+  },
+  {
+    exam: 'prova2',
+    question: 'Um novo provedor de pagamento expõe makePayment, mas o sistema chama processPayment. Sem alterar o código existente, o padrão indicado é:',
+    options: ['Adapter', 'Facade', 'Decorator', 'Factory'],
+    correctIndex: 0,
+    feedbackCorrect: 'Correto. O Adapter converte a interface do novo provedor para a esperada pelo sistema.',
+    feedbackWrong: 'Adapter converte uma interface existente (makePayment) para a esperada pelo cliente (processPayment).',
   },
 ];
 

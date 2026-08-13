@@ -23,6 +23,8 @@ GUIA COMPLETO DE METODOLOGIA CIENTÍFICA — Resumo:
 
 10. COLETA E ANÁLISE DE DADOS: Instrumentos estruturados, semiestruturados e não-estruturados. Questionários: fechadas (dicotômicas, múltipla escolha, Likert), abertas ou mistas. Observação, entrevista, grupo focal (3-12 pessoas, 1-2h), análise de documentos (fontes primárias e secundárias). Análise quantitativa: variáveis nominais, ordinais e escalares; tendência central (média, mediana), dispersão (desvio padrão), correlação, teste de comparação de médias; ferramentas Excel e SPSS. Análise qualitativa: transcrição, diário de pesquisa, codificação, fatos/padrões/comportamentos/insights, SADQ. Análise de conteúdo: pré-exploração, seleção de unidades de análise, categorização.
 
+11. ESCRITA CIENTÍFICA (COMUNICAÇÃO DA PESQUISA): O artigo científico relata uma pesquisa e deve conter novas ideias, conceitos, interpretações e modelos — não apenas um relato de resultados. Estrutura: elementos pré-textuais (título obrigatório, ideal até 12 palavras; autor; resumo no idioma do texto; palavras-chave para indexação; título/resumo em outro idioma e datas são opcionais), elementos textuais (introdução, desenvolvimento, considerações finais) e elementos pós-textuais (referências obrigatórias; glossário, apêndices, anexos e agradecimentos opcionais). Formato IMRD dos artigos originais: Introdução (o que foi pesquisado e por quê, lacuna e objetivo ao final), Método (como foi feito, permitindo reprodução), Resultados (achados objetivos, com tabelas e figuras, sem interpretar) e Discussão (interpreta à luz da literatura, aponta limitações, verifica se objetivo e conclusão combinam). Boas práticas de redação: texto simples, claro, preciso e conciso, evitando verborragia, rebuscamento, inversões, trocadilhos e metáforas; ordem recomendada de escrita é Método e Resultados primeiro, depois Introdução e Discussão, e o título por último; selecionar a revista (fator de impacto, indexação, público-alvo) e ler as normas antes de escrever; revisar, revisar, revisar.
+
 DIVISÃO POR AVALIAÇÕES:
 - PROVA 1: Fundamentos do conhecimento, ciência, tipos de conhecimento, ciência moderna e pós-moderna, lógica científica, indução e dedução, paradigmas, abordagem e natureza da pesquisa, objetivos da pesquisa, procedimentos da pesquisa, amostragem e técnicas de estudo (esquema, fichamento, resumo, resenha).
 - PROVA 2: Projeto de pesquisa, estrutura do projeto (introdução, problema, objetivos, justificativa, hipótese, revisão de literatura, metodologia, cronograma), normas ABNT (formatação, citações, referências), instrumentos e coleta de dados, análise de dados quantitativos e qualitativos.
@@ -37,7 +39,7 @@ export const METODOLOGIA_CIENTIFICA_TOPICS: QuizTopicOption[] = [
     {
         value: 'prova2',
         label: 'Prova 2: Projeto de Pesquisa, ABNT e Análise',
-        prompt: 'Conteúdo da Prova 2: projeto de pesquisa e seus elementos (problema, objetivo geral e específico, justificativa, hipótese, revisão de literatura, metodologia, cronograma, orçamento, referências, anexos e apêndices), 5W2H, estado da arte, desenho da pesquisa, normas ABNT de formatação (margens, fontes, paginação, siglas, ilustrações, resumo), citações (indireta, direta, citação de citação), formatos de referências (livro, artigo, anais, dissertação), instrumentos de coleta de dados (estruturado, semiestruturado, não estruturado, questionário, entrevista, grupo focal, observação, análise de documentos), análise de dados quantitativos (variáveis, tendência central, dispersão, correlação, SPSS) e qualitativos (transcrição, codificação, análise de conteúdo, SADQ).',
+        prompt: 'Conteúdo da Prova 2: projeto de pesquisa e seus elementos (problema, objetivo geral e específico, justificativa, hipótese, revisão de literatura, metodologia, cronograma, orçamento, referências, anexos e apêndices), 5W2H, estado da arte, desenho da pesquisa, normas ABNT de formatação (margens, fontes, paginação, siglas, ilustrações, resumo), citações (indireta, direta, citação de citação), formatos de referências (livro, artigo, anais, dissertação), instrumentos de coleta de dados (estruturado, semiestruturado, não estruturado, questionário, entrevista, grupo focal, observação, análise de documentos), análise de dados quantitativos (variáveis, tendência central, dispersão, correlação, SPSS) e qualitativos (transcrição, codificação, análise de conteúdo, SADQ), e escrita científica (estrutura do artigo em elementos pré-textuais, textuais e pós-textuais; formato IMRD; boas práticas de redação; ordem de escrita; escolha da revista).',
     },
     { value: 'conhecimento', label: 'Tipos de Conhecimento' },
     { value: 'ciencia', label: 'Ciência e Método' },
@@ -50,6 +52,7 @@ export const METODOLOGIA_CIENTIFICA_TOPICS: QuizTopicOption[] = [
     { value: 'abnt', label: 'Normas ABNT' },
     { value: 'citacoes', label: 'Citações e Referências' },
     { value: 'coleta-analise', label: 'Coleta e Análise de Dados' },
+    { value: 'escrita-cientifica', label: 'Escrita Científica' },
 ];
 
 export const METODOLOGIA_CIENTIFICA_SECTIONS = [
@@ -65,6 +68,7 @@ export const METODOLOGIA_CIENTIFICA_SECTIONS = [
     { id: 'abnt', title: 'Normas ABNT', shortTitle: 'ABNT', exam: 'AV2' },
     { id: 'citacoes', title: 'Citações e Referências', shortTitle: 'Citações', exam: 'AV2' },
     { id: 'coleta-analise', title: 'Coleta e Análise de Dados', shortTitle: 'Dados', exam: 'AV2' },
+    { id: 'escrita-cientifica', title: 'Escrita Científica', shortTitle: 'Escrita', exam: 'AV2' },
     { id: 'quiz', title: 'Quiz de Revisão', shortTitle: 'Quiz' },
 ];
 
@@ -458,6 +462,53 @@ const QUIZ_DATA_BASE: QuizQuestionData[] = [
         correctIndex: 2,
         feedbackCorrect: 'Correto. A codificação organiza o material em blocos ou segmentos antes da atribuição de significado.',
         feedbackWrong: 'Codificação: organização do material em blocos ou segmentos de texto antes de atribuir significado.',
+    },
+    {
+        id: 'q31',
+        question: '31. No formato IMRD de um artigo científico, as seções são, nesta ordem:',
+        options: [
+            'Introdução, Metodologia, Resumo, Discussão',
+            'Introdução, Método, Resultados e Discussão',
+            'Índice, Material, Referências, Dados',
+            'Introdução, Motivação, Revisão, Desfecho',
+        ],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. IMRD = Introdução, Método, Resultados e Discussão.',
+        feedbackWrong: 'IMRD é o formato dos artigos originais: Introdução, Método, Resultados e Discussão.',
+    },
+    {
+        id: 'q32',
+        question: '32. Em qual seção do artigo os achados são apresentados de forma objetiva, com tabelas e figuras, sem ainda interpretá-los?',
+        options: ['Introdução', 'Método', 'Resultados', 'Discussão'],
+        correctIndex: 2,
+        feedbackCorrect: 'Correto. Os Resultados relatam os achados; a interpretação fica para a Discussão.',
+        feedbackWrong: 'Os Resultados apresentam os achados objetivamente; interpretá-los é papel da Discussão.',
+    },
+    {
+        id: 'q33',
+        question: '33. Sobre a redação científica, é correto afirmar que o texto deve ser:',
+        options: [
+            'Rebuscado e literário, com metáforas e inversões para valorizar o estilo',
+            'Simples, claro, preciso e conciso, evitando verborragia',
+            'O mais longo possível para demonstrar domínio',
+            'Escrito começando sempre pelo título e pela introdução',
+        ],
+        correctIndex: 1,
+        feedbackCorrect: 'Correto. O texto científico é um relatório: simples, claro, preciso e conciso.',
+        feedbackWrong: 'O texto científico não é literário: deve ser simples, claro, preciso e conciso, sem verborragia.',
+    },
+    {
+        id: 'q34',
+        question: '34. Entre os elementos pré-textuais de um artigo, são obrigatórios:',
+        options: [
+            'Glossário e apêndice',
+            'Agradecimentos e anexos',
+            'Título, autor, resumo no idioma do texto e palavras-chave',
+            'Discussão e considerações finais',
+        ],
+        correctIndex: 2,
+        feedbackCorrect: 'Correto. Título, autor, resumo e palavras-chave são pré-textuais obrigatórios.',
+        feedbackWrong: 'Pré-textuais obrigatórios: título, autor, resumo no idioma do texto e palavras-chave. Glossário, apêndice, anexos e agradecimentos são pós-textuais opcionais.',
     },
 ];
 

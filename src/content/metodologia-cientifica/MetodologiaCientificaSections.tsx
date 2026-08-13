@@ -1197,6 +1197,110 @@ function ColetaAnaliseSection() {
     );
 }
 
+const articleStructurePanels: PanelItem[] = [
+    {
+        title: 'Elementos pré-textuais',
+        description:
+            'Título (obrigatório, idealmente até 12 palavras), autor(es) e crédito(s), resumo no idioma do texto e palavras-chave. Título em outro idioma, resumo em outro idioma e datas de submissão/aprovação são opcionais.',
+    },
+    {
+        title: 'Elementos textuais',
+        description:
+            'Introdução, desenvolvimento e considerações finais. Em artigos originais, o desenvolvimento costuma seguir o formato IMRD: Introdução, Método, Resultados e Discussão.',
+    },
+    {
+        title: 'Elementos pós-textuais',
+        description:
+            'Referências (obrigatório) e, quando necessário, glossário, apêndices, anexos e agradecimentos (opcionais).',
+    },
+    {
+        title: 'Título e palavras-chave',
+        description:
+            'O título é a parte mais lida e o primeiro filtro do leitor: curto e objetivo. Palavras-chave são escolhidas pensando na indexação e na recuperação do artigo em bases de busca.',
+    },
+];
+
+const imrdPanels: PanelItem[] = [
+    {
+        title: 'Introdução',
+        description:
+            'Diz o que foi pesquisado e por quê: tema, importância, o que já se sabia, a lacuna que motivou a investigação e o objetivo — normalmente ao final da introdução.',
+    },
+    {
+        title: 'Método',
+        description:
+            'Descreve como a pesquisa foi feita, com detalhe suficiente para permitir reprodução: tipo de estudo, participantes, instrumentos, procedimentos e forma de análise.',
+    },
+    {
+        title: 'Resultados',
+        description:
+            'Apresenta os achados de forma objetiva, apoiado em tabelas e figuras, sem interpretá-los ainda. É o relato do que a pesquisa encontrou.',
+    },
+    {
+        title: 'Discussão',
+        description:
+            'Interpreta os resultados à luz da literatura, aponta limitações, responde à pergunta de pesquisa e mostra a contribuição. Verifica-se sempre se objetivo e conclusão combinam.',
+    },
+];
+
+const writingPracticePanels: PanelItem[] = [
+    {
+        title: 'Clareza e concisão',
+        description:
+            'O texto científico é um relatório: simples, claro, preciso e conciso. Evite verborragia, rebuscamento, inversões de frase, trocadilhos e metáforas — não é texto literário.',
+    },
+    {
+        title: 'Ordem de escrita',
+        description:
+            'Costuma ser mais fácil escrever primeiro Método e Resultados, depois Introdução e Discussão (mais trabalhosas) e, por último, o título.',
+    },
+    {
+        title: 'Escolha da revista',
+        description:
+            'Antes de escrever, selecione o periódico (fator de impacto, indexação, público-alvo) e leia com atenção as normas de submissão.',
+    },
+    {
+        title: 'Revisar, revisar, revisar',
+        description:
+            'A qualidade vem da revisão. Concisão, clareza, exatidão, sequência lógica e coerência entre objetivo e conclusão são o que editores e leitores mais valorizam.',
+    },
+];
+
+function EscritaCientificaSection() {
+    return (
+        <section className="animate-fade-in space-y-6">
+            <SectionHeader
+                title="Escrita científica"
+                subtitle="Como comunicar a pesquisa: estrutura do artigo, formato IMRD e boas práticas de redação"
+                colorClass="text-accent"
+            />
+
+            <div>
+                <h3 className="font-display font-bold text-xl text-accent3 mb-3">Estrutura do artigo científico</h3>
+                <PanelList items={articleStructurePanels} columns="md:grid-cols-2" />
+            </div>
+
+            <div>
+                <h3 className="font-display font-bold text-xl text-accent5 mb-3">Formato IMRD do desenvolvimento</h3>
+                <PanelList items={imrdPanels} columns="md:grid-cols-2" />
+            </div>
+
+            <div>
+                <h3 className="font-display font-bold text-xl text-accent4 mb-3">Boas práticas de redação</h3>
+                <PanelList items={writingPracticePanels} columns="md:grid-cols-2" />
+            </div>
+
+            <HighlightBox title="O artigo não é só um relato de resultados">
+                <p>
+                    Um bom artigo traz ideias, conceitos, interpretações e modelos — os resultados servem para
+                    sustentá-los. A pesquisa só se completa quando é comunicada: a redação é o que leva o trabalho ao
+                    conhecimento da comunidade.
+                </p>
+            </HighlightBox>
+        </section>
+    );
+}
+
 function QuizSection() {
     return (
         <section className="animate-fade-in">
@@ -1255,6 +1359,8 @@ export default function MetodologiaCientificaSections({
             return <CitacoesSection />;
         case 'coleta-analise':
             return <ColetaAnaliseSection />;
+        case 'escrita-cientifica':
+            return <EscritaCientificaSection />;
         case 'quiz':
             return <QuizSection />;
         case 'iaquiz':
